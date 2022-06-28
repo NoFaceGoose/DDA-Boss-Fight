@@ -6,12 +6,13 @@ public class BossHealth : MonoBehaviour
 
     public int health = 500;
     public int defense = 200;
-    private int maxHealth = 0;
-    private int maxDefense = 0;
+    public int maxHealth = 0;
+    public int maxDefense = 0;
 
     public GameObject deathEffect;
     public GameObject bossHealthBar;
     public GameObject shield;
+    public GameObject shieldBar;
 
     public Text healthText;
     public Text defenseText;
@@ -26,8 +27,14 @@ public class BossHealth : MonoBehaviour
 
     private void Update()
     {
-        healthText.GetComponent<Text>().text = health + "/" + maxHealth;
-        defenseText.GetComponent<Text>().text = defense + "/" + maxDefense;
+        if (healthText != null)
+        {
+            healthText.GetComponent<Text>().text = health + "/" + maxHealth;
+        }
+        if (defenseText != null)
+        {
+            defenseText.GetComponent<Text>().text = defense + "/" + maxDefense;
+        }
     }
 
     public void TakeDamage(int damage)
@@ -37,11 +44,12 @@ public class BossHealth : MonoBehaviour
 
         if (defense > 0)
         {
-            defense -= damage;
+            defense -= (int)(damage * 0.5);
 
             if (defense <= 0)
             {
                 Destroy(shield);
+                Destroy(shieldBar);
             }
         }
         else
@@ -58,7 +66,12 @@ public class BossHealth : MonoBehaviour
     void Die()
     {
         Instantiate(deathEffect, transform.position, Quaternion.identity);
-        GetComponent<Boss>().tree.Stop();
+
+        if (GetComponent<Boss>().AI == 0)
+        {
+            GetComponent<Boss>().tree.Stop();
+        }
+
         Destroy(gameObject);
         Destroy(bossHealthBar);
     }

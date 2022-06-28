@@ -11,11 +11,14 @@ public class BossWeapon : MonoBehaviour
     public LayerMask attackMask;
 
     public GameObject swordWind;
+    public GameObject potion;
     public Transform firePoint;
-
+    public Transform throwPoint;
 
     public void Attack()
     {
+        GetComponent<Boss>().UpdateAttackInfo("Attack");
+
         Vector3 pos = transform.position;
         pos += transform.right * attackOffset.x;
         pos += transform.up * attackOffset.y;
@@ -23,7 +26,7 @@ public class BossWeapon : MonoBehaviour
         Collider2D colInfo = Physics2D.OverlapCircle(pos, attackRange, attackMask);
         if (colInfo != null)
         {
-            colInfo.GetComponent<PlayerHealth>().TakeDamage(attackDamage);
+            colInfo.GetComponent<PlayerHealth>().TakeDamage(attackDamage, "Attack");
         }
     }
 
@@ -31,6 +34,13 @@ public class BossWeapon : MonoBehaviour
     {
         // Launch sword wind, no damage for the sword cutting in the animation
         Instantiate(swordWind, firePoint.position, firePoint.rotation);
+        GetComponent<Boss>().UpdateAttackInfo("Fire");
+    }
+
+    public void ThrowPotion()
+    {
+        Instantiate(potion, throwPoint.position, throwPoint.rotation);
+        GetComponent<Boss>().UpdateAttackInfo("ThrowPotion");
     }
 
     public void EnragedAttack()

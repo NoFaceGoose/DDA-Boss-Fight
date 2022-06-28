@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class FireBall : MonoBehaviour
 {
     public float speed = 15f;
     public int damage = 30;

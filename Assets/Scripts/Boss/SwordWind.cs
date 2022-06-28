@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class SwordWind : MonoBehaviour
 {
-
     public float speed = 10f;
     public int damage = 15;
     public Rigidbody2D rb;
@@ -20,10 +19,8 @@ public class SwordWind : MonoBehaviour
 
         if (player != null)
         {
-            player.TakeDamage(damage);
+            player.TakeDamage(damage, "Fire");
         }
-
-        Destroy(gameObject);
     }
 
     void SelfDestroy()

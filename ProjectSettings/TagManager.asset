@@ -10,6 +10,9 @@ TagManager:
   - Trigger
   - Potion
   - Player Event
+  - Sword Wind
+  - Fire Ball
+  - Tile
   layers:
   - Default
   - TransparentFX

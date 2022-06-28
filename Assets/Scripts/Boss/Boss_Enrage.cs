@@ -20,5 +20,6 @@ public class Boss_Enrage : StateMachineBehaviour
     {
         animator.GetComponent<BossHealth>().isInvulnerable = false;
         animator.GetComponent<Boss>().isEnraged = true;
+        animator.ResetTrigger("Enrage");
     }
 }

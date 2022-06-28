@@ -38,7 +38,6 @@ public class CharacterController2D : MonoBehaviour
         if (OnLandEvent == null)
             OnLandEvent = new UnityEvent();
     }
-
     private void FixedUpdate()
     {
         jumpForceText.GetComponent<Text>().text = "Jump Force: " + m_JumpForce.ToString("#0.00");

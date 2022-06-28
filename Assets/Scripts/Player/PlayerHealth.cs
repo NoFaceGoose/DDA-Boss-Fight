@@ -8,10 +8,10 @@ public class PlayerHealth : MonoBehaviour
 
     public int health = 100;
     private int maxHealth = 0;
+    private bool isInvulnerable = false;
 
     public GameObject deathEffect;
     public Text healthText;
-
 
     private void Start()
     {
@@ -20,16 +20,24 @@ public class PlayerHealth : MonoBehaviour
 
     private void Update()
     {
-        if (transform.position.y < -20.0f)
-        {
-            TakeDamage(health);
-        }
-
         healthText.GetComponent<Text>().text = health + "/" + maxHealth;
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, string attack = "")
     {
+        if (isInvulnerable)
+        {
+            return;
+        }
+
+        switch (attack)
+        {
+            case "Attack": GetComponent<CharacterController2D>().boss.GetComponent<Boss>().UpdateAttackInfo("Attack", true); break;
+            case "Fire": GetComponent<CharacterController2D>().boss.GetComponent<Boss>().UpdateAttackInfo("Fire", true); break;
+            case "ThrowPotion": GetComponent<CharacterController2D>().boss.GetComponent<Boss>().UpdateAttackInfo("ThrowPotion", true); break;
+            default: break;
+        }
+
         health -= damage;
 
         int value = -damage;
@@ -61,6 +69,8 @@ public class PlayerHealth : MonoBehaviour
     {
         SpriteRenderer[] srs = GetComponentsInChildren<SpriteRenderer>();
 
+        isInvulnerable = true;
+
         for (int i = 0; i < 3; i++)
         {
             foreach (SpriteRenderer sr in srs)
@@ -81,6 +91,8 @@ public class PlayerHealth : MonoBehaviour
 
             yield return new WaitForSeconds(.1f);
         }
+
+        isInvulnerable = false;
     }
 
 }

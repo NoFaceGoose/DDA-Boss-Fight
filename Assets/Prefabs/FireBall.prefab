@@ -15,8 +15,8 @@ GameObject:
   - component: {fileID: 114444490285710056}
   - component: {fileID: 4379087076741164223}
   m_Layer: 0
-  m_Name: Bullet
-  m_TagString: Untagged
+  m_Name: FireBall
+  m_TagString: Fire Ball
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -139,10 +139,6 @@ MonoBehaviour:
   damage: 30
   rb: {fileID: 50231956401082150}
   impactEffect: {fileID: 1473625048454486, guid: 284f05ab582ef494a9ab1dd8bc1e76ae,
-    type: 3}
-  speedText: {fileID: 643995127665704203, guid: 5cffd381c3d9e8540bdbc1b4dd962f23,
-    type: 3}
-  damageText: {fileID: 6309292186864967809, guid: 214496e3003e764408054293d9909452,
     type: 3}
 --- !u!95 &4379087076741164223
 Animator:
