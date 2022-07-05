@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 4241659895260723917}
   - component: {fileID: 4241659895260723916}
   - component: {fileID: 4241659895260723915}
-  - component: {fileID: -7527393364336082187}
   m_Layer: 0
   m_Name: Player Event
   m_TagString: Player Event
@@ -100,16 +99,3 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.2
---- !u!114 &-7527393364336082187
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4241659895260723914}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9eeb34d698f1b8e40af434d6800cca47, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fireBall: {fileID: 1539632861300792, guid: 96ae8f9dd8fd89941bc4d858375f035b, type: 3}

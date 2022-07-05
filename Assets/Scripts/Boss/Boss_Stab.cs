@@ -1,9 +1,9 @@
 using UnityEngine;
 
-public class Boos_Attack : StateMachineBehaviour
+public class Boss_Stab : StateMachineBehaviour
 {
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        animator.ResetTrigger("Attack");
+        animator.ResetTrigger("Stab");
     }
 }

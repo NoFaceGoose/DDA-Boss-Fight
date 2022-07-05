@@ -32,9 +32,23 @@ public class PlayerHealth : MonoBehaviour
 
         switch (attack)
         {
-            case "Attack": GetComponent<CharacterController2D>().boss.GetComponent<Boss>().UpdateAttackInfo("Attack", true); break;
+            case "Slash": GetComponent<CharacterController2D>().boss.GetComponent<Boss>().UpdateAttackInfo("Slash", true); break;
             case "Fire": GetComponent<CharacterController2D>().boss.GetComponent<Boss>().UpdateAttackInfo("Fire", true); break;
-            case "ThrowPotion": GetComponent<CharacterController2D>().boss.GetComponent<Boss>().UpdateAttackInfo("ThrowPotion", true); break;
+
+            case "ThrowPotion":
+                GetComponent<CharacterController2D>().boss.GetComponent<Boss>().UpdateAttackInfo("ThrowPotion", true);
+                if (IsInvoking("GetDetoxified"))
+                {
+                    CancelInvoke("GetDetoxified");
+                }
+                else
+                {
+                    GetPoisoned();
+                }
+                Invoke("GetDetoxified", 3f);
+                break;
+
+            case "Stab": GetComponent<CharacterController2D>().boss.GetComponent<Boss>().UpdateAttackInfo("Stab", true); break;
             default: break;
         }
 
@@ -42,7 +56,7 @@ public class PlayerHealth : MonoBehaviour
 
         int value = -damage;
 
-        GetComponent<CharacterController2D>().updateReminder("HP " + (value < 0 ? value.ToString() : ("+" + value)), value >= 0);
+        GetComponent<CharacterController2D>().updateReminder("HP " + (value < 0 ? value.ToString() : ("+" + value)));
 
         if (damage > 0)
         {
@@ -58,6 +72,18 @@ public class PlayerHealth : MonoBehaviour
         {
             Die();
         }
+    }
+
+    void GetPoisoned()
+    {
+        GetComponent<CharacterController2D>().changeJumpForce(true);
+        GetComponent<PlayerMovement>().runSpeed /= 2;
+    }
+
+    void GetDetoxified()
+    {
+        GetComponent<CharacterController2D>().changeJumpForce(false);
+        GetComponent<PlayerMovement>().runSpeed *= 2;
     }
 
     void Die()

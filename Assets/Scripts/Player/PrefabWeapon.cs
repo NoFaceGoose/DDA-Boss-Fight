@@ -1,11 +1,10 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public class PrefabWeapon : MonoBehaviour
 {
     public Transform firePoint;
     public GameObject bulletPrefab;
-    public Text coolDownText;
+
     public float coolDown = 0.35f;
     private float timer = 0.35f;
 
@@ -17,17 +16,11 @@ public class PrefabWeapon : MonoBehaviour
     public float attackRange = 1f;
     public LayerMask attackMask;
 
-    public Text speedText;
-    public Text damageText;
     public Animator animator;
 
     // Update is called once per frame
     void Update()
     {
-        coolDownText.GetComponent<Text>().text = "Fire Cool Down: " + coolDown.ToString("#0.00");
-        speedText.GetComponent<Text>().text = "Fire Ball Speed: " + fireBallSpeed.ToString("#0.00");
-        damageText.GetComponent<Text>().text = "Fire Ball Damage: " + fireBallDamage.ToString();
-
         timer += Time.deltaTime;
         if (Input.GetButtonDown("Fire"))
         {

@@ -15,24 +15,24 @@ public class BossWeapon : MonoBehaviour
     public Transform firePoint;
     public Transform throwPoint;
 
-    public void Attack()
+    public void Slash()
     {
-        GetComponent<Boss>().UpdateAttackInfo("Attack");
+        GetComponent<Boss>().UpdateAttackInfo("Slash");
 
         Vector3 pos = transform.position;
         pos += transform.right * attackOffset.x;
         pos += transform.up * attackOffset.y;
 
         Collider2D colInfo = Physics2D.OverlapCircle(pos, attackRange, attackMask);
-        if (colInfo != null)
+        if (colInfo && colInfo.GetComponent<PlayerHealth>())
         {
-            colInfo.GetComponent<PlayerHealth>().TakeDamage(attackDamage, "Attack");
+            colInfo.GetComponent<PlayerHealth>().TakeDamage(attackDamage, "Slash");
         }
     }
 
     public void Fire()
     {
-        // Launch sword wind, no damage for the sword cutting in the animation
+        // Launch sword wind, no damage for the sword cutting in the animati on
         Instantiate(swordWind, firePoint.position, firePoint.rotation);
         GetComponent<Boss>().UpdateAttackInfo("Fire");
     }
@@ -43,14 +43,18 @@ public class BossWeapon : MonoBehaviour
         GetComponent<Boss>().UpdateAttackInfo("ThrowPotion");
     }
 
-    public void EnragedAttack()
+    public void Stab()
     {
+        GetComponent<Boss>().UpdateAttackInfo("Stab");
+
         Vector3 pos = transform.position;
         pos += transform.right * attackOffset.x;
         pos += transform.up * attackOffset.y;
+        pos += transform.right * -0.6f;
+        pos += transform.up * -0.15f;
 
-        Collider2D colInfo = Physics2D.OverlapCircle(pos, attackRange, attackMask);
-        if (colInfo != null)
+        Collider2D colInfo = Physics2D.OverlapBox(pos, new Vector3(attackRange * 2.1f, 1.5f, 0f), attackMask);
+        if (colInfo && colInfo.GetComponent<PlayerHealth>())
         {
             colInfo.GetComponent<PlayerHealth>().TakeDamage(enragedAttackDamage);
         }
@@ -63,5 +67,10 @@ public class BossWeapon : MonoBehaviour
         pos += transform.up * attackOffset.y;
 
         Gizmos.DrawWireSphere(pos, attackRange);
+
+        pos += transform.right * -0.6f;
+        pos += transform.up * -0.15f;
+        Gizmos.DrawWireCube(pos, new Vector3(attackRange * 2.1f, 1.5f, 0f));
     }
+
 }

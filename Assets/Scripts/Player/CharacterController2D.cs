@@ -40,8 +40,6 @@ public class CharacterController2D : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        jumpForceText.GetComponent<Text>().text = "Jump Force: " + m_JumpForce.ToString("#0.00");
-
         bool wasGrounded = m_Grounded;
         m_Grounded = false;
 
@@ -110,20 +108,23 @@ public class CharacterController2D : MonoBehaviour
         transform.Rotate(0f, 180f, 0f);
     }
 
-    public void changeJumpForce(float value)
+    public void changeJumpForce(bool poison)
     {
-        m_JumpForce += value;
-        if (m_JumpForce <= 0)
+        if (poison)
         {
-            m_JumpForce = 0;
+            m_JumpForce = m_JumpForce * 2 / 3;
+        }
+        else
+        {
+            m_JumpForce = m_JumpForce * 1.5f;
         }
     }
 
     // update the reminder text
-    public void updateReminder(string text, bool buff)
+    public void updateReminder(string text)
     {
         reminder.GetComponent<Text>().text = text;
-        reminder.GetComponent<Text>().color = buff ? Color.green : Color.red;
+        reminder.GetComponent<Text>().color = Color.red;
         reminder.SetActive(true);
         CancelInvoke("cancelReminder");
         Invoke("cancelReminder", 1.0f);

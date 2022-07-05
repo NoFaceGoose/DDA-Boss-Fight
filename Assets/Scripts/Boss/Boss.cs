@@ -10,9 +10,9 @@ public class Boss : MonoBehaviour
     public bool isFlipped = false;
     public bool isEnraged = false;
 
-    public float attackRange = 3f;
-    public float enragedAttackRange = 3.5f;
-    public float fireRange = 15.0f;
+    public float nearAttackRange = 3f;
+    public float nearEnragedAttackRange = 3.5f;
+    public float farAttackRange = 15.0f;
     public int dangerHealth = 200;
 
     public int AI = 1;
@@ -30,32 +30,37 @@ public class Boss : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         b_health = GetComponent<BossHealth>();
-        playerTotalHealth = player.GetComponent<PlayerHealth>().health;
-        bossTotalHealth = b_health.maxHealth + b_health.maxDefense;
 
         attackData = new Dictionary<string, AttackInfo>();
-        attackData.Add("Attack", new AttackInfo(GetComponent<BossWeapon>().attackDamage));
+        attackData.Add("Slash", new AttackInfo(GetComponent<BossWeapon>().attackDamage));
         attackData.Add("Fire", new AttackInfo(GetComponent<BossWeapon>().swordWind.GetComponent<SwordWind>().damage));
         attackData.Add("ThrowPotion", new AttackInfo(GetComponent<BossWeapon>().potion.GetComponent<Potion>().damage));
+        attackData.Add("Stab", new AttackInfo(GetComponent<BossWeapon>().enragedAttackDamage));
 
-        // Default BT
-        if (AI == 0)
+        switch (AI)
         {
-            // Start behaviour tree
-            tree = BehaviourTree();
-            blackboard = tree.Blackboard;
+            // Default BT
+            case 0:
+                // Start behaviour tree
+                tree = BehaviourTree();
+                blackboard = tree.Blackboard;
 
 #if UNITY_EDITOR
-            Debugger debugger = (Debugger)this.gameObject.AddComponent(typeof(Debugger));
-            debugger.BehaviorTree = tree;
+                Debugger debugger = (Debugger)this.gameObject.AddComponent(typeof(Debugger));
+                debugger.BehaviorTree = tree;
 #endif
-        }
+                break;
 
-        // Rule-based DDA
-        if (AI == 1)
-        {
-            MoveToPlayer();
-            InvokeRepeating("RuleBasedDDA", 3f, 2f);
+            // Rule-based DDA
+            case 1:
+                playerTotalHealth = player.GetComponent<PlayerHealth>().health;
+                bossTotalHealth = b_health.maxHealth + b_health.maxDefense;
+
+                MoveToPlayer();
+                InvokeRepeating("RuleBasedDDA", 3f, 2f);
+                break;
+
+            default: break;
         }
     }
 
@@ -73,9 +78,9 @@ public class Boss : MonoBehaviour
         {
             RunToPlayer();
 
-            if (Vector2.Distance(player.transform.position, rb.position) <= enragedAttackRange)
+            if (Vector2.Distance(player.transform.position, rb.position) <= nearEnragedAttackRange)
             {
-                Attack();
+                Stab();
             }
         }
         else
@@ -87,7 +92,7 @@ public class Boss : MonoBehaviour
             else
             {
                 // near attack decision
-                if (Vector2.Distance(player.transform.position, rb.position) <= attackRange)
+                if (Vector2.Distance(player.transform.position, rb.position) <= nearAttackRange)
                 {
                     // each attack has to be executed once to run the DDA system
                     bool useDDA = true;
@@ -109,7 +114,7 @@ public class Boss : MonoBehaviour
                         {
                             case 0: Fire(); break;
                             case 1: ThrowPotion(); break;
-                            default: Attack(); break;
+                            default: Slash(); break;
                         }
                     }
                     else
@@ -128,18 +133,18 @@ public class Boss : MonoBehaviour
                         float value = UnityEngine.Random.Range(0f, totalWeights);
 
                         // log attack info
-                        Debug.Log("Attack hit/total: " + attackData["Attack"].hit + "/" + attackData["Attack"].total +
+                        Debug.Log("Slash hit/total: " + attackData["Slash"].hit + "/" + attackData["Slash"].total +
                             "; Fire hit/total: " + attackData["Fire"].hit + "/" + attackData["Fire"].total +
                             "; ThrowPotion hit/total: " + attackData["ThrowPotion"].hit + "/" + attackData["ThrowPotion"].total);
-                        Debug.Log("Attack expectation: " + attackData["Attack"].expectation + "; Fire expectation: " + attackData["Fire"].expectation + "; ThrowPotion expectation: " + attackData["ThrowPotion"].expectation);
-                        Debug.Log("Attack weight: " + attackData["Attack"].weight + "; Fire weight: " + attackData["Fire"].weight + "; ThrowPotion weight: " + attackData["ThrowPotion"].weight);
+                        Debug.Log("Slash expectation: " + attackData["Slash"].expectation + "; Fire expectation: " + attackData["Fire"].expectation + "; ThrowPotion expectation: " + attackData["ThrowPotion"].expectation);
+                        Debug.Log("Slash weight: " + attackData["Slash"].weight + "; Fire weight: " + attackData["Fire"].weight + "; ThrowPotion weight: " + attackData["ThrowPotion"].weight);
                         Debug.Log("Random Value: " + value);
 
-                        if (value >= 0f && value < attackData["Attack"].weight)
+                        if (value >= 0f && value < attackData["Slash"].weight)
                         {
-                            Attack();
+                            Slash();
                         }
-                        else if (value >= attackData["Attack"].weight && value < attackData["Attack"].weight + attackData["Fire"].weight)
+                        else if (value >= attackData["Slash"].weight && value < attackData["Slash"].weight + attackData["Fire"].weight)
                         {
                             Fire();
                         }
@@ -151,14 +156,14 @@ public class Boss : MonoBehaviour
                 }
 
                 // far attack decision
-                else if (Vector2.Distance(player.transform.position, rb.position) <= fireRange)
+                else if (Vector2.Distance(player.transform.position, rb.position) <= farAttackRange)
                 {
                     // each attack has to be executed once to run the DDA system
                     bool useDDA = true;
 
                     foreach (var item in attackData)
                     {
-                        if (item.Key != "Attack" && item.Value.total == 0)
+                        if (item.Key != "Slash" && item.Value.total == 0)
                         {
                             useDDA = false;
                             break;
@@ -183,7 +188,7 @@ public class Boss : MonoBehaviour
                         // calculate weights
                         foreach (var item in attackData)
                         {
-                            if (item.Key != "Attack")
+                            if (item.Key != "Slash")
                             {
                                 // if the difference between the player's and boss's health condition is less, the attack will be assigned with more weight value
                                 // weight = 1 / | (playerCurrentHP - attackExpectation) / playerTotalHP - bossCurrentHP / bossTotalHP |
@@ -243,27 +248,35 @@ public class Boss : MonoBehaviour
 
     private Node PhaseOneBehaviour()
     {
-        // Fire (sword wind) if the player is in fire range
-        Node bb1 = new BlackboardCondition("playerDistance", Operator.IS_SMALLER_OR_EQUAL, fireRange, Stops.IMMEDIATE_RESTART, new Action(() => Fire()));
+        // Select between fire and throw potion
+        Node rndSel1 = new RandomSelector(new Action(() => Fire()), new Action(() => ThrowPotion()));
+        // Use far attacks if the player is in far attack range
+        Node bb1 = new BlackboardCondition("playerDistance", Operator.IS_SMALLER_OR_EQUAL, farAttackRange, Stops.IMMEDIATE_RESTART, rndSel1);
+        // Select between far attacks and move when the player is not in attack range, more likely to move
+        Node rndSel2 = new RandomSelector(bb1, new Action(() => MoveToPlayer()), new Action(() => MoveToPlayer()));
 
-        Node bb0 = new BlackboardCondition("playerDistance", Operator.IS_SMALLER_OR_EQUAL, fireRange, Stops.IMMEDIATE_RESTART, new Action(() => ThrowPotion()));
+        // Select between fire, throw potion and slash
+        Node rndSel3 = new RandomSelector(new Action(() => Fire()), new Action(() => ThrowPotion()), new Action(() => Slash()), new Action(() => Slash()));
+        // Use all attacks the player if the player is in near attack range
+        Node bb2 = new BlackboardCondition("playerDistance", Operator.IS_SMALLER_OR_EQUAL, nearAttackRange, Stops.IMMEDIATE_RESTART, rndSel3);
 
-        // Select between move and fire when the player is not in attack range, more likely to move
-        Node rndSel = new RandomSelector(bb0, bb1, new Action(() => MoveToPlayer()), new Action(() => MoveToPlayer()), new Action(() => MoveToPlayer()), new Action(() => MoveToPlayer()), new Action(() => MoveToPlayer()));
-        // Attack the player if the player is in attacking range
-        Node bb2 = new BlackboardCondition("playerDistance", Operator.IS_SMALLER_OR_EQUAL, attackRange, Stops.IMMEDIATE_RESTART, new Action(() => Attack()));
         // Look at the player at first, then wait for 0.5 second, let the last state continue for a while
-        return new Sequence(new Action(() => LookAtPlayer()), new Wait(0.5f), new Selector(bb2, rndSel));
+        return new Sequence(new Action(() => LookAtPlayer()), new Wait(0.5f), new Selector(bb2, rndSel2));
     }
 
     private Node PhaseTwoBehaviour()
     {
+        // Select among far attacks, more likely to stab
+        Node rndSel1 = new RandomSelector(new Action(() => Fire()), new Action(() => ThrowPotion()), new Action(() => Slash()), new Action(() => Stab()), new Action(() => Stab()));
         // Attack the player if player is in attack range
-        Node bb1 = new BlackboardCondition("playerDistance", Operator.IS_SMALLER_OR_EQUAL, enragedAttackRange, Stops.IMMEDIATE_RESTART, new Action(() => Attack()));
-        // Run to the player
-        Node sel = new Selector(bb1, new Action(() => RunToPlayer()));
-        // Look at the player first
-        Node seq = new Sequence(new Action(() => LookAtPlayer()), bb1);
+        Node bb = new BlackboardCondition("playerDistance", Operator.IS_SMALLER_OR_EQUAL, nearEnragedAttackRange, Stops.IMMEDIATE_RESTART, rndSel1);
+
+        // Select between far attacks and run to the player
+        Node rndSel2 = new RandomSelector(new Action(() => Fire()), new Action(() => ThrowPotion()), new Action(() => RunToPlayer()), new Action(() => RunToPlayer()));
+
+        // Look at the player first, then check attacks
+        Node seq = new Sequence(new Action(() => LookAtPlayer()), new Selector(bb, rndSel2));
+
         // Enter phase two when enraged
         return new BlackboardCondition("isEnraged", Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, seq);
     }
@@ -273,10 +286,15 @@ public class Boss : MonoBehaviour
         GetComponent<Animator>().SetTrigger("Enrage");
     }
 
-    private void Attack()
+    private void Slash()
     {
         GetComponent<Animator>().SetBool("IsMoving", false);
-        GetComponent<Animator>().SetTrigger("Attack");
+        GetComponent<Animator>().SetTrigger("Slash");
+    }
+
+    private void Stab()
+    {
+        GetComponent<Animator>().SetTrigger("Stab");
     }
 
     private void ThrowPotion()
@@ -313,14 +331,14 @@ public class Boss : MonoBehaviour
     private void MoveToPlayer()
     {
         GetComponent<Animator>().SetBool("IsMoving", true);
-        GetComponent<Animator>().ResetTrigger("Attack");
+        GetComponent<Animator>().ResetTrigger("Slash");
         GetComponent<Animator>().ResetTrigger("Fire");
         GetComponent<Animator>().ResetTrigger("ThrowPotion");
     }
 
     private void RunToPlayer()
     {
-        GetComponent<Animator>().ResetTrigger("Attack");
+        GetComponent<Animator>().ResetTrigger("Slash");
         GetComponent<Animator>().ResetTrigger("Fire");
     }
 
