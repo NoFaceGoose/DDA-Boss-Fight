@@ -2,8 +2,9 @@ using UnityEngine;
 
 public class FireBall : MonoBehaviour
 {
-    public float speed = 15f;
-    public int damage = 30;
+    public float speed;
+    public int damage;
+    public float lifetime;
     public Rigidbody2D rb;
     public GameObject impactEffect;
 
@@ -11,17 +12,16 @@ public class FireBall : MonoBehaviour
     void Start()
     {
         rb.velocity = transform.right * speed;
-        Invoke("SelfDestroy", 2.0f);
+        Invoke("SelfDestroy", lifetime);
     }
-
 
     void OnTriggerEnter2D(Collider2D hitInfo)
     {
-        if (hitInfo.GetComponent<BossHealth>() != null)
+        if (hitInfo.GetComponent<BossHealth>())
         {
             hitInfo.GetComponent<BossHealth>().TakeDamage(damage);
         }
-        else if (hitInfo.GetComponent<Spike>() != null)
+        else if (hitInfo.GetComponent<Spike>())
         {
             hitInfo.GetComponent<Spike>().TakeDamage(damage);
         }

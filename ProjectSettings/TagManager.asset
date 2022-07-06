@@ -4,15 +4,14 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Through
   - Ground
   - Spike
   - Trigger
   - Potion
-  - Player Event
   - Sword Wind
   - Fire Ball
   - Tile
+  - Boss Trigger
   layers:
   - Default
   - TransparentFX

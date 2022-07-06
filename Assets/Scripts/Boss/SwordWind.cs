@@ -2,24 +2,23 @@ using UnityEngine;
 
 public class SwordWind : MonoBehaviour
 {
-    public float speed = 10f;
-    public int damage = 15;
+    public float speed;
+    public int damage;
+    public float lifetime;
     public Rigidbody2D rb;
 
     // Use this for initialization
     void Start()
     {
         rb.velocity = transform.right * speed * -1.0f;
-        Invoke("SelfDestroy", 2.0f);
+        Invoke("SelfDestroy", lifetime);
     }
 
     void OnTriggerEnter2D(Collider2D hitInfo)
     {
-        PlayerHealth player = hitInfo.GetComponent<PlayerHealth>();
-
-        if (player != null)
+        if (hitInfo.GetComponent<PlayerHealth>())
         {
-            player.TakeDamage(damage, "Fire");
+            hitInfo.GetComponent<PlayerHealth>().TakeDamage(damage, "Fire");
         }
     }
 

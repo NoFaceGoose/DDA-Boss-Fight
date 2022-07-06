@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class Potion : MonoBehaviour
 {
-    public float speed = 10f;
-    public int damage = 10;
+    public float speed;
+    public int damage;
     public Rigidbody2D rb;
 
     void Start()
@@ -21,7 +21,7 @@ public class Potion : MonoBehaviour
         {
             PlayerHealth player = collision.gameObject.GetComponent<PlayerHealth>();
 
-            if (player != null)
+            if (player)
             {
                 player.TakeDamage(damage, "ThrowPotion");
                 Destroy(gameObject);

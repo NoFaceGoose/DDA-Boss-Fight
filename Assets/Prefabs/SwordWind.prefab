@@ -147,6 +147,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 20
   damage: 20
+  lifetime: 2
   rb: {fileID: 50231956401082150}
 --- !u!60 &1518401425637309225
 PolygonCollider2D:

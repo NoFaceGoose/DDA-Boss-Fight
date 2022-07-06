@@ -1,19 +1,16 @@
 using UnityEngine;
 
-public class PrefabWeapon : MonoBehaviour
+public class PlayerWeapon : MonoBehaviour
 {
     public Transform firePoint;
-    public GameObject bulletPrefab;
+    public GameObject fireBall;
 
-    public float coolDown = 0.35f;
-    private float timer = 0.35f;
+    public float coolDown;
+    private float timer;
 
-    public float fireBallSpeed = 15f;
-    public int fireBallDamage = 30;
-
-    public int attackDamage = 50;
+    public int attackDamage;
     public Vector3 attackOffset;
-    public float attackRange = 1f;
+    public float attackRange;
     public LayerMask attackMask;
 
     public Animator animator;
@@ -29,7 +26,6 @@ public class PrefabWeapon : MonoBehaviour
                 Fire();
                 timer = 0;
             }
-
         }
 
         if (Input.GetButtonDown("Attack"))
@@ -45,9 +41,12 @@ public class PrefabWeapon : MonoBehaviour
         pos += transform.up * attackOffset.y;
 
         Collider2D colInfo = Physics2D.OverlapCircle(pos, attackRange, attackMask);
-        if (colInfo != null)
+        if (colInfo)
         {
-            colInfo.GetComponent<BossHealth>().TakeDamage(attackDamage);
+            if (colInfo.GetComponent<BossHealth>())
+            {
+                colInfo.GetComponent<BossHealth>().TakeDamage(attackDamage);
+            }
         }
     }
 
@@ -62,8 +61,6 @@ public class PrefabWeapon : MonoBehaviour
 
     void Fire()
     {
-        GameObject fireBall = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
-        fireBall.GetComponent<FireBall>().speed = fireBallSpeed;
-        fireBall.GetComponent<FireBall>().damage = fireBallDamage;
+        Instantiate(fireBall, firePoint.position, firePoint.rotation);
     }
 }

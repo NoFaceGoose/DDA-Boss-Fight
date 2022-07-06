@@ -126,7 +126,6 @@ MonoBehaviour:
   speed: 15
   damage: 10
   rb: {fileID: 3069038905345237073}
-  boss: {fileID: 853691114071750478, guid: 5e3e452c7c33788428855d36cf7962d2, type: 3}
 --- !u!50 &3069038905345237073
 Rigidbody2D:
   serializedVersion: 4

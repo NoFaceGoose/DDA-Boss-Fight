@@ -2,16 +2,20 @@
 
 public class BossWeapon : MonoBehaviour
 {
-    public int attackDamage = 20;
-    public int enragedAttackDamage = 40;
-    public float cooldown = 2.0f;
+    public int attackDamage;
+    public int enragedAttackDamage;
+    public float cooldown;
 
-    public Vector3 attackOffset;
-    public float attackRange = 1f;
+    public Vector3 slashOffset;
+    public float slashRange;
+    public Vector3 stabOffset;
+    public Vector3 stabSize;
     public LayerMask attackMask;
+    public float spellHeight;
 
     public GameObject swordWind;
     public GameObject potion;
+    public GameObject explosive;
     public Transform firePoint;
     public Transform throwPoint;
 
@@ -20,10 +24,10 @@ public class BossWeapon : MonoBehaviour
         GetComponent<Boss>().UpdateAttackInfo("Slash");
 
         Vector3 pos = transform.position;
-        pos += transform.right * attackOffset.x;
-        pos += transform.up * attackOffset.y;
+        pos += transform.right * slashOffset.x;
+        pos += transform.up * slashOffset.y;
 
-        Collider2D colInfo = Physics2D.OverlapCircle(pos, attackRange, attackMask);
+        Collider2D colInfo = Physics2D.OverlapCircle(pos, slashRange, attackMask);
         if (colInfo && colInfo.GetComponent<PlayerHealth>())
         {
             colInfo.GetComponent<PlayerHealth>().TakeDamage(attackDamage, "Slash");
@@ -48,29 +52,35 @@ public class BossWeapon : MonoBehaviour
         GetComponent<Boss>().UpdateAttackInfo("Stab");
 
         Vector3 pos = transform.position;
-        pos += transform.right * attackOffset.x;
-        pos += transform.up * attackOffset.y;
-        pos += transform.right * -0.6f;
-        pos += transform.up * -0.15f;
+        pos += transform.right * stabOffset.x;
+        pos += transform.up * stabOffset.y;
 
-        Collider2D colInfo = Physics2D.OverlapBox(pos, new Vector3(attackRange * 2.1f, 1.5f, 0f), attackMask);
+        Collider2D colInfo = Physics2D.OverlapBox(pos, stabSize, attackMask);
         if (colInfo && colInfo.GetComponent<PlayerHealth>())
         {
             colInfo.GetComponent<PlayerHealth>().TakeDamage(enragedAttackDamage);
         }
     }
 
+    public void Spell()
+    {
+        GetComponent<Boss>().UpdateAttackInfo("Spell");
+
+        Vector3 pos = GetComponent<Boss>().player.transform.position;
+        pos.y = spellHeight;
+        Instantiate(explosive, pos, GetComponent<Boss>().player.transform.rotation);
+    }
+
     void OnDrawGizmosSelected()
     {
         Vector3 pos = transform.position;
-        pos += transform.right * attackOffset.x;
-        pos += transform.up * attackOffset.y;
+        pos += transform.right * slashOffset.x;
+        pos += transform.up * slashOffset.y;
+        Gizmos.DrawWireSphere(pos, slashRange);
 
-        Gizmos.DrawWireSphere(pos, attackRange);
-
-        pos += transform.right * -0.6f;
-        pos += transform.up * -0.15f;
-        Gizmos.DrawWireCube(pos, new Vector3(attackRange * 2.1f, 1.5f, 0f));
+        pos = transform.position;
+        pos += transform.right * stabOffset.x;
+        pos += transform.up * stabOffset.y;
+        Gizmos.DrawWireCube(pos, stabSize);
     }
-
 }

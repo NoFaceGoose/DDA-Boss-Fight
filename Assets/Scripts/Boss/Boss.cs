@@ -7,35 +7,36 @@ public class Boss : MonoBehaviour
     public GameObject player;
     public Rigidbody2D rb;
 
-    public bool isFlipped = false;
-    public bool isEnraged = false;
+    public bool isFlipped;
+    public bool isEnraged;
 
-    public float nearAttackRange = 3f;
-    public float nearEnragedAttackRange = 3.5f;
-    public float farAttackRange = 15.0f;
-    public int dangerHealth = 200;
+    public float nearAttackRange;
+    public float nearEnragedAttackRange;
+    public float farAttackRange;
+    public int dangerHealth;
 
-    public int AI = 1;
+    public int AI;
+    public float initalWalkTime;
+    public float DDAReactionRate;
 
     public Root tree; // The boss's behaviour tree
     private Blackboard blackboard; // The boss's behaviour blackboard
 
-    private BossHealth b_health; // Reference to boss's health script, used by the AI to deal with health.
-    private int playerTotalHealth;
-    private int bossTotalHealth;
+    private BossHealth bossHealth; // Reference to boss's health script, used by the AI to deal with health.
 
     private Dictionary<string, AttackInfo> attackData;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        b_health = GetComponent<BossHealth>();
+        bossHealth = GetComponent<BossHealth>();
 
         attackData = new Dictionary<string, AttackInfo>();
         attackData.Add("Slash", new AttackInfo(GetComponent<BossWeapon>().attackDamage));
         attackData.Add("Fire", new AttackInfo(GetComponent<BossWeapon>().swordWind.GetComponent<SwordWind>().damage));
         attackData.Add("ThrowPotion", new AttackInfo(GetComponent<BossWeapon>().potion.GetComponent<Potion>().damage));
         attackData.Add("Stab", new AttackInfo(GetComponent<BossWeapon>().enragedAttackDamage));
+        attackData.Add("Spell", new AttackInfo(GetComponent<BossWeapon>().explosive.GetComponent<Explosive>().damage));
 
         switch (AI)
         {
@@ -53,11 +54,8 @@ public class Boss : MonoBehaviour
 
             // Rule-based DDA
             case 1:
-                playerTotalHealth = player.GetComponent<PlayerHealth>().health;
-                bossTotalHealth = b_health.maxHealth + b_health.maxDefense;
-
                 MoveToPlayer();
-                InvokeRepeating("RuleBasedDDA", 3f, 2f);
+                InvokeRepeating("RuleBasedDDA", initalWalkTime, DDAReactionRate);
                 break;
 
             default: break;
@@ -74,21 +72,178 @@ public class Boss : MonoBehaviour
 
     private void RuleBasedDDA()
     {
+        // phase two
         if (isEnraged)
         {
-            RunToPlayer();
-
+            // near attack decision
             if (Vector2.Distance(player.transform.position, rb.position) <= nearEnragedAttackRange)
             {
-                Stab();
+                // each attack has to be executed once to run the DDA system
+                bool useDDA = true;
+
+                foreach (var val in attackData.Values)
+                {
+                    if (val.total == 0)
+                    {
+                        useDDA = false;
+                        break;
+                    }
+                }
+
+                if (!useDDA)
+                {
+                    int value = UnityEngine.Random.Range(0, 6);
+
+                    switch (value)
+                    {
+                        case 0: Fire(); break;
+                        case 1: ThrowPotion(); break;
+                        case 2: Slash(); break;
+                        case 3: Spell(); break;
+                        default: Stab(); break;
+                    }
+                }
+                else
+                {
+                    float totalWeights = 0f;
+
+                    // calculate weights
+                    foreach (var val in attackData.Values)
+                    {
+                        totalWeights += val.GetWeight(player.GetComponent<PlayerHealth>(), bossHealth);
+                    }
+
+                    float value = UnityEngine.Random.Range(0f, totalWeights);
+
+                    // log attack info
+                    Debug.Log("Slash hit/total: " + attackData["Slash"].hit + "/" + attackData["Slash"].total +
+                        "; Fire hit/total: " + attackData["Fire"].hit + "/" + attackData["Fire"].total +
+                        "; ThrowPotion hit/total: " + attackData["ThrowPotion"].hit + "/" + attackData["ThrowPotion"].total +
+                        "; Stab hit/total: " + attackData["Stab"].hit + "/" + attackData["Stab"].total +
+                        "; Spell hit/total: " + attackData["Spell"].hit + "/" + attackData["Spell"].total);
+                    Debug.Log("Slash expectation: " + attackData["Slash"].expectation +
+                        "; Fire expectation: " + attackData["Fire"].expectation +
+                        "; ThrowPotion expectation: " + attackData["ThrowPotion"].expectation +
+                        "; Stab expectation: " + attackData["Stab"].expectation +
+                        "; Spell expectation: " + attackData["Spell"].expectation);
+                    Debug.Log("Slash weight: " + attackData["Slash"].weight +
+                        "; Fire weight: " + attackData["Fire"].weight +
+                        "; ThrowPotion weight: " + attackData["ThrowPotion"].weight +
+                        "; Stab weight: " + attackData["Stab"].weight +
+                        "; Spell weight: " + attackData["Spell"].weight);
+                    Debug.Log("Random Value: " + value);
+
+                    if (value >= 0f
+                        && value < attackData["Slash"].weight)
+                    {
+                        Slash();
+                    }
+                    else if (value >= attackData["Slash"].weight
+                        && value < attackData["Slash"].weight + attackData["Fire"].weight)
+                    {
+                        Fire();
+                    }
+                    else if (value >= attackData["Slash"].weight + attackData["Fire"].weight
+                        && value < attackData["Slash"].weight + attackData["Fire"].weight + attackData["ThrowPotion"].weight)
+                    {
+                        ThrowPotion();
+                    }
+                    else if (value >= attackData["Slash"].weight + attackData["Fire"].weight + attackData["ThrowPotion"].weight
+                        && value < attackData["Slash"].weight + attackData["Fire"].weight + attackData["ThrowPotion"].weight + attackData["Stab"].weight)
+                    {
+                        Stab();
+                    }
+                    else
+                    {
+                        Spell();
+                    }
+                }
+            }
+            // far attack decision
+            else
+            {
+                // each attack has to be executed once to run the DDA system
+                bool useDDA = true;
+
+                foreach (var item in attackData)
+                {
+                    if (item.Key != "Slash" && item.Key != "Stab" && item.Value.total == 0)
+                    {
+                        useDDA = false;
+                        break;
+                    }
+                }
+
+                if (!useDDA)
+                {
+                    int value = UnityEngine.Random.Range(0, 5);
+
+                    switch (value)
+                    {
+                        case 0: Fire(); break;
+                        case 1: ThrowPotion(); break;
+                        case 2: Spell(); break;
+                        default: RunToPlayer(); break;
+                    }
+                }
+                else
+                {
+                    float totalWeights = 0f;
+
+                    // calculate weights
+                    foreach (var item in attackData)
+                    {
+                        if (item.Key != "Slash" && item.Key != "Stab")
+                        {
+                            totalWeights += item.Value.GetWeight(player.GetComponent<PlayerHealth>(), bossHealth);
+                        }
+                    }
+
+                    // Assign 1/3 weights to run to player
+                    float value = UnityEngine.Random.Range(0f, totalWeights * 1.5f);
+
+                    // log attack info
+                    Debug.Log("Fire hit/total: " + attackData["Fire"].hit + "/" + attackData["Fire"].total +
+                        "; ThrowPotion hit/total: " + attackData["ThrowPotion"].hit + "/" + attackData["ThrowPotion"].total +
+                        "; Spell hit/total: " + attackData["Spell"].hit + "/" + attackData["Spell"].total);
+                    Debug.Log("Fire expectation: " + attackData["Fire"].expectation +
+                        "; ThrowPotion expectation: " + attackData["ThrowPotion"].expectation +
+                        "; Spell expectation: " + attackData["Spell"].expectation);
+                    Debug.Log("Fire weight: " + attackData["Fire"].weight +
+                        "; ThrowPotion weight: " + attackData["ThrowPotion"].weight +
+                        "; Spell weight: " + attackData["Spell"].weight);
+                    Debug.Log("Random Value: " + value);
+
+                    if (value >= 0f
+                        && value < attackData["Fire"].weight)
+                    {
+                        Fire();
+                    }
+                    else if (value >= attackData["Fire"].weight
+                        && value < attackData["Fire"].weight + attackData["ThrowPotion"].weight)
+                    {
+                        ThrowPotion();
+                    }
+                    else if (value >= attackData["Fire"].weight + attackData["ThrowPotion"].weight
+                        && value < attackData["Fire"].weight + attackData["ThrowPotion"].weight + attackData["Spell"].weight)
+                    {
+                        Spell();
+                    }
+                    else
+                    {
+                        RunToPlayer();
+                    }
+                }
             }
         }
         else
         {
-            if (b_health.health <= dangerHealth)
+            // enrage
+            if (bossHealth.health <= dangerHealth)
             {
                 Enrage();
             }
+            // phase one
             else
             {
                 // near attack decision
@@ -99,7 +254,7 @@ public class Boss : MonoBehaviour
 
                     foreach (var item in attackData)
                     {
-                        if (item.Value.total == 0)
+                        if (item.Key != "Stab" && item.Key != "Spell" && item.Value.total == 0)
                         {
                             useDDA = false;
                             break;
@@ -122,12 +277,12 @@ public class Boss : MonoBehaviour
                         float totalWeights = 0f;
 
                         // calculate weights
-                        foreach (var info in attackData.Values)
+                        foreach (var item in attackData)
                         {
-                            // if the difference between the player's and boss's health condition is less, the attack will be assigned with more weight value
-                            // weight = 1 / | (playerCurrentHP - attackExpectation) / playerTotalHP - bossCurrentHP / bossTotalHP |
-                            info.weight = 1.0f / Mathf.Abs((player.GetComponent<PlayerHealth>().health - info.expectation) / playerTotalHealth - (b_health.health + b_health.defense) / bossTotalHealth);
-                            totalWeights += info.weight;
+                            if (item.Key != "Stab" && item.Key != "Spell")
+                            {
+                                totalWeights += item.Value.GetWeight(player.GetComponent<PlayerHealth>(), bossHealth);
+                            }
                         }
 
                         float value = UnityEngine.Random.Range(0f, totalWeights);
@@ -136,15 +291,21 @@ public class Boss : MonoBehaviour
                         Debug.Log("Slash hit/total: " + attackData["Slash"].hit + "/" + attackData["Slash"].total +
                             "; Fire hit/total: " + attackData["Fire"].hit + "/" + attackData["Fire"].total +
                             "; ThrowPotion hit/total: " + attackData["ThrowPotion"].hit + "/" + attackData["ThrowPotion"].total);
-                        Debug.Log("Slash expectation: " + attackData["Slash"].expectation + "; Fire expectation: " + attackData["Fire"].expectation + "; ThrowPotion expectation: " + attackData["ThrowPotion"].expectation);
-                        Debug.Log("Slash weight: " + attackData["Slash"].weight + "; Fire weight: " + attackData["Fire"].weight + "; ThrowPotion weight: " + attackData["ThrowPotion"].weight);
+                        Debug.Log("Slash expectation: " + attackData["Slash"].expectation +
+                            "; Fire expectation: " + attackData["Fire"].expectation +
+                            "; ThrowPotion expectation: " + attackData["ThrowPotion"].expectation);
+                        Debug.Log("Slash weight: " + attackData["Slash"].weight +
+                            "; Fire weight: " + attackData["Fire"].weight +
+                            "; ThrowPotion weight: " + attackData["ThrowPotion"].weight);
                         Debug.Log("Random Value: " + value);
 
-                        if (value >= 0f && value < attackData["Slash"].weight)
+                        if (value >= 0f
+                            && value < attackData["Slash"].weight)
                         {
                             Slash();
                         }
-                        else if (value >= attackData["Slash"].weight && value < attackData["Slash"].weight + attackData["Fire"].weight)
+                        else if (value >= attackData["Slash"].weight
+                            && value < attackData["Slash"].weight + attackData["Fire"].weight)
                         {
                             Fire();
                         }
@@ -163,7 +324,7 @@ public class Boss : MonoBehaviour
 
                     foreach (var item in attackData)
                     {
-                        if (item.Key != "Slash" && item.Value.total == 0)
+                        if ((item.Key == "Fire" || item.Key == "ThrowPotion") && item.Value.total == 0)
                         {
                             useDDA = false;
                             break;
@@ -188,12 +349,9 @@ public class Boss : MonoBehaviour
                         // calculate weights
                         foreach (var item in attackData)
                         {
-                            if (item.Key != "Slash")
+                            if (item.Key == "Fire" || item.Key == "ThrowPotion")
                             {
-                                // if the difference between the player's and boss's health condition is less, the attack will be assigned with more weight value
-                                // weight = 1 / | (playerCurrentHP - attackExpectation) / playerTotalHP - bossCurrentHP / bossTotalHP |
-                                item.Value.weight = 1.0f / Mathf.Abs((player.GetComponent<PlayerHealth>().health - item.Value.expectation) / playerTotalHealth - (b_health.health + b_health.defense) / bossTotalHealth);
-                                totalWeights += item.Value.weight;
+                                totalWeights += item.Value.GetWeight(player.GetComponent<PlayerHealth>(), bossHealth); ;
                             }
                         }
 
@@ -203,15 +361,19 @@ public class Boss : MonoBehaviour
                         // log attack info
                         Debug.Log("Fire hit/total: " + attackData["Fire"].hit + "/" + attackData["Fire"].total +
                             "; ThrowPotion hit/total: " + attackData["ThrowPotion"].hit + "/" + attackData["ThrowPotion"].total);
-                        Debug.Log("Fire expectation: " + attackData["Fire"].expectation + "; ThrowPotion expectation: " + attackData["ThrowPotion"].expectation);
-                        Debug.Log("Fire weight: " + attackData["Fire"].weight + "; ThrowPotion weight: " + attackData["ThrowPotion"].weight);
+                        Debug.Log("Fire expectation: " + attackData["Fire"].expectation +
+                            "; ThrowPotion expectation: " + attackData["ThrowPotion"].expectation);
+                        Debug.Log("Fire weight: " + attackData["Fire"].weight +
+                            "; ThrowPotion weight: " + attackData["ThrowPotion"].weight);
                         Debug.Log("Random Value: " + value);
 
-                        if (value >= 0f && value < attackData["Fire"].weight)
+                        if (value >= 0f
+                            && value < attackData["Fire"].weight)
                         {
                             Fire();
                         }
-                        else if (value >= attackData["Fire"].weight && value < totalWeights)
+                        else if (value >= attackData["Fire"].weight
+                            && value < totalWeights)
                         {
                             ThrowPotion();
                         }
@@ -229,7 +391,7 @@ public class Boss : MonoBehaviour
     private void UpdatePerception()
     {
         blackboard["playerDistance"] = Vector2.Distance(player.transform.position, rb.position);
-        blackboard["health"] = b_health.health;
+        blackboard["health"] = bossHealth.health;
         blackboard["isEnraged"] = isEnraged;
     }
 
@@ -267,12 +429,19 @@ public class Boss : MonoBehaviour
     private Node PhaseTwoBehaviour()
     {
         // Select among far attacks, more likely to stab
-        Node rndSel1 = new RandomSelector(new Action(() => Fire()), new Action(() => ThrowPotion()), new Action(() => Slash()), new Action(() => Stab()), new Action(() => Stab()));
+        Node rndSel1 = new RandomSelector(new Action(() => Spell()),
+            new Action(() => Fire()), new Action(() => Fire()),
+            new Action(() => ThrowPotion()), new Action(() => ThrowPotion()),
+            new Action(() => Slash()), new Action(() => Slash()),
+            new Action(() => Stab()), new Action(() => Stab()), new Action(() => Stab()));
         // Attack the player if player is in attack range
         Node bb = new BlackboardCondition("playerDistance", Operator.IS_SMALLER_OR_EQUAL, nearEnragedAttackRange, Stops.IMMEDIATE_RESTART, rndSel1);
 
         // Select between far attacks and run to the player
-        Node rndSel2 = new RandomSelector(new Action(() => Fire()), new Action(() => ThrowPotion()), new Action(() => RunToPlayer()), new Action(() => RunToPlayer()));
+        Node rndSel2 = new RandomSelector(new Action(() => Spell()),
+            new Action(() => Fire()), new Action(() => Fire()),
+            new Action(() => ThrowPotion()), new Action(() => ThrowPotion()),
+            new Action(() => RunToPlayer()), new Action(() => RunToPlayer()), new Action(() => RunToPlayer()));
 
         // Look at the player first, then check attacks
         Node seq = new Sequence(new Action(() => LookAtPlayer()), new Selector(bb, rndSel2));
@@ -307,6 +476,11 @@ public class Boss : MonoBehaviour
     {
         GetComponent<Animator>().SetBool("IsMoving", false);
         GetComponent<Animator>().SetTrigger("Fire");
+    }
+
+    private void Spell()
+    {
+        GetComponent<Animator>().SetTrigger("Spell");
     }
 
     private void LookAtPlayer()
@@ -364,6 +538,7 @@ public class Boss : MonoBehaviour
         public float expectation;
         public float weight;
 
+
         public AttackInfo(int damage)
         {
             total = 0;
@@ -377,6 +552,12 @@ public class Boss : MonoBehaviour
         public void Update()
         {
             expectation = ((float)hit / total) * damage;
+        }
+
+        public float GetWeight(PlayerHealth playerHealth, BossHealth bossHealth)
+        {
+            weight = 1.0f / Mathf.Abs((playerHealth.health - expectation) / playerHealth.maxHealth - (bossHealth.health + bossHealth.defense) / (bossHealth.maxHealth + bossHealth.maxDefense));
+            return weight;
         }
     }
 }

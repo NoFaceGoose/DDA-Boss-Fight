@@ -3,11 +3,11 @@ using UnityEngine.UI;
 
 public class BossHealth : MonoBehaviour
 {
-
-    public int health = 500;
-    public int defense = 200;
-    public int maxHealth = 0;
-    public int maxDefense = 0;
+    public int health;
+    public int defense;
+    public int maxHealth;
+    public int maxDefense;
+    public float defenseFactor;
 
     public GameObject deathEffect;
     public GameObject bossHealthBar;
@@ -17,7 +17,7 @@ public class BossHealth : MonoBehaviour
     public Text healthText;
     public Text defenseText;
 
-    public bool isInvulnerable = false;
+    public bool isInvulnerable;
 
     private void Start()
     {
@@ -27,11 +27,12 @@ public class BossHealth : MonoBehaviour
 
     private void Update()
     {
-        if (healthText != null)
+        if (healthText)
         {
             healthText.GetComponent<Text>().text = health + "/" + maxHealth;
         }
-        if (defenseText != null)
+
+        if (defenseText)
         {
             defenseText.GetComponent<Text>().text = defense + "/" + maxDefense;
         }
@@ -44,7 +45,7 @@ public class BossHealth : MonoBehaviour
 
         if (defense > 0)
         {
-            defense -= (int)(damage * 0.5);
+            defense -= (int)(damage * defenseFactor);
 
             if (defense <= 0)
             {

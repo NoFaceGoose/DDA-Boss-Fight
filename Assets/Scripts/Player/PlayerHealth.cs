@@ -6,16 +6,22 @@ using UnityEngine.UI;
 public class PlayerHealth : MonoBehaviour
 {
 
-    public int health = 100;
-    private int maxHealth = 0;
-    private bool isInvulnerable = false;
+    public int health;
+    public int maxHealth;
+    public float recoverTime;
+    public float moveSpeedFactor;
+    public float jumpForceFactor;
 
     public GameObject deathEffect;
+    public Boss boss;
     public Text healthText;
+
+    private bool isInvulnerable;
 
     private void Start()
     {
         maxHealth = health;
+        isInvulnerable = false;
     }
 
     private void Update()
@@ -32,11 +38,11 @@ public class PlayerHealth : MonoBehaviour
 
         switch (attack)
         {
-            case "Slash": GetComponent<CharacterController2D>().boss.GetComponent<Boss>().UpdateAttackInfo("Slash", true); break;
-            case "Fire": GetComponent<CharacterController2D>().boss.GetComponent<Boss>().UpdateAttackInfo("Fire", true); break;
+            case "Slash": boss.UpdateAttackInfo("Slash", true); break;
+            case "Fire": boss.UpdateAttackInfo("Fire", true); break;
 
             case "ThrowPotion":
-                GetComponent<CharacterController2D>().boss.GetComponent<Boss>().UpdateAttackInfo("ThrowPotion", true);
+                boss.UpdateAttackInfo("ThrowPotion", true);
                 if (IsInvoking("GetDetoxified"))
                 {
                     CancelInvoke("GetDetoxified");
@@ -45,10 +51,12 @@ public class PlayerHealth : MonoBehaviour
                 {
                     GetPoisoned();
                 }
-                Invoke("GetDetoxified", 3f);
+                Invoke("GetDetoxified", recoverTime);
                 break;
 
-            case "Stab": GetComponent<CharacterController2D>().boss.GetComponent<Boss>().UpdateAttackInfo("Stab", true); break;
+            case "Stab": boss.UpdateAttackInfo("Stab", true); break;
+            case "Spell": boss.UpdateAttackInfo("Spell", true); break;
+
             default: break;
         }
 
@@ -56,7 +64,7 @@ public class PlayerHealth : MonoBehaviour
 
         int value = -damage;
 
-        GetComponent<CharacterController2D>().updateReminder("HP " + (value < 0 ? value.ToString() : ("+" + value)));
+        GetComponent<Player>().updateReminder("HP " + (value < 0 ? value.ToString() : ("+" + value)));
 
         if (damage > 0)
         {
@@ -76,14 +84,14 @@ public class PlayerHealth : MonoBehaviour
 
     void GetPoisoned()
     {
-        GetComponent<CharacterController2D>().changeJumpForce(true);
-        GetComponent<PlayerMovement>().runSpeed /= 2;
+        GetComponent<Player>().changeJumpForce(jumpForceFactor);
+        GetComponent<PlayerMovement>().moveSpeed *= moveSpeedFactor;
     }
 
     void GetDetoxified()
     {
-        GetComponent<CharacterController2D>().changeJumpForce(false);
-        GetComponent<PlayerMovement>().runSpeed *= 2;
+        GetComponent<Player>().changeJumpForce(1f / jumpForceFactor);
+        GetComponent<PlayerMovement>().moveSpeed /= moveSpeedFactor;
     }
 
     void Die()
@@ -120,5 +128,4 @@ public class PlayerHealth : MonoBehaviour
 
         isInvulnerable = false;
     }
-
 }

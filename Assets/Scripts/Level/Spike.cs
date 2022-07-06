@@ -2,14 +2,14 @@ using UnityEngine;
 
 public class Spike : MonoBehaviour
 {
-    public int damage = 20;
-    public int health = 60;
+    public int damage;
+    public int health;
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         PlayerHealth player = collision.gameObject.GetComponent<PlayerHealth>();
 
-        if (player != null)
+        if (player)
         {
             player.TakeDamage(damage);
         }

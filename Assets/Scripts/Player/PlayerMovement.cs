@@ -2,19 +2,19 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public CharacterController2D controller;
+    public Player player;
     public Animator animator;
 
-    public float runSpeed = 40f;
+    public float moveSpeed;
 
-    float horizontalMove = 0f;
-    bool jump = false;
+    public float horizontalMove;
+    public bool jump;
 
     // Update is called once per frame
     void Update()
     {
 
-        horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
+        horizontalMove = Input.GetAxisRaw("Horizontal") * moveSpeed;
 
         animator.SetFloat("Speed", Mathf.Abs(horizontalMove));
 
@@ -33,7 +33,7 @@ public class PlayerMovement : MonoBehaviour
     void FixedUpdate()
     {
         // Move our character
-        controller.Move(horizontalMove * Time.fixedDeltaTime, jump);
+        player.Move(horizontalMove * Time.fixedDeltaTime, jump);
         jump = false;
     }
 }
