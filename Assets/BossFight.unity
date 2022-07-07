@@ -2004,7 +2004,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   firePoint: {fileID: 831852625}
   fireBall: {fileID: 1539632861300792, guid: 96ae8f9dd8fd89941bc4d858375f035b, type: 3}
-  coolDown: 1
+  coolDown: 2
   attackDamage: 40
   attackOffset: {x: 1, y: -0.5, z: 0}
   attackRange: 1.25
@@ -4846,7 +4846,7 @@ MonoBehaviour:
   nearAttackRange: 4
   nearEnragedAttackRange: 4.5
   farAttackRange: 15
-  dangerHealth: 800
+  dangerHealth: 500
   AI: 1
   initalWalkTime: 3
   DDAReactionRate: 1

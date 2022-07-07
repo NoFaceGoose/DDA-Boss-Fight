@@ -38,7 +38,7 @@ public class BossHealth : MonoBehaviour
         }
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, bool isFireBall = false)
     {
         if (isInvulnerable)
             return;
@@ -49,6 +49,7 @@ public class BossHealth : MonoBehaviour
 
             if (defense <= 0)
             {
+                defense = 0;
                 Destroy(shield);
                 Destroy(shieldBar);
             }

@@ -556,7 +556,7 @@ public class Boss : MonoBehaviour
 
         public float GetWeight(PlayerHealth playerHealth, BossHealth bossHealth)
         {
-            weight = 1.0f / Mathf.Abs((playerHealth.health - expectation) / playerHealth.maxHealth - (bossHealth.health + bossHealth.defense) / (bossHealth.maxHealth + bossHealth.maxDefense));
+            weight = 1.0f / Mathf.Abs((float)(playerHealth.health - expectation) / (float)playerHealth.maxHealth - (float)(bossHealth.health + bossHealth.defense) / (float)(bossHealth.maxHealth + bossHealth.maxDefense));
             return weight;
         }
     }
