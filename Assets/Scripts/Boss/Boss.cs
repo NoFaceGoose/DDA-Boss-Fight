@@ -26,10 +26,8 @@ public class Boss : MonoBehaviour
     private Dictionary<string, ActionData> actionDict; // action data
 
     // valid actions for each case
-    private readonly string[] phaseOneFarActions = { "Move", "Fire", "ThrowPotion" };
-    private readonly string[] phaseOneNearActions = { "Slash", "Fire", "ThrowPotion" };
-    private readonly string[] phaseTwoFarActions = { "Fire", "ThrowPotion", "Spell" };
-    private readonly string[] phaseTwoNearActions = { "Slash", "Fire", "ThrowPotion", "Stab", "Spell" };
+    private readonly string[] phaseOneFarActions = { "Move", "Fire", "ThrowPotion" }, phaseOneNearActions = { "Slash", "Fire", "ThrowPotion" },
+        phaseTwoFarActions = { "Fire", "ThrowPotion", "Spell" }, phaseTwoNearActions = { "Slash", "Fire", "ThrowPotion", "Stab", "Spell" };
 
     private void Start()
     {
@@ -578,16 +576,7 @@ public class Boss : MonoBehaviour
 
     private void setActionValidity(State state)
     {
-        string[] validActions = { };
-
-        switch (state)
-        {
-            case State.PhaseOneFar: validActions = phaseOneFarActions; break;
-            case State.PhaseOneNear: validActions = phaseOneNearActions; break;
-            case State.PhaseTwoFar: validActions = phaseTwoFarActions; break;
-            case State.PhaseTwoNear: validActions = phaseTwoNearActions; break;
-            default: break;
-        }
+        string[] validActions = GetValidActions(state);
 
         foreach (var item in actionDict)
         {
@@ -604,7 +593,24 @@ public class Boss : MonoBehaviour
 
     private void ExecuteRandomAction(State state)
     {
+        string[] validActions = GetValidActions(state);
 
+        int index = UnityEngine.Random.Range(0, validActions.Length);
+
+        ExecuteAction(validActions[index]);
+    }
+
+    // get valid actions according to boss's current state
+    private string[] GetValidActions(State state)
+    {
+        switch (state)
+        {
+            case State.PhaseOneFar: return phaseOneFarActions;
+            case State.PhaseOneNear: return phaseOneNearActions;
+            case State.PhaseTwoFar: return phaseTwoFarActions;
+            case State.PhaseTwoNear: return phaseTwoNearActions;
+            default: return new string[] { };
+        }
     }
 
     private void ExecuteAction(string key)
@@ -694,11 +700,13 @@ public class Boss : MonoBehaviour
 
     private class ActionData
     {
-        public int count;
-        public int hit;
+        public int count, hit;
+
         public int damage;
+
         public float expectedDamage;
         public float fitness;
+
         public bool isValid;
 
         public ActionData(int damage)
