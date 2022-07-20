@@ -3,9 +3,12 @@ using UnityEngine;
 public class FireBall : MonoBehaviour
 {
     public float speed;
-    public int damage;
     public float lifetime;
+
+    public int damage;
+
     public Rigidbody2D rb;
+
     public GameObject impactEffect;
 
     // Use this for initialization

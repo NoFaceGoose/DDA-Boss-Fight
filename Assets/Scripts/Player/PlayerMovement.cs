@@ -3,11 +3,12 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public Player player;
+
     public Animator animator;
 
     public float moveSpeed;
-
     public float horizontalMove;
+
     public bool jump;
 
     // Update is called once per frame

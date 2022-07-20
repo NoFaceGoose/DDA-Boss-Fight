@@ -26,6 +26,7 @@ public class Player : MonoBehaviour
     public class BoolEvent : UnityEvent<bool> { }
 
     public GameObject reminder;
+
     public float reminderLifetime;
 
     private void Awake()

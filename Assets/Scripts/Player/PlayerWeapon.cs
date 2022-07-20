@@ -3,6 +3,7 @@ using UnityEngine;
 public class PlayerWeapon : MonoBehaviour
 {
     public Transform firePoint;
+
     public GameObject fireBall;
 
     public float coolDown;

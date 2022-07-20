@@ -5,12 +5,9 @@ using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
 {
-
-    public int health;
-    public int maxHealth;
+    public int health, maxHealth;
     public float recoverTime;
-    public float moveSpeedFactor;
-    public float jumpForceFactor;
+    public float moveSpeedFactor, jumpForceFactor;
 
     public GameObject deathEffect;
     public Boss boss;
@@ -38,11 +35,11 @@ public class PlayerHealth : MonoBehaviour
 
         switch (attack)
         {
-            case "Slash": boss.UpdateActionData("Slash", true); break;
-            case "Fire": boss.UpdateActionData("Fire", true); break;
+            case "Slash": boss.UpdateAction("Slash", true); break;
+            case "Fire": boss.UpdateAction("Fire", true); break;
 
             case "ThrowPotion":
-                boss.UpdateActionData("ThrowPotion", true);
+                boss.UpdateAction("ThrowPotion", true);
                 if (IsInvoking("GetDetoxified"))
                 {
                     CancelInvoke("GetDetoxified");
@@ -54,8 +51,8 @@ public class PlayerHealth : MonoBehaviour
                 Invoke("GetDetoxified", recoverTime);
                 break;
 
-            case "Stab": boss.UpdateActionData("Stab", true); break;
-            case "Spell": boss.UpdateActionData("Spell", true); break;
+            case "Stab": boss.UpdateAction("Stab", true); break;
+            case "Spell": boss.UpdateAction("Spell", true); break;
 
             default: break;
         }

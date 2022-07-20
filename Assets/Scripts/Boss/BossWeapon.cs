@@ -2,26 +2,24 @@
 
 public class BossWeapon : MonoBehaviour
 {
-    public int attackDamage;
-    public int enragedAttackDamage;
-    public float cooldown;
+    public int attackDamage, enragedAttackDamage;
 
-    public Vector3 slashOffset;
-    public float slashRange;
-    public Vector3 stabOffset;
-    public Vector3 stabSize;
-    public LayerMask attackMask;
+    public float cooldown;
     public float spellHeight;
 
-    public GameObject swordWind;
-    public GameObject potion;
-    public GameObject explosive;
-    public Transform firePoint;
-    public Transform throwPoint;
+    public float slashRange;
+    public Vector3 slashOffset;
+
+    public Vector3 stabOffset, stabSize;
+
+    public LayerMask attackMask;
+
+    public GameObject swordWind, potion, explosive;
+    public Transform firePoint, throwPoint;
 
     public void Slash()
     {
-        GetComponent<Boss>().UpdateActionData("Slash");
+        GetComponent<Boss>().UpdateAction("Slash");
 
         Vector3 pos = transform.position;
         pos += transform.right * slashOffset.x;
@@ -38,18 +36,18 @@ public class BossWeapon : MonoBehaviour
     {
         // Launch sword wind, no damage for the sword cutting in the animati on
         Instantiate(swordWind, firePoint.position, firePoint.rotation);
-        GetComponent<Boss>().UpdateActionData("Fire");
+        GetComponent<Boss>().UpdateAction("Fire");
     }
 
     public void ThrowPotion()
     {
         Instantiate(potion, throwPoint.position, throwPoint.rotation);
-        GetComponent<Boss>().UpdateActionData("ThrowPotion");
+        GetComponent<Boss>().UpdateAction("ThrowPotion");
     }
 
     public void Stab()
     {
-        GetComponent<Boss>().UpdateActionData("Stab");
+        GetComponent<Boss>().UpdateAction("Stab");
 
         Vector3 pos = transform.position;
         pos += transform.right * stabOffset.x;
@@ -64,7 +62,7 @@ public class BossWeapon : MonoBehaviour
 
     public void Spell()
     {
-        GetComponent<Boss>().UpdateActionData("Spell");
+        GetComponent<Boss>().UpdateAction("Spell");
 
         Vector3 pos = GetComponent<Boss>().player.transform.position;
         pos.y = spellHeight;

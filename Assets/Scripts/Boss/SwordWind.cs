@@ -3,8 +3,10 @@ using UnityEngine;
 public class SwordWind : MonoBehaviour
 {
     public float speed;
-    public int damage;
     public float lifetime;
+
+    public int damage;
+    
     public Rigidbody2D rb;
 
     // Use this for initialization

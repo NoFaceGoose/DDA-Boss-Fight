@@ -212,10 +212,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -254,6 +256,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 1
+  swizzle: 50462976
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -1636,9 +1639,73 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      Grass_TileSet_03_8: 21300016
+      Grass_TileSet_03_53: 21300106
+      Grass_TileSet_03_38: 21300076
+      Grass_TileSet_03_1: 21300002
+      Grass_TileSet_03_48: 21300096
+      Grass_TileSet_03_9: 21300018
+      Grass_TileSet_03_12: 21300024
+      Grass_TileSet_03_15: 21300030
+      Grass_TileSet_03_50: 21300100
+      Grass_TileSet_03_22: 21300044
+      Grass_TileSet_03_21: 21300042
+      Grass_TileSet_03_14: 21300028
+      Grass_TileSet_03_62: 21300124
+      Grass_TileSet_03_2: 21300004
+      Grass_TileSet_03_27: 21300054
+      Grass_TileSet_03_52: 21300104
+      Grass_TileSet_03_13: 21300026
+      Grass_TileSet_03_58: 21300116
+      Grass_TileSet_03_24: 21300048
+      Grass_TileSet_03_6: 21300012
+      Grass_TileSet_03_10: 21300020
+      Grass_TileSet_03_30: 21300060
+      Grass_TileSet_03_55: 21300110
+      Grass_TileSet_03_41: 21300082
+      Grass_TileSet_03_11: 21300022
+      Grass_TileSet_03_31: 21300062
+      Grass_TileSet_03_16: 21300032
+      Grass_TileSet_03_46: 21300092
+      Grass_TileSet_03_23: 21300046
+      Grass_TileSet_03_39: 21300078
+      Grass_TileSet_03_33: 21300066
+      Grass_TileSet_03_0: 21300000
+      Grass_TileSet_03_43: 21300086
+      Grass_TileSet_03_59: 21300118
+      Grass_TileSet_03_47: 21300094
+      Grass_TileSet_03_60: 21300120
+      Grass_TileSet_03_34: 21300068
+      Grass_TileSet_03_20: 21300040
+      Grass_TileSet_03_3: 21300006
+      Grass_TileSet_03_29: 21300058
+      Grass_TileSet_03_45: 21300090
+      Grass_TileSet_03_36: 21300072
+      Grass_TileSet_03_56: 21300112
+      Grass_TileSet_03_4: 21300008
+      Grass_TileSet_03_18: 21300036
+      Grass_TileSet_03_40: 21300080
+      Grass_TileSet_03_42: 21300084
+      Grass_TileSet_03_25: 21300050
+      Grass_TileSet_03_49: 21300098
+      Grass_TileSet_03_19: 21300038
+      Grass_TileSet_03_63: 21300126
+      Grass_TileSet_03_5: 21300010
+      Grass_TileSet_03_54: 21300108
+      Grass_TileSet_03_57: 21300114
+      Grass_TileSet_03_35: 21300070
+      Grass_TileSet_03_32: 21300064
+      Grass_TileSet_03_37: 21300074
+      Grass_TileSet_03_44: 21300088
+      Grass_TileSet_03_17: 21300034
+      Grass_TileSet_03_26: 21300052
+      Grass_TileSet_03_7: 21300014
+      Grass_TileSet_03_61: 21300122
+      Grass_TileSet_03_51: 21300102
+      Grass_TileSet_03_28: 21300056
   spritePackingTag: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

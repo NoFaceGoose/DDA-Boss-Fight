@@ -2,20 +2,22 @@ using UnityEngine;
 
 public class Explosive : MonoBehaviour
 {
-    public float rotateSpeed;
+    public float rotateSpeed, growSpeed;
+
     public float maxScale;
-    public float growSpeed;
     public float gravityScale;
 
-    public float explosionYOffset;
-    public float explosionScale;
+    public float explosionYOffset, explosionScale;
+
     public float range;
     public int damage;
+
     public LayerMask attackMask;
 
     public GameObject impactEffect;
 
     private bool isReady;
+
     private Rigidbody2D rb;
 
     void Start()

@@ -3,19 +3,16 @@ using UnityEngine.UI;
 
 public class BossHealth : MonoBehaviour
 {
-    public int health;
-    public int defense;
-    public int maxHealth;
-    public int maxDefense;
+    public int health, maxHealth;
+    public int defense, maxDefense;
     public float defenseFactor;
 
     public GameObject deathEffect;
-    public GameObject bossHealthBar;
     public GameObject shield;
-    public GameObject shieldBar;
 
-    public Text healthText;
-    public Text defenseText;
+    public GameObject bossHealthBar, shieldBar;
+
+    public Text healthText, defenseText;
 
     public bool isInvulnerable;
 
