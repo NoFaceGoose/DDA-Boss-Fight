@@ -38,11 +38,11 @@ public class PlayerHealth : MonoBehaviour
 
         switch (attack)
         {
-            case "Slash": boss.UpdateAttackInfo("Slash", true); break;
-            case "Fire": boss.UpdateAttackInfo("Fire", true); break;
+            case "Slash": boss.UpdateActionData("Slash", true); break;
+            case "Fire": boss.UpdateActionData("Fire", true); break;
 
             case "ThrowPotion":
-                boss.UpdateAttackInfo("ThrowPotion", true);
+                boss.UpdateActionData("ThrowPotion", true);
                 if (IsInvoking("GetDetoxified"))
                 {
                     CancelInvoke("GetDetoxified");
@@ -54,8 +54,8 @@ public class PlayerHealth : MonoBehaviour
                 Invoke("GetDetoxified", recoverTime);
                 break;
 
-            case "Stab": boss.UpdateAttackInfo("Stab", true); break;
-            case "Spell": boss.UpdateAttackInfo("Spell", true); break;
+            case "Stab": boss.UpdateActionData("Stab", true); break;
+            case "Spell": boss.UpdateActionData("Spell", true); break;
 
             default: break;
         }

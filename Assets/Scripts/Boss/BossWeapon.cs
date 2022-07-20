@@ -21,7 +21,7 @@ public class BossWeapon : MonoBehaviour
 
     public void Slash()
     {
-        GetComponent<Boss>().UpdateAttackInfo("Slash");
+        GetComponent<Boss>().UpdateActionData("Slash");
 
         Vector3 pos = transform.position;
         pos += transform.right * slashOffset.x;
@@ -38,18 +38,18 @@ public class BossWeapon : MonoBehaviour
     {
         // Launch sword wind, no damage for the sword cutting in the animati on
         Instantiate(swordWind, firePoint.position, firePoint.rotation);
-        GetComponent<Boss>().UpdateAttackInfo("Fire");
+        GetComponent<Boss>().UpdateActionData("Fire");
     }
 
     public void ThrowPotion()
     {
         Instantiate(potion, throwPoint.position, throwPoint.rotation);
-        GetComponent<Boss>().UpdateAttackInfo("ThrowPotion");
+        GetComponent<Boss>().UpdateActionData("ThrowPotion");
     }
 
     public void Stab()
     {
-        GetComponent<Boss>().UpdateAttackInfo("Stab");
+        GetComponent<Boss>().UpdateActionData("Stab");
 
         Vector3 pos = transform.position;
         pos += transform.right * stabOffset.x;
@@ -64,7 +64,7 @@ public class BossWeapon : MonoBehaviour
 
     public void Spell()
     {
-        GetComponent<Boss>().UpdateAttackInfo("Spell");
+        GetComponent<Boss>().UpdateActionData("Spell");
 
         Vector3 pos = GetComponent<Boss>().player.transform.position;
         pos.y = spellHeight;

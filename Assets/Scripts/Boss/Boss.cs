@@ -19,30 +19,31 @@ public class Boss : MonoBehaviour
     public float initalWalkTime;
     public float DDAReactionRate;
 
-    public Root tree; // The boss's behaviour tree
-    private Blackboard blackboard; // The boss's behaviour blackboard
+    public Root tree; // the boss's behaviour tree
+    private Blackboard blackboard; // the boss's behaviour blackboard
 
-    private BossHealth bossHealth; // Reference to boss's health script, used by the AI to deal with health.
+    private BossHealth bossHealth; // reference to boss's health script, used by the AI to deal with health.
 
-    private Dictionary<string, AttackInfo> attackData;
+    private Dictionary<string, ActionData> attackData;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         bossHealth = GetComponent<BossHealth>();
 
-        attackData = new Dictionary<string, AttackInfo>();
-        attackData.Add("Slash", new AttackInfo(GetComponent<BossWeapon>().attackDamage));
-        attackData.Add("Fire", new AttackInfo(GetComponent<BossWeapon>().swordWind.GetComponent<SwordWind>().damage));
-        attackData.Add("ThrowPotion", new AttackInfo(GetComponent<BossWeapon>().potion.GetComponent<Potion>().damage));
-        attackData.Add("Stab", new AttackInfo(GetComponent<BossWeapon>().enragedAttackDamage));
-        attackData.Add("Spell", new AttackInfo(GetComponent<BossWeapon>().explosive.GetComponent<Explosive>().damage));
+        attackData = new Dictionary<string, ActionData>();
+        attackData.Add("Move", new ActionData(0));
+        attackData.Add("Slash", new ActionData(GetComponent<BossWeapon>().attackDamage));
+        attackData.Add("Fire", new ActionData(GetComponent<BossWeapon>().swordWind.GetComponent<SwordWind>().damage));
+        attackData.Add("ThrowPotion", new ActionData(GetComponent<BossWeapon>().potion.GetComponent<Potion>().damage));
+        attackData.Add("Stab", new ActionData(GetComponent<BossWeapon>().enragedAttackDamage));
+        attackData.Add("Spell", new ActionData(GetComponent<BossWeapon>().explosive.GetComponent<Explosive>().damage));
 
         switch (AI)
         {
             // Default BT
             case 0:
-                // Start behaviour tree
+                // start behaviour tree
                 tree = BehaviourTree();
                 blackboard = tree.Blackboard;
 
@@ -52,25 +53,24 @@ public class Boss : MonoBehaviour
 #endif
                 break;
 
-            // Rule-based DDA
-            case 1:
+            // DDA
+            default:
                 MoveToPlayer();
-                InvokeRepeating("RuleBasedDDA", initalWalkTime, DDAReactionRate);
+                InvokeRepeating("DDA", initalWalkTime, DDAReactionRate);
                 break;
-
-            default: break;
         }
     }
 
     private void FixedUpdate()
     {
-        if (AI == 1)
+        if (AI != 0)
         {
             LookAtPlayer();
         }
     }
 
-    private void RuleBasedDDA()
+    // AI 1 or 2
+    private void DDA()
     {
         // phase two
         if (isEnraged)
@@ -90,6 +90,7 @@ public class Boss : MonoBehaviour
                     }
                 }
 
+                // disable DDA until each attack is executed once
                 if (!useDDA)
                 {
                     int value = UnityEngine.Random.Range(0, 6);
@@ -103,59 +104,68 @@ public class Boss : MonoBehaviour
                         default: Stab(); break;
                     }
                 }
+                // enable DDA
                 else
                 {
-                    float totalWeights = 0f;
+                    // random selection with weights
+                    if (AI == 1)
+                    {
+                        float totalFitness = 0f;
 
-                    // calculate weights
-                    foreach (var val in attackData.Values)
-                    {
-                        totalWeights += val.GetWeight(player.GetComponent<PlayerHealth>(), bossHealth);
-                    }
+                        // calculate fitnesses
+                        foreach (var val in attackData.Values)
+                        {
+                            totalFitness += val.GetFitness(player.GetComponent<PlayerHealth>(), bossHealth);
+                        }
 
-                    float value = UnityEngine.Random.Range(0f, totalWeights);
+                        float value = UnityEngine.Random.Range(0f, totalFitness);
 
-                    // log attack info
-                    Debug.Log("Slash hit/total: " + attackData["Slash"].hit + "/" + attackData["Slash"].total +
-                        "; Fire hit/total: " + attackData["Fire"].hit + "/" + attackData["Fire"].total +
-                        "; ThrowPotion hit/total: " + attackData["ThrowPotion"].hit + "/" + attackData["ThrowPotion"].total +
-                        "; Stab hit/total: " + attackData["Stab"].hit + "/" + attackData["Stab"].total +
-                        "; Spell hit/total: " + attackData["Spell"].hit + "/" + attackData["Spell"].total);
-                    Debug.Log("Slash expectation: " + attackData["Slash"].expectation +
-                        "; Fire expectation: " + attackData["Fire"].expectation +
-                        "; ThrowPotion expectation: " + attackData["ThrowPotion"].expectation +
-                        "; Stab expectation: " + attackData["Stab"].expectation +
-                        "; Spell expectation: " + attackData["Spell"].expectation);
-                    Debug.Log("Slash weight: " + attackData["Slash"].weight +
-                        "; Fire weight: " + attackData["Fire"].weight +
-                        "; ThrowPotion weight: " + attackData["ThrowPotion"].weight +
-                        "; Stab weight: " + attackData["Stab"].weight +
-                        "; Spell weight: " + attackData["Spell"].weight);
-                    Debug.Log("Random Value: " + value);
-
-                    if (value >= 0f
-                        && value < attackData["Slash"].weight)
-                    {
-                        Slash();
+                        if (value >= 0f
+                            && value < attackData["Slash"].fitness)
+                        {
+                            Slash();
+                        }
+                        else if (value >= attackData["Slash"].fitness
+                            && value < attackData["Slash"].fitness + attackData["Fire"].fitness)
+                        {
+                            Fire();
+                        }
+                        else if (value >= attackData["Slash"].fitness + attackData["Fire"].fitness
+                            && value < attackData["Slash"].fitness + attackData["Fire"].fitness + attackData["ThrowPotion"].fitness)
+                        {
+                            ThrowPotion();
+                        }
+                        else if (value >= attackData["Slash"].fitness + attackData["Fire"].fitness + attackData["ThrowPotion"].fitness
+                            && value < attackData["Slash"].fitness + attackData["Fire"].fitness + attackData["ThrowPotion"].fitness + attackData["Stab"].fitness)
+                        {
+                            Stab();
+                        }
+                        else
+                        {
+                            Spell();
+                        }
                     }
-                    else if (value >= attackData["Slash"].weight
-                        && value < attackData["Slash"].weight + attackData["Fire"].weight)
-                    {
-                        Fire();
-                    }
-                    else if (value >= attackData["Slash"].weight + attackData["Fire"].weight
-                        && value < attackData["Slash"].weight + attackData["Fire"].weight + attackData["ThrowPotion"].weight)
-                    {
-                        ThrowPotion();
-                    }
-                    else if (value >= attackData["Slash"].weight + attackData["Fire"].weight + attackData["ThrowPotion"].weight
-                        && value < attackData["Slash"].weight + attackData["Fire"].weight + attackData["ThrowPotion"].weight + attackData["Stab"].weight)
-                    {
-                        Stab();
-                    }
+                    // choose the attack with the max fitness
                     else
                     {
-                        Spell();
+                        // get the max fitness
+                        float maxFitness = 0f;
+                        string action = "";
+
+                        foreach (var item in attackData)
+                        {
+                            float temp = maxFitness;
+                            maxFitness = Mathf.Max(maxFitness, item.Value.GetFitness(player.GetComponent<PlayerHealth>(), bossHealth));
+
+                            // Debug.Log(item.Key + ": " + item.Value.weight);
+
+                            if (temp < maxFitness)
+                            {
+                                action = item.Key;
+                            }
+                        }
+
+                        ExecuteAttackByKey(action);
                     }
                 }
             }
@@ -183,55 +193,71 @@ public class Boss : MonoBehaviour
                         case 0: Fire(); break;
                         case 1: ThrowPotion(); break;
                         case 2: Spell(); break;
-                        default: RunToPlayer(); break;
+                        default: break;
                     }
                 }
                 else
                 {
-                    float totalWeights = 0f;
-
-                    // calculate weights
-                    foreach (var item in attackData)
-                    {
-                        if (item.Key != "Slash" && item.Key != "Stab")
-                        {
-                            totalWeights += item.Value.GetWeight(player.GetComponent<PlayerHealth>(), bossHealth);
-                        }
-                    }
-
                     // Assign 1/3 weights to run to player
-                    float value = UnityEngine.Random.Range(0f, totalWeights * 1.5f);
+                    int rndValue = UnityEngine.Random.Range(0, 3);
 
-                    // log attack info
-                    Debug.Log("Fire hit/total: " + attackData["Fire"].hit + "/" + attackData["Fire"].total +
-                        "; ThrowPotion hit/total: " + attackData["ThrowPotion"].hit + "/" + attackData["ThrowPotion"].total +
-                        "; Spell hit/total: " + attackData["Spell"].hit + "/" + attackData["Spell"].total);
-                    Debug.Log("Fire expectation: " + attackData["Fire"].expectation +
-                        "; ThrowPotion expectation: " + attackData["ThrowPotion"].expectation +
-                        "; Spell expectation: " + attackData["Spell"].expectation);
-                    Debug.Log("Fire weight: " + attackData["Fire"].weight +
-                        "; ThrowPotion weight: " + attackData["ThrowPotion"].weight +
-                        "; Spell weight: " + attackData["Spell"].weight);
-                    Debug.Log("Random Value: " + value);
+                    if (rndValue != 0)
+                    {
+                        // random selection with weights
+                        if (AI == 1)
+                        {
+                            float totalFitness = 0f;
 
-                    if (value >= 0f
-                        && value < attackData["Fire"].weight)
-                    {
-                        Fire();
-                    }
-                    else if (value >= attackData["Fire"].weight
-                        && value < attackData["Fire"].weight + attackData["ThrowPotion"].weight)
-                    {
-                        ThrowPotion();
-                    }
-                    else if (value >= attackData["Fire"].weight + attackData["ThrowPotion"].weight
-                        && value < attackData["Fire"].weight + attackData["ThrowPotion"].weight + attackData["Spell"].weight)
-                    {
-                        Spell();
-                    }
-                    else
-                    {
-                        RunToPlayer();
+                            // calculate fitnesses
+                            foreach (var item in attackData)
+                            {
+                                if (item.Key != "Slash" && item.Key != "Stab")
+                                {
+                                    totalFitness += item.Value.GetFitness(player.GetComponent<PlayerHealth>(), bossHealth);
+                                }
+                            }
+
+                            // Assign 1/3 weights to run to player
+                            float value = UnityEngine.Random.Range(0f, totalFitness);
+
+                            if (value >= 0f
+                                && value < attackData["Fire"].fitness)
+                            {
+                                Fire();
+                            }
+                            else if (value >= attackData["Fire"].fitness
+                                && value < attackData["Fire"].fitness + attackData["ThrowPotion"].fitness)
+                            {
+                                ThrowPotion();
+                            }
+                            else
+                            {
+                                Spell();
+                            }
+                        }
+                        // choose the attack with the max fitness
+                        else
+                        {
+                            // get the max fitness
+                            float maxFitness = 0f;
+                            string action = "";
+
+                            foreach (var item in attackData)
+                            {
+                                if (item.Key != "Slash" && item.Key != "Stab")
+                                {
+                                    float temp = maxFitness;
+                                    maxFitness = Mathf.Max(maxFitness, item.Value.GetFitness(player.GetComponent<PlayerHealth>(), bossHealth));
+
+                                    if (temp < maxFitness)
+                                    {
+                                        action = item.Key;
+                                    }
+                                }
+                            }
+
+                            ExecuteAttackByKey(action);
+                        }
                     }
                 }
             }
@@ -274,44 +300,59 @@ public class Boss : MonoBehaviour
                     }
                     else
                     {
-                        float totalWeights = 0f;
-
-                        // calculate weights
-                        foreach (var item in attackData)
+                        // random selection with weights
+                        if (AI == 1)
                         {
-                            if (item.Key != "Stab" && item.Key != "Spell")
+                            float totalFitness = 0f;
+
+                            // calculate fitnesses
+                            foreach (var item in attackData)
                             {
-                                totalWeights += item.Value.GetWeight(player.GetComponent<PlayerHealth>(), bossHealth);
+                                if (item.Key != "Stab" && item.Key != "Spell")
+                                {
+                                    totalFitness += item.Value.GetFitness(player.GetComponent<PlayerHealth>(), bossHealth);
+                                }
+                            }
+
+                            float value = UnityEngine.Random.Range(0f, totalFitness);
+
+                            if (value >= 0f
+                                && value < attackData["Slash"].fitness)
+                            {
+                                Slash();
+                            }
+                            else if (value >= attackData["Slash"].fitness
+                                && value < attackData["Slash"].fitness + attackData["Fire"].fitness)
+                            {
+                                Fire();
+                            }
+                            else
+                            {
+                                ThrowPotion();
                             }
                         }
-
-                        float value = UnityEngine.Random.Range(0f, totalWeights);
-
-                        // log attack info
-                        Debug.Log("Slash hit/total: " + attackData["Slash"].hit + "/" + attackData["Slash"].total +
-                            "; Fire hit/total: " + attackData["Fire"].hit + "/" + attackData["Fire"].total +
-                            "; ThrowPotion hit/total: " + attackData["ThrowPotion"].hit + "/" + attackData["ThrowPotion"].total);
-                        Debug.Log("Slash expectation: " + attackData["Slash"].expectation +
-                            "; Fire expectation: " + attackData["Fire"].expectation +
-                            "; ThrowPotion expectation: " + attackData["ThrowPotion"].expectation);
-                        Debug.Log("Slash weight: " + attackData["Slash"].weight +
-                            "; Fire weight: " + attackData["Fire"].weight +
-                            "; ThrowPotion weight: " + attackData["ThrowPotion"].weight);
-                        Debug.Log("Random Value: " + value);
-
-                        if (value >= 0f
-                            && value < attackData["Slash"].weight)
-                        {
-                            Slash();
-                        }
-                        else if (value >= attackData["Slash"].weight
-                            && value < attackData["Slash"].weight + attackData["Fire"].weight)
-                        {
-                            Fire();
-                        }
+                        // choose the attack with the max fitness
                         else
                         {
-                            ThrowPotion();
+                            // get the max fitness
+                            float maxFitness = 0f;
+                            string action = "";
+
+                            foreach (var item in attackData)
+                            {
+                                if (item.Key != "Stab" && item.Key != "Spell")
+                                {
+                                    float temp = maxFitness;
+                                    maxFitness = Mathf.Max(maxFitness, item.Value.GetFitness(player.GetComponent<PlayerHealth>(), bossHealth));
+
+                                    if (temp < maxFitness)
+                                    {
+                                        action = item.Key;
+                                    }
+                                }
+                            }
+
+                            ExecuteAttackByKey(action);
                         }
                     }
                 }
@@ -344,45 +385,66 @@ public class Boss : MonoBehaviour
                     }
                     else
                     {
-                        float totalWeights = 0f;
+                        // Assign 1/3 weights to run to player
+                        int rndValue = UnityEngine.Random.Range(0, 3);
 
-                        // calculate weights
-                        foreach (var item in attackData)
+                        if (rndValue != 0)
                         {
-                            if (item.Key == "Fire" || item.Key == "ThrowPotion")
+                            // random selection with weights
+                            if (AI == 1)
                             {
-                                totalWeights += item.Value.GetWeight(player.GetComponent<PlayerHealth>(), bossHealth); ;
+                                float totalFitness = 0f;
+
+                                // calculate fitnesses
+                                foreach (var item in attackData)
+                                {
+                                    if (item.Key == "Fire" || item.Key == "ThrowPotion")
+                                    {
+                                        totalFitness += item.Value.GetFitness(player.GetComponent<PlayerHealth>(), bossHealth); ;
+                                    }
+                                }
+
+                                // assign 1/3 weight value to moveToPlayer when making far attack decision
+                                float value = UnityEngine.Random.Range(0f, totalFitness);
+
+                                if (value >= 0f && value < attackData["Fire"].fitness)
+                                {
+                                    Fire();
+                                }
+                                else
+                                {
+                                    ThrowPotion();
+                                }
                             }
-                        }
+                            // choose the attack with the max fitness
+                            else
+                            {
+                                // get the max fitness
+                                float maxFitness = 0f;
+                                string action = "";
 
-                        // assign 1/3 weight value to moveToPlayer when making far attack decision
-                        float value = UnityEngine.Random.Range(0f, totalWeights * 1.5f);
+                                foreach (var item in attackData)
+                                {
+                                    if (item.Key == "Fire" || item.Key == "ThrowPotion")
+                                    {
+                                        float temp = maxFitness;
+                                        maxFitness = Mathf.Max(maxFitness, item.Value.GetFitness(player.GetComponent<PlayerHealth>(), bossHealth));
 
-                        // log attack info
-                        Debug.Log("Fire hit/total: " + attackData["Fire"].hit + "/" + attackData["Fire"].total +
-                            "; ThrowPotion hit/total: " + attackData["ThrowPotion"].hit + "/" + attackData["ThrowPotion"].total);
-                        Debug.Log("Fire expectation: " + attackData["Fire"].expectation +
-                            "; ThrowPotion expectation: " + attackData["ThrowPotion"].expectation);
-                        Debug.Log("Fire weight: " + attackData["Fire"].weight +
-                            "; ThrowPotion weight: " + attackData["ThrowPotion"].weight);
-                        Debug.Log("Random Value: " + value);
+                                        if (temp < maxFitness)
+                                        {
+                                            action = item.Key;
+                                        }
+                                    }
+                                }
 
-                        if (value >= 0f
-                            && value < attackData["Fire"].weight)
-                        {
-                            Fire();
-                        }
-                        else if (value >= attackData["Fire"].weight
-                            && value < totalWeights)
-                        {
-                            ThrowPotion();
+                                ExecuteAttackByKey(action);
+                            }
                         }
                         else
                         {
                             MoveToPlayer();
                         }
                     }
-
                 }
             }
         }
@@ -440,14 +502,54 @@ public class Boss : MonoBehaviour
         // Select between far attacks and run to the player
         Node rndSel2 = new RandomSelector(new Action(() => Spell()),
             new Action(() => Fire()), new Action(() => Fire()),
-            new Action(() => ThrowPotion()), new Action(() => ThrowPotion()),
-            new Action(() => RunToPlayer()), new Action(() => RunToPlayer()), new Action(() => RunToPlayer()));
+            new Action(() => ThrowPotion()), new Action(() => ThrowPotion()));
 
         // Look at the player first, then check attacks
-        Node seq = new Sequence(new Action(() => LookAtPlayer()), new Selector(bb, rndSel2));
+        Node seq = new Sequence(new Action(() => LookAtPlayer()), new Wait(0.5f), new Selector(bb, rndSel2));
 
         // Enter phase two when enraged
         return new BlackboardCondition("isEnraged", Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, seq);
+    }
+
+    private void DDAAction(ActionScope scope)
+    {
+        setActionValidity(scope);
+    }
+
+    private void setActionValidity(ActionScope scope)
+    {
+        switch (scope)
+        {
+            case ActionScope.PhaseOneFar: break;
+            case ActionScope.PhaseOneNear: break;
+            case ActionScope.PhaseTwoFar: break;
+            case ActionScope.PhaseTwoNear: break;
+            default: break;
+        }
+    }
+
+    private void LookAtPlayer()
+    {
+        Vector3 flipped = transform.localScale;
+        flipped.z *= -1f;
+
+        if (transform.position.x > player.transform.position.x && isFlipped)
+        {
+            transform.localScale = flipped;
+            transform.Rotate(0f, 180f, 0f);
+            isFlipped = false;
+        }
+        else if (transform.position.x < player.transform.position.x && !isFlipped)
+        {
+            transform.localScale = flipped;
+            transform.Rotate(0f, 180f, 0f);
+            isFlipped = true;
+        }
+    }
+
+    private void MoveToPlayer()
+    {
+        GetComponent<Animator>().SetBool("IsMoving", true);
     }
 
     private void Enrage()
@@ -483,40 +585,21 @@ public class Boss : MonoBehaviour
         GetComponent<Animator>().SetTrigger("Spell");
     }
 
-    private void LookAtPlayer()
+    private void ExecuteAttackByKey(string key)
     {
-        Vector3 flipped = transform.localScale;
-        flipped.z *= -1f;
-
-        if (transform.position.x > player.transform.position.x && isFlipped)
+        switch (key)
         {
-            transform.localScale = flipped;
-            transform.Rotate(0f, 180f, 0f);
-            isFlipped = false;
-        }
-        else if (transform.position.x < player.transform.position.x && !isFlipped)
-        {
-            transform.localScale = flipped;
-            transform.Rotate(0f, 180f, 0f);
-            isFlipped = true;
+            case "Move": MoveToPlayer(); break;
+            case "Slash": Slash(); break;
+            case "Fire": Fire(); break;
+            case "ThrowPotion": ThrowPotion(); break;
+            case "Stab": Stab(); break;
+            case "Spell": Spell(); break;
+            default: break;
         }
     }
 
-    private void MoveToPlayer()
-    {
-        GetComponent<Animator>().SetBool("IsMoving", true);
-        GetComponent<Animator>().ResetTrigger("Slash");
-        GetComponent<Animator>().ResetTrigger("Fire");
-        GetComponent<Animator>().ResetTrigger("ThrowPotion");
-    }
-
-    private void RunToPlayer()
-    {
-        GetComponent<Animator>().ResetTrigger("Slash");
-        GetComponent<Animator>().ResetTrigger("Fire");
-    }
-
-    public void UpdateAttackInfo(string attackType, bool hit = false)
+    public void UpdateActionData(string attackType, bool hit = false)
     {
         if (hit)
         {
@@ -530,22 +613,23 @@ public class Boss : MonoBehaviour
         attackData[attackType].Update();
     }
 
-    private class AttackInfo
+    private class ActionData
     {
         public int total;
         public int hit;
         public int damage;
         public float expectation;
-        public float weight;
+        public float fitness;
+        public bool isValid;
 
-
-        public AttackInfo(int damage)
+        public ActionData(int damage)
         {
             total = 0;
             hit = 0;
-            expectation = 0f;
-            weight = 0;
             this.damage = damage;
+            expectation = 0f;
+            fitness = 0;
+            isValid = true;
         }
 
         // update the attack's expectation
@@ -554,10 +638,19 @@ public class Boss : MonoBehaviour
             expectation = ((float)hit / total) * damage;
         }
 
-        public float GetWeight(PlayerHealth playerHealth, BossHealth bossHealth)
+        // calculate the attack's fitness
+        public float GetFitness(PlayerHealth playerHealth, BossHealth bossHealth)
         {
-            weight = 1.0f / Mathf.Abs((float)(playerHealth.health - expectation) / (float)playerHealth.maxHealth - (float)(bossHealth.health + bossHealth.defense) / (float)(bossHealth.maxHealth + bossHealth.maxDefense));
-            return weight;
+            fitness = 1f - Mathf.Sqrt(Mathf.Abs((float)(playerHealth.health - expectation) / (float)playerHealth.maxHealth - (float)(bossHealth.health + bossHealth.defense) / (float)(bossHealth.maxHealth + bossHealth.maxDefense)));
+            return fitness;
         }
+    }
+
+    private enum ActionScope
+    {
+        PhaseOneFar,
+        PhaseOneNear,
+        PhaseTwoFar,
+        PhaseTwoNear
     }
 }
