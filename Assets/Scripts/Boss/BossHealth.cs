@@ -66,10 +66,7 @@ public class BossHealth : MonoBehaviour
     {
         Instantiate(deathEffect, transform.position, Quaternion.identity);
 
-        if (GetComponent<Boss>().AI == 0)
-        {
-            GetComponent<Boss>().tree.Stop();
-        }
+        GetComponent<Boss>().tree.Stop();
 
         Destroy(gameObject);
         Destroy(bossHealthBar);
