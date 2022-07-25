@@ -2,10 +2,12 @@
 
 public class BossWeapon : MonoBehaviour
 {
+    public int damageLowerBound, damageUpperBound;
+
     public int attackDamage, enragedAttackDamage;
 
     public float cooldown;
-    public float spellHeight;
+    public float orbHeight;
 
     public float slashRange;
     public Vector3 slashOffset;
@@ -14,8 +16,25 @@ public class BossWeapon : MonoBehaviour
 
     public LayerMask attackMask;
 
-    public GameObject swordWind, potion, explosive;
+    public GameObject shockWave, potion, orb;
     public Transform firePoint, throwPoint;
+
+    public int RandomizeAttackDamage(string name)
+    {
+        int value = Random.Range(damageLowerBound, damageUpperBound);
+
+        switch (name)
+        {
+            case "Slash": attackDamage = value; break;
+            case "Fire": shockWave.GetComponent<ShockWave>().damage = value; break;
+            case "ThrowPotion": potion.GetComponent<Potion>().damage = value; break;
+            case "Stab": enragedAttackDamage = value; break;
+            case "Spell": orb.GetComponent<Orb>().damage = value; break;
+            default: break;
+        }
+
+        return value;
+    }
 
     public void Slash()
     {
@@ -34,8 +53,8 @@ public class BossWeapon : MonoBehaviour
 
     public void Fire()
     {
-        // Launch sword wind, no damage for the sword cutting in the animati on
-        Instantiate(swordWind, firePoint.position, firePoint.rotation);
+        // Launch shock wave, no damage for the sword cutting in the animation
+        Instantiate(shockWave, firePoint.position, firePoint.rotation);
         GetComponent<Boss>().UpdateAction("Fire");
     }
 
@@ -60,13 +79,13 @@ public class BossWeapon : MonoBehaviour
         }
     }
 
-    public void Spell()
+    public void Summon()
     {
-        GetComponent<Boss>().UpdateAction("Spell");
+        GetComponent<Boss>().UpdateAction("Summon");
 
         Vector3 pos = GetComponent<Boss>().player.transform.position;
-        pos.y = spellHeight;
-        Instantiate(explosive, pos, GetComponent<Boss>().player.transform.rotation);
+        pos.y = orbHeight;
+        Instantiate(orb, pos, GetComponent<Boss>().player.transform.rotation);
     }
 
     void OnDrawGizmosSelected()

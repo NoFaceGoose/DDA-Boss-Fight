@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Boss_Spell : StateMachineBehaviour
+public class Boss_Summon : StateMachineBehaviour
 {
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {

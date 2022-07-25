@@ -1,12 +1,12 @@
 using UnityEngine;
 
-public class SwordWind : MonoBehaviour
+public class ShockWave : MonoBehaviour
 {
     public float speed;
     public float lifetime;
 
     public int damage;
-    
+
     public Rigidbody2D rb;
 
     // Use this for initialization

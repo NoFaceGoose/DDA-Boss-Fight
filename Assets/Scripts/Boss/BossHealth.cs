@@ -4,22 +4,22 @@ using UnityEngine.UI;
 public class BossHealth : MonoBehaviour
 {
     public int health, maxHealth;
-    public int defense, maxDefense;
+    public int shield, maxShield;
     public float defenseFactor;
 
     public GameObject deathEffect;
-    public GameObject shield;
+    public GameObject shieldObj;
 
     public GameObject bossHealthBar, shieldBar;
 
-    public Text healthText, defenseText;
+    public Text healthText, shieldText;
 
     public bool isInvulnerable;
 
     private void Start()
     {
         maxHealth = health;
-        maxDefense = defense;
+        maxShield = shield;
     }
 
     private void Update()
@@ -29,9 +29,9 @@ public class BossHealth : MonoBehaviour
             healthText.GetComponent<Text>().text = health + "/" + maxHealth;
         }
 
-        if (defenseText)
+        if (shieldText)
         {
-            defenseText.GetComponent<Text>().text = defense + "/" + maxDefense;
+            shieldText.GetComponent<Text>().text = shield + "/" + maxShield;
         }
     }
 
@@ -40,14 +40,14 @@ public class BossHealth : MonoBehaviour
         if (isInvulnerable)
             return;
 
-        if (defense > 0)
+        if (shield > 0)
         {
-            defense -= (int)(damage * defenseFactor);
+            shield -= (int)(damage * defenseFactor);
 
-            if (defense <= 0)
+            if (shield <= 0)
             {
-                defense = 0;
-                Destroy(shield);
+                shield = 0;
+                Destroy(shieldObj);
                 Destroy(shieldBar);
             }
         }

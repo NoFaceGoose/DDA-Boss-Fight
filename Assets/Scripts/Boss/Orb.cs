@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Explosive : MonoBehaviour
+public class Orb : MonoBehaviour
 {
     public float rotateSpeed, growSpeed;
 
@@ -57,7 +57,7 @@ public class Explosive : MonoBehaviour
             Collider2D colInfo = Physics2D.OverlapCircle(transform.position, range, attackMask);
             if (colInfo && colInfo.GetComponent<PlayerHealth>())
             {
-                colInfo.GetComponent<PlayerHealth>().TakeDamage(damage, "Spell");
+                colInfo.GetComponent<PlayerHealth>().TakeDamage(damage, "Summon");
             }
         }
     }

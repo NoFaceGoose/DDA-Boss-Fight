@@ -8,12 +8,12 @@ public class BossShieldBar : MonoBehaviour
 
     void Start()
     {
-        slider.maxValue = bossHealth.defense;
+        slider.maxValue = bossHealth.shield;
     }
 
     // Update is called once per frame
     void Update()
     {
-        slider.value = bossHealth.defense;
+        slider.value = bossHealth.shield;
     }
 }
