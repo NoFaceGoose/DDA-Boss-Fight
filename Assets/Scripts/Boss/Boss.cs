@@ -10,13 +10,13 @@ public class Boss : MonoBehaviour
 
     public bool isFlipped;
     public bool isEnraged;
+    public bool isRandomizedDamage;
 
     public float nearAttackRange, nearEnragedAttackRange, farAttackRange;
+    public float maxWaitingTime, minWaitingTime;
 
     public int dangerHealth;
     public int AI;
-
-    public bool isRandomizedDamage;
 
     public Root tree; // the boss's behaviour tree
 
@@ -29,6 +29,8 @@ public class Boss : MonoBehaviour
     // valid actions for each state of the boss
     private readonly string[] phaseOneFarActions = { "Move", "Fire", "ThrowPotion" }, phaseOneNearActions = { "Slash", "Fire", "ThrowPotion" },
         phaseTwoFarActions = { "Fire", "ThrowPotion", "Summon" }, phaseTwoNearActions = { "Slash", "Fire", "ThrowPotion", "Stab", "Summon" };
+
+    public int temp = 1;
 
     private void Start()
     {
@@ -101,7 +103,7 @@ public class Boss : MonoBehaviour
              AI == 0 ? new Action(() => RandomAction(State.PhaseOneNear)) : new Action(() => DDAAction(State.PhaseOneNear)));
 
         // Look at the player at first, then wait for 1 second, let the last state continue for a while
-        return new Sequence(new Action(() => LookAtPlayer()), new Wait(0.75f), new Selector(bb2, sel));
+        return new Sequence(new Action(() => LookAtPlayer()), AI == 0 ? new Wait(10f) : new Wait(DDAWait), new Selector(bb2, sel));
     }
 
     // always run to the player
@@ -112,11 +114,19 @@ public class Boss : MonoBehaviour
             AI == 0 ? new Action(() => RandomAction(State.PhaseTwoNear)) : new Action(() => DDAAction(State.PhaseTwoNear)));
 
         // Look at the player first and wait for 1 second, then check attack range, choose far attacks if the player is not in near attack range
-        Node seq = new Sequence(new Action(() => LookAtPlayer()), new Wait(0.5f),
+        Node seq = new Sequence(new Action(() => LookAtPlayer()), AI == 0 ? new Wait(0.5f) : new Wait(DDAWait),
             new Selector(bb, AI == 0 ? new Action(() => RandomAction(State.PhaseTwoFar)) : new Action(() => DDAAction(State.PhaseTwoFar))));
 
         // Enter phase two when enraged
         return new BlackboardCondition("isEnraged", Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, seq);
+    }
+
+    private float DDAWait()
+    {
+        Debug.Log((maxWaitingTime + minWaitingTime) / 2f - (maxWaitingTime - minWaitingTime) / 2f *
+            ((float)player.GetComponent<PlayerHealth>().health / (float)player.GetComponent<PlayerHealth>().maxHealth - (float)(bossHealth.health + bossHealth.shield) / (float)(bossHealth.maxHealth + bossHealth.maxShield)));
+        return (maxWaitingTime + minWaitingTime) / 2f - (maxWaitingTime - minWaitingTime) / 2f *
+            ((float)player.GetComponent<PlayerHealth>().health / (float)player.GetComponent<PlayerHealth>().maxHealth - (float)(bossHealth.health + bossHealth.shield) / (float)(bossHealth.maxHealth + bossHealth.maxShield));
     }
 
     // provide action selected by DDA system
