@@ -123,8 +123,6 @@ public class Boss : MonoBehaviour
 
     private float DDAWait()
     {
-        Debug.Log((maxWaitingTime + minWaitingTime) / 2f - (maxWaitingTime - minWaitingTime) / 2f *
-            ((float)player.GetComponent<PlayerHealth>().health / (float)player.GetComponent<PlayerHealth>().maxHealth - (float)(bossHealth.health + bossHealth.shield) / (float)(bossHealth.maxHealth + bossHealth.maxShield)));
         return (maxWaitingTime + minWaitingTime) / 2f - (maxWaitingTime - minWaitingTime) / 2f *
             ((float)player.GetComponent<PlayerHealth>().health / (float)player.GetComponent<PlayerHealth>().maxHealth - (float)(bossHealth.health + bossHealth.shield) / (float)(bossHealth.maxHealth + bossHealth.maxShield));
     }
