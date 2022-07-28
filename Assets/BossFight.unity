@@ -2028,7 +2028,7 @@ MonoBehaviour:
   firePoint: {fileID: 831852625}
   fireBall: {fileID: 1539632861300792, guid: 96ae8f9dd8fd89941bc4d858375f035b, type: 3}
   coolDown: 0.3
-  attackDamage: 300
+  attackDamage: 30
   attackOffset: {x: 1, y: -0.5, z: 0}
   attackRange: 1.25
   attackMask:
@@ -4927,14 +4927,14 @@ MonoBehaviour:
   rb: {fileID: 8128140162128505673}
   isFlipped: 0
   isEnraged: 0
-  isRandomizedDamage: 0
+  randomDamage: 1
   nearAttackRange: 4
   nearEnragedAttackRange: 4.5
   farAttackRange: 15
   maxWaitingTime: 1.5
   minWaitingTime: 0
   dangerHealth: 500
-  AI: 2
+  AI: 1
   temp: 1
 --- !u!61 &8128140162128505672
 BoxCollider2D:
@@ -4995,7 +4995,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3754e040110fdaf4eb3f15797fe5312c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageLowerBound: 10
+  damageLowerBound: 20
   damageUpperBound: 80
   attackDamage: 25
   enragedAttackDamage: 40

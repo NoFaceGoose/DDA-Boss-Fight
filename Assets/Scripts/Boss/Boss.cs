@@ -10,7 +10,7 @@ public class Boss : MonoBehaviour
 
     public bool isFlipped;
     public bool isEnraged;
-    public bool isRandomizedDamage;
+    public bool randomDamage;
 
     public float nearAttackRange, nearEnragedAttackRange, farAttackRange;
     public float maxWaitingTime, minWaitingTime;
@@ -41,7 +41,7 @@ public class Boss : MonoBehaviour
         actionDict.Add("Move", new ActionData(0));
 
         // randomize the value of each attack damage of the boss
-        if (isRandomizedDamage)
+        if (randomDamage)
         {
             actionDict.Add("Slash", new ActionData(GetComponent<BossWeapon>().RandomizeAttackDamage("Slash")));
             actionDict.Add("Fire", new ActionData(GetComponent<BossWeapon>().RandomizeAttackDamage("Fire")));
@@ -103,7 +103,7 @@ public class Boss : MonoBehaviour
              AI == 0 ? new Action(() => RandomAction(State.PhaseOneNear)) : new Action(() => DDAAction(State.PhaseOneNear)));
 
         // Look at the player at first, then wait for 1 second, let the last state continue for a while
-        return new Sequence(new Action(() => LookAtPlayer()), AI == 0 ? new Wait(10f) : new Wait(DDAWait), new Selector(bb2, sel));
+        return new Sequence(new Action(() => LookAtPlayer()), AI == 0 ? new Wait(0.75f) : new Wait(DDAWait), new Selector(bb2, sel));
     }
 
     // always run to the player
@@ -143,11 +143,35 @@ public class Boss : MonoBehaviour
             }
         }
 
+        // execute the fittest action 
+        if (AI == 1)
+        {
+            float maxFitness = 0f;
+            string action = null;
+
+            // calculate each action's fitness
+            foreach (var item in actionDict)
+            {
+                if (item.Value.isValid)
+                {
+                    item.Value.UpdateFitness(player.GetComponent<PlayerHealth>(), bossHealth);
+                    if (maxFitness <= item.Value.fitness)
+                    {
+                        maxFitness = item.Value.fitness;
+                        action = item.Key;                       
+                    }
+                }
+            }
+
+            ExecuteAction(action);
+            return;
+        }
+
         // sum up each action's fitness for random float generation
         float sumFitness = 0f;
 
         // Roulette selection DDA
-        if (AI == 1)
+        if (AI == 2)
         {
             // calculate each action's fitness
             foreach (var val in actionDict.Values)
@@ -365,7 +389,8 @@ public class Boss : MonoBehaviour
         // calculate and return the action's fitness
         public float UpdateFitness(PlayerHealth playerHealth, BossHealth bossHealth)
         {
-            fitness = 1f - Mathf.Sqrt(Mathf.Abs((float)(playerHealth.health - expectedDamage) / (float)playerHealth.maxHealth - (float)(bossHealth.health + bossHealth.shield) / (float)(bossHealth.maxHealth + bossHealth.maxShield)));
+            float playerExpectedHP = playerHealth.health - expectedDamage >= 0 ? (float)(playerHealth.health - expectedDamage) : 0f;
+            fitness = 1f - Mathf.Sqrt(Mathf.Abs(playerExpectedHP / (float)playerHealth.maxHealth - (float)(bossHealth.health + bossHealth.shield) / (float)(bossHealth.maxHealth + bossHealth.maxShield)));
             return fitness;
         }
     }

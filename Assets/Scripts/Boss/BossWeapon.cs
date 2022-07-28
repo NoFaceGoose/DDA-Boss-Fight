@@ -19,6 +19,13 @@ public class BossWeapon : MonoBehaviour
     public GameObject shockWave, potion, orb;
     public Transform firePoint, throwPoint;
 
+    private void Start()
+    {
+        int playerMaxHP = GetComponent<Boss>().player.GetComponent<PlayerHealth>().maxHealth;
+        damageLowerBound = playerMaxHP / 20;
+        damageUpperBound = playerMaxHP / 5;
+    }
+
     public int RandomizeAttackDamage(string name)
     {
         int value = Random.Range(damageLowerBound, damageUpperBound);
@@ -29,7 +36,7 @@ public class BossWeapon : MonoBehaviour
             case "Fire": shockWave.GetComponent<ShockWave>().damage = value; break;
             case "ThrowPotion": potion.GetComponent<Potion>().damage = value; break;
             case "Stab": enragedAttackDamage = value; break;
-            case "Spell": orb.GetComponent<Orb>().damage = value; break;
+            case "Summon": orb.GetComponent<Orb>().damage = value; break;
             default: break;
         }
 
