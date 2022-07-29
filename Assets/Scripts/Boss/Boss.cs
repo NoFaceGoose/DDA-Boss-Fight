@@ -5,7 +5,7 @@ using System.Linq;
 
 public class Boss : MonoBehaviour
 {
-    public GameObject player;
+    public GameObject player, bgm;
     public Rigidbody2D rb;
 
     public bool isFlipped;
@@ -30,7 +30,10 @@ public class Boss : MonoBehaviour
     private readonly string[] phaseOneFarActions = { "Move", "Fire", "ThrowPotion" }, phaseOneNearActions = { "Slash", "Fire", "ThrowPotion" },
         phaseTwoFarActions = { "Fire", "ThrowPotion", "Summon" }, phaseTwoNearActions = { "Slash", "Fire", "ThrowPotion", "Stab", "Summon" };
 
-    public int temp = 1;
+    private void Awake()
+    {
+        AI = MainMenu.bossAI;
+    }
 
     private void Start()
     {
@@ -41,7 +44,7 @@ public class Boss : MonoBehaviour
         actionDict.Add("Move", new ActionData(0));
 
         // randomize the value of each attack damage of the boss
-        if (randomDamage)
+        if (AI != 0)
         {
             actionDict.Add("Slash", new ActionData(GetComponent<BossWeapon>().RandomizeAttackDamage("Slash")));
             actionDict.Add("Fire", new ActionData(GetComponent<BossWeapon>().RandomizeAttackDamage("Fire")));
@@ -158,7 +161,7 @@ public class Boss : MonoBehaviour
                     if (maxFitness <= item.Value.fitness)
                     {
                         maxFitness = item.Value.fitness;
-                        action = item.Key;                       
+                        action = item.Key;
                     }
                 }
             }

@@ -6,5 +6,6 @@ public class Boss_Intro : StateMachineBehaviour
     {
         // Start the behaviour tree when the intro animation is done
         animator.GetComponent<Boss>().tree.Start();
+        FindObjectOfType<AudioManager>().Play("Theme");
     }
 }

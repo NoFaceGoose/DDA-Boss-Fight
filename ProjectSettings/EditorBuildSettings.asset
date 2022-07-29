@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Sample Scene.unity
-    guid: 4fa650a2ffe722f4bb46a03d00f22d43
+    path: Assets/Menu.unity
+    guid: 6ede924ae8eeb3e43892d1118d3583d9
+  - enabled: 1
+    path: Assets/BossFight.unity
+    guid: 21d085146ba1595488f631d2512f731e
   m_configObjects: {}

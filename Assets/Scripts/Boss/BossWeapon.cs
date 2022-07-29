@@ -62,12 +62,14 @@ public class BossWeapon : MonoBehaviour
     {
         // Launch shock wave, no damage for the sword cutting in the animation
         Instantiate(shockWave, firePoint.position, firePoint.rotation);
+        FindObjectOfType<AudioManager>().Play("BossFire");
         GetComponent<Boss>().UpdateAction("Fire");
     }
 
     public void ThrowPotion()
     {
         Instantiate(potion, throwPoint.position, throwPoint.rotation);
+        FindObjectOfType<AudioManager>().Play("BossThrowPotion");
         GetComponent<Boss>().UpdateAction("ThrowPotion");
     }
 
@@ -93,6 +95,8 @@ public class BossWeapon : MonoBehaviour
         Vector3 pos = GetComponent<Boss>().player.transform.position;
         pos.y = orbHeight;
         Instantiate(orb, pos, GetComponent<Boss>().player.transform.rotation);
+
+        FindObjectOfType<AudioManager>().Play("BossSummon");
     }
 
     void OnDrawGizmosSelected()

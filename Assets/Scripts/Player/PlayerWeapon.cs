@@ -29,9 +29,9 @@ public class PlayerWeapon : MonoBehaviour
             }
         }
 
-        if (Input.GetButtonDown("Attack"))
+        if (Input.GetButtonDown("Slash"))
         {
-            animator.SetTrigger("Attack");
+            animator.SetTrigger("Slash");
         }
     }
 
@@ -63,5 +63,6 @@ public class PlayerWeapon : MonoBehaviour
     void Fire()
     {
         Instantiate(fireBall, firePoint.position, firePoint.rotation);
+        FindObjectOfType<AudioManager>().Play("PlayerFire");
     }
 }

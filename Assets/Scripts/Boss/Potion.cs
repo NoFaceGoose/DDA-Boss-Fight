@@ -15,6 +15,7 @@ public class Potion : MonoBehaviour
     {
         if (collision.CompareTag("Fire Ball") || collision.CompareTag("Tile"))
         {
+            FindObjectOfType<AudioManager>().Play("PotionHit");
             Destroy(gameObject);
         }
         else
@@ -24,6 +25,7 @@ public class Potion : MonoBehaviour
             if (player)
             {
                 player.TakeDamage(damage, "ThrowPotion");
+                FindObjectOfType<AudioManager>().Play("PotionHit");
                 Destroy(gameObject);
             }
         }

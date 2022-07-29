@@ -2,8 +2,7 @@ using UnityEngine;
 
 public class BossTrigger : MonoBehaviour
 {
-    public GameObject boss;
-    public GameObject bossBars;
+    public GameObject boss, bossBars, bossName;
 
     // Tigger boss fight when player lands on the stage
     private void OnTriggerEnter2D(Collider2D collision)
@@ -12,6 +11,7 @@ public class BossTrigger : MonoBehaviour
         {
             boss.SetActive(true);
             bossBars.SetActive(true);
+            bossName.SetActive(true);
         }
     }
 }

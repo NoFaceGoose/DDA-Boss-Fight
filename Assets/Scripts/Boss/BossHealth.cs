@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class BossHealth : MonoBehaviour
 {
@@ -7,12 +8,12 @@ public class BossHealth : MonoBehaviour
     public int shield, maxShield;
     public float defenseFactor;
 
-    public GameObject deathEffect;
+    public GameObject resultMenu;
     public GameObject shieldObj;
-
-    public GameObject bossHealthBar, shieldBar;
+    public GameObject bossHealthBar, shieldBar, bossName;
 
     public Text healthText, shieldText;
+    public TextMeshProUGUI resultText;
 
     public bool isInvulnerable;
 
@@ -64,11 +65,19 @@ public class BossHealth : MonoBehaviour
 
     void Die()
     {
-        Instantiate(deathEffect, transform.position, Quaternion.identity);
-
         GetComponent<Boss>().tree.Stop();
 
         Destroy(gameObject);
         Destroy(bossHealthBar);
+        Destroy(bossName);
+
+        InGameMenu.gameEnded = true;
+        resultText.text = "BOSS FELLED";
+        resultText.color = Color.yellow;
+
+        FindObjectOfType<AudioManager>().Stop("Theme");
+
+        resultMenu.SetActive(true);
+        Time.timeScale = 0f;
     }
 }

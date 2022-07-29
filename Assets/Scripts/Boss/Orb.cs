@@ -49,6 +49,7 @@ public class Orb : MonoBehaviour
         if (collision.gameObject.CompareTag("Boss Trigger"))
         {
             Destroy(gameObject);
+            FindObjectOfType<AudioManager>().Play("OrbExplosion");
             Quaternion rotation = transform.rotation;
             rotation.eulerAngles = Vector3.zero;
             GameObject explosion = Instantiate(impactEffect, transform.position + new Vector3(0f, explosionYOffset, 0f), rotation);

@@ -32,6 +32,7 @@ public class FireBall : MonoBehaviour
         if (!hitInfo.CompareTag("Player"))
         {
             Instantiate(impactEffect, transform.position, transform.rotation);
+            FindObjectOfType<AudioManager>().Play("PlayerFireHit");
             Destroy(gameObject);
         }
     }

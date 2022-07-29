@@ -21,6 +21,7 @@ public class ShockWave : MonoBehaviour
         if (hitInfo.GetComponent<PlayerHealth>())
         {
             hitInfo.GetComponent<PlayerHealth>().TakeDamage(damage, "Fire");
+            FindObjectOfType<AudioManager>().Play("ShockWaveHit");
         }
     }
 

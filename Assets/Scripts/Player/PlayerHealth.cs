@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -9,9 +9,12 @@ public class PlayerHealth : MonoBehaviour
     public float recoverTime;
     public float moveSpeedFactor, jumpForceFactor;
 
-    public GameObject deathEffect;
+    public GameObject resultMenu;
+    public GameObject playerHealthBar;
+
     public Boss boss;
     public Text healthText;
+    public TextMeshProUGUI resultText;
 
     private bool isInvulnerable;
 
@@ -93,7 +96,17 @@ public class PlayerHealth : MonoBehaviour
 
     void Die()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        Destroy(gameObject);
+        Destroy(playerHealthBar);
+
+        InGameMenu.gameEnded = true;
+        resultText.text = "YOU DIED";
+        resultText.color = Color.red;
+
+        FindObjectOfType<AudioManager>().Stop("Theme");
+
+        resultMenu.SetActive(true);
+        Time.timeScale = 0f;
     }
 
     IEnumerator DamageAnimation()

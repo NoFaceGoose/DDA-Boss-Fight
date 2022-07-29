@@ -25,12 +25,16 @@ public class Player : MonoBehaviour
     [System.Serializable]
     public class BoolEvent : UnityEvent<bool> { }
 
+    public Transform tutorialPos, bossFightPos;
+
     public GameObject reminder;
 
     public float reminderLifetime;
 
     private void Awake()
     {
+        transform.position = MainMenu.skipTutorial ? bossFightPos.position : tutorialPos.position;
+
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
 
         if (OnLandEvent == null)
@@ -49,7 +53,7 @@ public class Player : MonoBehaviour
             if (colliders[i].gameObject != gameObject)
             {
                 m_Grounded = true;
-                if (!wasGrounded)
+                if (wasGrounded)
                     OnLandEvent.Invoke();
             }
         }
