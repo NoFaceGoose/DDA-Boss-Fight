@@ -37,6 +37,7 @@ public class MainMenu : MonoBehaviour
     private void loadBoss()
     {
         skipTutorial = toggle.isOn;
+        FindObjectOfType<AudioManager>().Play("Button");
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 }

@@ -1,0 +1,349 @@
+Using pre-set license
+Built from '2022.1/staging' branch; Version is '2022.1.11f1 (09bebd6e9324) revision 638653'; Using compiler version '192829333'; Build Type 'Release'
+OS: 'Windows 11  (10.0.22000) 64bit CoreCountrySpecific' Language: 'zh' Physical Memory: 16236 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 1
+
+COMMAND LINE ARGUMENTS:
+D:\Unity\2022.1.11f1\Editor\Unity.exe
+-adb2
+-batchMode
+-noUpm
+-name
+AssetImportWorker6
+-projectPath
+D:/github/DDA-Boss-Fight
+-logFile
+Logs/AssetImportWorker6.log
+-srvPort
+7769
+Successfully changed project path to: D:/github/DDA-Boss-Fight
+D:/github/DDA-Boss-Fight
+[UnityMemory] Configuration Parameters - Can be set up in boot.config
+    "memorysetup-bucket-allocator-granularity=16"
+    "memorysetup-bucket-allocator-bucket-count=8"
+    "memorysetup-bucket-allocator-block-size=33554432"
+    "memorysetup-bucket-allocator-block-count=8"
+    "memorysetup-main-allocator-block-size=16777216"
+    "memorysetup-thread-allocator-block-size=16777216"
+    "memorysetup-gfx-main-allocator-block-size=16777216"
+    "memorysetup-gfx-thread-allocator-block-size=16777216"
+    "memorysetup-cache-allocator-block-size=4194304"
+    "memorysetup-typetree-allocator-block-size=2097152"
+    "memorysetup-profiler-bucket-allocator-granularity=16"
+    "memorysetup-profiler-bucket-allocator-bucket-count=8"
+    "memorysetup-profiler-bucket-allocator-block-size=33554432"
+    "memorysetup-profiler-bucket-allocator-block-count=8"
+    "memorysetup-profiler-allocator-block-size=16777216"
+    "memorysetup-profiler-editor-allocator-block-size=1048576"
+    "memorysetup-temp-allocator-size-main=16777216"
+    "memorysetup-job-temp-allocator-block-size=2097152"
+    "memorysetup-job-temp-allocator-block-size-background=1048576"
+    "memorysetup-job-temp-allocator-reduction-small-platforms=262144"
+    "memorysetup-temp-allocator-size-background-worker=32768"
+    "memorysetup-temp-allocator-size-job-worker=262144"
+    "memorysetup-temp-allocator-size-preload-manager=33554432"
+    "memorysetup-temp-allocator-size-nav-mesh-worker=65536"
+    "memorysetup-temp-allocator-size-audio-worker=65536"
+    "memorysetup-temp-allocator-size-cloud-worker=32768"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gfx=262144"
+Refreshing native plugins compatible for Editor in 54.22 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 2022.1.11f1 (09bebd6e9324)
+[Subsystems] Discovering subsystems at path D:/Unity/2022.1.11f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path D:/github/DDA-Boss-Fight/Assets
+GfxDevice: creating device client; threaded=0; jobified=0
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: NVIDIA GeForce RTX 3060 Laptop GPU (ID=0x2560)
+    Vendor:   NVIDIA
+    VRAM:     6023 MB
+    Driver:   31.0.15.1659
+Initialize mono
+Mono path[0] = 'D:/Unity/2022.1.11f1/Editor/Data/Managed'
+Mono path[1] = 'D:/Unity/2022.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
+Mono config path = 'D:/Unity/2022.1.11f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56396
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: D:/Unity/2022.1.11f1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll
+Register platform support module: D:/Unity/2022.1.11f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.002316 seconds.
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 38.90 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.552 seconds
+Domain Reload Profiling:
+	ReloadAssembly (553ms)
+		BeginReloadAssembly (102ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (0ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (1ms)
+		EndReloadAssembly (364ms)
+			LoadAssemblies (103ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (91ms)
+				TypeCache.Initialize (90ms)
+					TypeCache.ScanAssembly (89ms)
+				ResolveRequiredComponents (0ms)
+			ReleaseScriptCaches (0ms)
+			RebuildScriptCaches (23ms)
+			SetupLoadedEditorAssemblies (206ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (6ms)
+				SetLoadedEditorAssemblies (6ms)
+				RefreshPlugins (39ms)
+				BeforeProcessingInitializeOnLoad (1ms)
+				ProcessInitializeOnLoadAttributes (113ms)
+				ProcessInitializeOnLoadMethodAttributes (41ms)
+				AfterProcessingInitializeOnLoad (0ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (0ms)
+Platform modules already initialized, skipping
+Registering precompiled user dll's ...
+Registered in 0.005821 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 0.75 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Package Manager log level set to [2]
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] UpmClient::Send -- Unable to send message (not connected to UPM process).
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Completed reload, in  1.114 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1115ms)
+		BeginReloadAssembly (148ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (4ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (21ms)
+		EndReloadAssembly (869ms)
+			LoadAssemblies (134ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (200ms)
+				TypeCache.Initialize (197ms)
+					TypeCache.ScanAssembly (193ms)
+				ResolveRequiredComponents (3ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (61ms)
+			SetupLoadedEditorAssemblies (442ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (5ms)
+				SetLoadedEditorAssemblies (9ms)
+				RefreshPlugins (1ms)
+				BeforeProcessingInitializeOnLoad (66ms)
+				ProcessInitializeOnLoadAttributes (250ms)
+				ProcessInitializeOnLoadMethodAttributes (109ms)
+				AfterProcessingInitializeOnLoad (2ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (11ms)
+Platform modules already initialized, skipping
+========================================================================
+Worker process is ready to serve import requests
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.05 seconds
+Refreshing native plugins compatible for Editor in 1.18 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2596 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 67 unused Assets / (130.9 KB). Loaded Objects now: 3039.
+Memory consumption went from 412.4 MB to 412.3 MB.
+Total: 8.335600 ms (FindLiveObjects: 0.321500 ms CreateObjectMapping: 0.089500 ms MarkObjects: 7.783500 ms  DeleteObjects: 0.139000 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:video-codec-MediaFoundation-h265: 746d11721c4dcdbdad8f713fa42b33f4 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 120719.565960 seconds.
+  path: Assets/Nature Sounds Pack/Foliage/Foliage02.wav
+  artifactKey: Guid(50eea12b4c8ff134aa661793bc99cca8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Nature Sounds Pack/Foliage/Foliage02.wav using Guid(50eea12b4c8ff134aa661793bc99cca8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5548c27c6745b207fa166dfe89a806cd') in 0.095458 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 7.101670 seconds.
+  path: Assets/Nature Sounds Pack/Footstep/FootstepGrass02.wav
+  artifactKey: Guid(8b07250d785236c49ba7e9a0e0bd85a2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Nature Sounds Pack/Footstep/FootstepGrass02.wav using Guid(8b07250d785236c49ba7e9a0e0bd85a2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f7590e7e53b689c3ec0937cf05b4ea55') in 0.031862 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000028 seconds.
+  path: Assets/Nature Sounds Pack/Footstep/FootstepGrass05.wav
+  artifactKey: Guid(72ef55abbf151174aa20d21b6f36916b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Nature Sounds Pack/Footstep/FootstepGrass05.wav using Guid(72ef55abbf151174aa20d21b6f36916b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ef07c53513a634f545b78034a0f0661a') in 0.118562 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000028 seconds.
+  path: Assets/Nature Sounds Pack/Footstep/FootstepGrass09.wav
+  artifactKey: Guid(472a657f3a39f69479fc15945f62f88d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Nature Sounds Pack/Footstep/FootstepGrass09.wav using Guid(472a657f3a39f69479fc15945f62f88d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'eaf5bf728f22d03b1ca531860b0e9086') in 0.015858 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 9.974181 seconds.
+  path: Assets/Nature Sounds Pack/Stream/StreamAndBirds02.wav
+  artifactKey: Guid(197ffedc04e06cc4dbe0e6ecb9db213c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Nature Sounds Pack/Stream/StreamAndBirds02.wav using Guid(197ffedc04e06cc4dbe0e6ecb9db213c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'dc7dbea8f566eeebd45e067088cde71e') in 0.045157 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 122.332252 seconds.
+  path: Assets/96 General Library (Free Sample)/Samples/AEROMisc_InsJ_Hot-Air-Balloon_Fire_01-01.wav
+  artifactKey: Guid(94b01adb9e48b2c429629cb9e912f95e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/96 General Library (Free Sample)/Samples/AEROMisc_InsJ_Hot-Air-Balloon_Fire_01-01.wav using Guid(94b01adb9e48b2c429629cb9e912f95e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7715c99da117c45d6fa765a98b0ececa') in 0.010441 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000022 seconds.
+  path: Assets/96 General Library (Free Sample)/Samples/AMBTech_InsJ_Ambience_Underground-Base_01-01_LOOP.wav
+  artifactKey: Guid(56e33d1cbc81cfd44a9505450240fe2b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/96 General Library (Free Sample)/Samples/AMBTech_InsJ_Ambience_Underground-Base_01-01_LOOP.wav using Guid(56e33d1cbc81cfd44a9505450240fe2b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5b4237b8846ee25a35ba185e75b9a225') in 0.009236 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.001081 seconds.
+  path: Assets/96 General Library (Free Sample)/Samples/ANMLInsc_InsJ_Ambience_Cricket-Insect_06-01_LOOP.wav
+  artifactKey: Guid(12f3981d6b7920b41ad91c23e1b49047) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/96 General Library (Free Sample)/Samples/ANMLInsc_InsJ_Ambience_Cricket-Insect_06-01_LOOP.wav using Guid(12f3981d6b7920b41ad91c23e1b49047) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'da3c6baa8573d0e8b8555dde6376535a') in 0.010623 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000024 seconds.
+  path: Assets/96 General Library (Free Sample)/Samples/DOORWood_InsJ_Door_Wooden_Closing_03-01.wav
+  artifactKey: Guid(a68d77d1ab4d8ad48bfc7ea06d637e0a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/96 General Library (Free Sample)/Samples/DOORWood_InsJ_Door_Wooden_Closing_03-01.wav using Guid(a68d77d1ab4d8ad48bfc7ea06d637e0a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '921e47e891decd9d1a4be16f1adcc831') in 0.018797 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000021 seconds.
+  path: Assets/96 General Library (Free Sample)/Samples/CHAINImpt_InsJ_Chains_Metal_Dropping_Close_01-01.wav
+  artifactKey: Guid(f2278fecc222f14459622deee93a4eae) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/96 General Library (Free Sample)/Samples/CHAINImpt_InsJ_Chains_Metal_Dropping_Close_01-01.wav using Guid(f2278fecc222f14459622deee93a4eae) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '266797835735df6318ad633bd563a149') in 0.018461 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000017 seconds.
+  path: Assets/96 General Library (Free Sample)/Samples/RAIN_InsJ_Ambience_Rain_Light_01_LOOP.wav
+  artifactKey: Guid(422a01e4a23540840b028a59d816ff20) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/96 General Library (Free Sample)/Samples/RAIN_InsJ_Ambience_Rain_Light_01_LOOP.wav using Guid(422a01e4a23540840b028a59d816ff20) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b13f113c7f1db8f15e9aa1dff10132b2') in 0.021730 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000024 seconds.
+  path: Assets/96 General Library (Free Sample)/Samples/FRWKComr_InsJ_Fireworks_Multi_Close_01-02-Crackle.wav
+  artifactKey: Guid(968908658fb3da642ae9ad9b54b4c4d0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/96 General Library (Free Sample)/Samples/FRWKComr_InsJ_Fireworks_Multi_Close_01-02-Crackle.wav using Guid(968908658fb3da642ae9ad9b54b4c4d0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8eef70da4bdc8c304180512fd0f8da1a') in 0.031609 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000024 seconds.
+  path: Assets/96 General Library (Free Sample)/Samples/TOOLPowr_InsJ_Lawn-Mower-01_Idling_Close_01-01.wav
+  artifactKey: Guid(3f046dadc8691cf469798a69f125f0a2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/96 General Library (Free Sample)/Samples/TOOLPowr_InsJ_Lawn-Mower-01_Idling_Close_01-01.wav using Guid(3f046dadc8691cf469798a69f125f0a2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '89cfbf32b044e12623e2dd5baea0900c') in 0.012351 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000022 seconds.
+  path: Assets/96 General Library (Free Sample)/Samples/FEETHmn_InsJ_Footsteps_Glass_Running_Trainers_01-01_Single-01.wav
+  artifactKey: Guid(ccdc11c8aca43b447943d03982ddc44b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/96 General Library (Free Sample)/Samples/FEETHmn_InsJ_Footsteps_Glass_Running_Trainers_01-01_Single-01.wav using Guid(ccdc11c8aca43b447943d03982ddc44b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3946d7a742ac93634bea2fc05c57b438') in 0.014588 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000019 seconds.
+  path: Assets/96 General Library (Free Sample)/Samples/CLOCKTick_InsJ_Clock-01_Ticking_Single-01.wav
+  artifactKey: Guid(2796991c2d63adf4c9c3d417a318aeaf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/96 General Library (Free Sample)/Samples/CLOCKTick_InsJ_Clock-01_Ticking_Single-01.wav using Guid(2796991c2d63adf4c9c3d417a318aeaf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b69c19896b6bc1e46eefa25deeb1f873') in 0.014689 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000016 seconds.
+  path: Assets/96 General Library (Free Sample)/Samples/FEETHmn_InsJ_Footsteps_Gravel_Jogging_Trainers_01-01_Single-02.wav
+  artifactKey: Guid(dd3a9bf23f1906c41820c9956b72b01f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/96 General Library (Free Sample)/Samples/FEETHmn_InsJ_Footsteps_Gravel_Jogging_Trainers_01-01_Single-02.wav using Guid(dd3a9bf23f1906c41820c9956b72b01f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3c1f10f62b5756d18ff23e4d64100324') in 0.015343 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000018 seconds.
+  path: Assets/96 General Library (Free Sample)/Samples/FIREBrst_InsJ_Flamethrower_Short_01-01_WET.wav
+  artifactKey: Guid(9558776529dbab5418c79032647f36ec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/96 General Library (Free Sample)/Samples/FIREBrst_InsJ_Flamethrower_Short_01-01_WET.wav using Guid(9558776529dbab5418c79032647f36ec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a86430e275479d1563bd826412b75395') in 0.014312 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000019 seconds.
+  path: Assets/96 General Library (Free Sample)/Samples/AMBBird_InsJ_Ambience_Birds_Dawn-Chorus_01-01_LOOP.wav
+  artifactKey: Guid(e9d1c843e495c2c4eb9ae7b6fb15eadc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/96 General Library (Free Sample)/Samples/AMBBird_InsJ_Ambience_Birds_Dawn-Chorus_01-01_LOOP.wav using Guid(e9d1c843e495c2c4eb9ae7b6fb15eadc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ece2010b893d805b0c5c699d626802c1') in 0.023611 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000024 seconds.
+  path: Assets/96 General Library (Free Sample)/Samples/ANMLCat_InsJ_Cat_Purring_Female_02-01.wav
+  artifactKey: Guid(c65752e34ab58f5468b317fe21cb5f85) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/96 General Library (Free Sample)/Samples/ANMLCat_InsJ_Cat_Purring_Female_02-01.wav using Guid(c65752e34ab58f5468b317fe21cb5f85) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e7cc886b5287e0db2474b8a0fec5e604') in 0.012704 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000032 seconds.
+  path: Assets/96 General Library (Free Sample)/Samples/VEHCar_1990s_InsJ_Car_Nissan-Serena_Button-01_01.wav
+  artifactKey: Guid(dfd742b227924bb4cb7c133c3d94c6da) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/96 General Library (Free Sample)/Samples/VEHCar_1990s_InsJ_Car_Nissan-Serena_Button-01_01.wav using Guid(dfd742b227924bb4cb7c133c3d94c6da) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e7a435ffe92636030da16ca6b20e57d7') in 0.011267 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000027 seconds.
+  path: Assets/96 General Library (Free Sample)/Samples/VEHBike_InsJ_Bike_Bell-Ding-01_Close_Single_01-01.wav
+  artifactKey: Guid(5a96e2c290c5f3941bd4b25879ef7e43) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/96 General Library (Free Sample)/Samples/VEHBike_InsJ_Bike_Bell-Ding-01_Close_Single_01-01.wav using Guid(5a96e2c290c5f3941bd4b25879ef7e43) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f0a163fdfae9bc5b76f747949848e8ee') in 0.015084 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000021 seconds.
+  path: Assets/96 General Library (Free Sample)/Samples/UIClick_InsJ_UI_Mechanical_Move_01.wav
+  artifactKey: Guid(cd092ad13de41c24c9d3838981942e04) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/96 General Library (Free Sample)/Samples/UIClick_InsJ_UI_Mechanical_Move_01.wav using Guid(cd092ad13de41c24c9d3838981942e04) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'cb3229c885210fb7e369a9737d882f62') in 0.011177 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000024 seconds.
+  path: Assets/96 General Library (Free Sample)/Samples/MUSCChim_InsJ_Hand-Bell_01-16_High-C.wav
+  artifactKey: Guid(374f9d3b5620719408ea03778e8dc0f3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/96 General Library (Free Sample)/Samples/MUSCChim_InsJ_Hand-Bell_01-16_High-C.wav using Guid(374f9d3b5620719408ea03778e8dc0f3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1abe9513da1299ccd98e09370f964401') in 0.013513 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000015 seconds.
+  path: Assets/96 General Library (Free Sample)/Samples/MACHOffi_InsJ_Machine-01_Turning-Off_01.wav
+  artifactKey: Guid(7495c98f26961e441aa45d80fab397be) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/96 General Library (Free Sample)/Samples/MACHOffi_InsJ_Machine-01_Turning-Off_01.wav using Guid(7495c98f26961e441aa45d80fab397be) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'df223a393462393190bc39479636e932') in 0.009267 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000018 seconds.
+  path: Assets/96 General Library (Free Sample)/Samples/MECHSwtch_InsJ_Switch_Plastic_Organ-Stops_Multi_01.wav
+  artifactKey: Guid(867bd21a8f297d248b1b12c24f1a37d1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/96 General Library (Free Sample)/Samples/MECHSwtch_InsJ_Switch_Plastic_Organ-Stops_Multi_01.wav using Guid(867bd21a8f297d248b1b12c24f1a37d1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f1ecff9d5c54be4a46190f640eb3f1e4') in 0.009480 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000025 seconds.
+  path: Assets/96 General Library (Free Sample)/Samples/WATRFlow_InsJ_Stream_Water_01_LOOP.wav
+  artifactKey: Guid(89b16bfd82038a546af1843006e3cfc0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/96 General Library (Free Sample)/Samples/WATRFlow_InsJ_Stream_Water_01_LOOP.wav using Guid(89b16bfd82038a546af1843006e3cfc0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'be280121b884c426b5a30d9a7cb2a685') in 0.009607 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000024 seconds.
+  path: Assets/96 General Library (Free Sample)/Samples/COMCell_InsJ_Phone_Digital_Ringing_01-01_LOOP.wav
+  artifactKey: Guid(d2717153103eb8d4fa8bb3f9072f8d4e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/96 General Library (Free Sample)/Samples/COMCell_InsJ_Phone_Digital_Ringing_01-01_LOOP.wav using Guid(d2717153103eb8d4fa8bb3f9072f8d4e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6924f35ccee08266b7520603d3e0dcc9') in 0.009102 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000017 seconds.
+  path: Assets/96 General Library (Free Sample)/Samples/THUN_InsJ_Thunder_Close_Rain_01.wav
+  artifactKey: Guid(eb5c08ef9f0415147a27e5035b2d69ee) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/96 General Library (Free Sample)/Samples/THUN_InsJ_Thunder_Close_Rain_01.wav using Guid(eb5c08ef9f0415147a27e5035b2d69ee) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ea7820198f28fb323336d46c705941fe') in 0.009573 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000019 seconds.
+  path: Assets/96 General Library (Free Sample)/Samples/ANMLInsc_InsJ_Buzzing_Bee_Single_Very-Short_01-01.wav
+  artifactKey: Guid(8a7be74d657c57944b0e60abe511cc2b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/96 General Library (Free Sample)/Samples/ANMLInsc_InsJ_Buzzing_Bee_Single_Very-Short_01-01.wav using Guid(8a7be74d657c57944b0e60abe511cc2b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '767f4dc964cfec10444d505f4816f031') in 0.008484 seconds 
+Editor requested this worker to shutdown with reason: Scaling down because of idle timeout
+AssetImportWorker is now disconnected from the server
+Process exiting
+Exiting without the bug reporter. Application will terminate with return code 0

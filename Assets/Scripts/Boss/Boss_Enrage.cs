@@ -6,6 +6,7 @@ public class Boss_Enrage : StateMachineBehaviour
     {
         // Invulnerable when boss is getting enraged
         animator.GetComponent<BossHealth>().isInvulnerable = true;
+        FindObjectOfType<AudioManager>().Play("Enrage");
     }
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

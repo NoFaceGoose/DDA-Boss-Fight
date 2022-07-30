@@ -50,6 +50,7 @@ public class BossHealth : MonoBehaviour
                 shield = 0;
                 Destroy(shieldObj);
                 Destroy(shieldBar);
+                FindObjectOfType<AudioManager>().Play("PlayerFireHit");
             }
         }
         else
@@ -58,18 +59,20 @@ public class BossHealth : MonoBehaviour
 
             if (health <= 0)
             {
+                health = 0;
                 Die();
             }
         }
     }
 
+    public void Intro()
+    {
+        FindObjectOfType<AudioManager>().Play("BossIntro");
+    }
+
     void Die()
     {
         GetComponent<Boss>().tree.Stop();
-
-        Destroy(gameObject);
-        Destroy(bossHealthBar);
-        Destroy(bossName);
 
         InGameMenu.gameEnded = true;
         resultText.text = "BOSS FELLED";

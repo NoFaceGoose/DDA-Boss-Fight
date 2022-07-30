@@ -37,6 +37,7 @@ public class PlayerWeapon : MonoBehaviour
 
     public void Attack()
     {
+        FindObjectOfType<AudioManager>().Play("PlayerSlash");
         Vector3 pos = transform.position;
         pos += transform.right * attackOffset.x;
         pos += transform.up * attackOffset.y;
@@ -47,6 +48,7 @@ public class PlayerWeapon : MonoBehaviour
             if (colInfo.GetComponent<BossHealth>())
             {
                 colInfo.GetComponent<BossHealth>().TakeDamage(attackDamage);
+                FindObjectOfType<AudioManager>().Play("PlayerSlashHit");
             }
         }
     }

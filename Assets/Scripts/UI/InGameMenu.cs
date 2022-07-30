@@ -24,6 +24,7 @@ public class InGameMenu : MonoBehaviour
 
     private void Pause()
     {
+        FindObjectOfType<AudioManager>().Play("Button");
         pauseMenu.SetActive(true);
         Time.timeScale = 0f;
         isPaused = true;
@@ -31,6 +32,7 @@ public class InGameMenu : MonoBehaviour
 
     public void Resume()
     {
+        FindObjectOfType<AudioManager>().Play("Button");
         pauseMenu.SetActive(false);
         resultMenu.SetActive(false);
         Time.timeScale = 1f;
@@ -40,12 +42,14 @@ public class InGameMenu : MonoBehaviour
     public void Restart()
     {
         Resume();
+        FindObjectOfType<AudioManager>().StopAll();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void Quit()
     {
         Resume();
+        FindObjectOfType<AudioManager>().StopAll();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
     }
 }

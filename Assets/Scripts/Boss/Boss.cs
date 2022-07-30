@@ -10,7 +10,6 @@ public class Boss : MonoBehaviour
 
     public bool isFlipped;
     public bool isEnraged;
-    public bool randomDamage;
 
     public float nearAttackRange, nearEnragedAttackRange, farAttackRange;
     public float maxWaitingTime, minWaitingTime;

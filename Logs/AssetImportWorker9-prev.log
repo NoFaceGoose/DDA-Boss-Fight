@@ -9,11 +9,11 @@ D:\Unity\2022.1.11f1\Editor\Unity.exe
 -batchMode
 -noUpm
 -name
-AssetImportWorker3
+AssetImportWorker9
 -projectPath
 D:/github/DDA-Boss-Fight
 -logFile
-Logs/AssetImportWorker3.log
+Logs/AssetImportWorker9.log
 -srvPort
 7769
 Successfully changed project path to: D:/github/DDA-Boss-Fight
@@ -47,7 +47,7 @@ D:/github/DDA-Boss-Fight
     "memorysetup-temp-allocator-size-cloud-worker=32768"
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gfx=262144"
-Refreshing native plugins compatible for Editor in 51.47 ms, found 2 plugins.
+Refreshing native plugins compatible for Editor in 57.19 ms, found 2 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2022.1.11f1 (09bebd6e9324)
 [Subsystems] Discovering subsystems at path D:/Unity/2022.1.11f1/Editor/Data/Resources/UnitySubsystems
@@ -63,86 +63,86 @@ Initialize mono
 Mono path[0] = 'D:/Unity/2022.1.11f1/Editor/Data/Managed'
 Mono path[1] = 'D:/Unity/2022.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
 Mono config path = 'D:/Unity/2022.1.11f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56828
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56568
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: D:/Unity/2022.1.11f1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll
 Register platform support module: D:/Unity/2022.1.11f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Registered in 0.002405 seconds.
+Registered in 0.002436 seconds.
 Native extension for WindowsStandalone target not found
 Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 39.45 ms, found 2 plugins.
+Refreshing native plugins compatible for Editor in 40.23 ms, found 2 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  0.597 seconds
+- Completed reload, in  0.612 seconds
 Domain Reload Profiling:
-	ReloadAssembly (597ms)
-		BeginReloadAssembly (108ms)
+	ReloadAssembly (612ms)
+		BeginReloadAssembly (125ms)
 			ExecutionOrderSort (0ms)
 			DisableScriptedObjects (0ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
 			CreateAndSetChildDomain (1ms)
-		EndReloadAssembly (387ms)
-			LoadAssemblies (108ms)
+		EndReloadAssembly (396ms)
+			LoadAssemblies (126ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (97ms)
-				TypeCache.Initialize (97ms)
-					TypeCache.ScanAssembly (95ms)
-				ResolveRequiredComponents (1ms)
+			SetupTypeCache (103ms)
+				TypeCache.Initialize (103ms)
+					TypeCache.ScanAssembly (102ms)
+				ResolveRequiredComponents (0ms)
 			ReleaseScriptCaches (0ms)
-			RebuildScriptCaches (22ms)
-			SetupLoadedEditorAssemblies (221ms)
+			RebuildScriptCaches (28ms)
+			SetupLoadedEditorAssemblies (216ms)
 				LogAssemblyErrors (0ms)
 				InitializePlatformSupportModulesInManaged (6ms)
-				SetLoadedEditorAssemblies (6ms)
+				SetLoadedEditorAssemblies (7ms)
 				RefreshPlugins (40ms)
 				BeforeProcessingInitializeOnLoad (1ms)
-				ProcessInitializeOnLoadAttributes (125ms)
-				ProcessInitializeOnLoadMethodAttributes (44ms)
+				ProcessInitializeOnLoadAttributes (119ms)
+				ProcessInitializeOnLoadMethodAttributes (43ms)
 				AfterProcessingInitializeOnLoad (0ms)
 				EditorAssembliesLoaded (0ms)
 			ExecutionOrderSort2 (0ms)
 			AwakeInstancesAfterBackupRestoration (0ms)
 Platform modules already initialized, skipping
 Registering precompiled user dll's ...
-Registered in 0.006074 seconds.
+Registered in 0.006443 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for WindowsStandalone target not found
 Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 0.77 ms, found 2 plugins.
+Refreshing native plugins compatible for Editor in 0.66 ms, found 2 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Package Manager log level set to [2]
 [Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
 [Package Manager] UpmClient::Send -- Unable to send message (not connected to UPM process).
 [Package Manager] Cannot connect to Unity Package Manager local server
 Mono: successfully reloaded assembly
-- Completed reload, in  1.053 seconds
+- Completed reload, in  1.050 seconds
 Domain Reload Profiling:
-	ReloadAssembly (1054ms)
-		BeginReloadAssembly (177ms)
+	ReloadAssembly (1051ms)
+		BeginReloadAssembly (160ms)
 			ExecutionOrderSort (0ms)
 			DisableScriptedObjects (5ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (28ms)
-		EndReloadAssembly (757ms)
-			LoadAssemblies (161ms)
+			CreateAndSetChildDomain (20ms)
+		EndReloadAssembly (793ms)
+			LoadAssemblies (149ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (180ms)
-				TypeCache.Initialize (175ms)
-					TypeCache.ScanAssembly (172ms)
-				ResolveRequiredComponents (5ms)
+			SetupTypeCache (184ms)
+				TypeCache.Initialize (181ms)
+					TypeCache.ScanAssembly (178ms)
+				ResolveRequiredComponents (3ms)
 			ReleaseScriptCaches (1ms)
-			RebuildScriptCaches (41ms)
-			SetupLoadedEditorAssemblies (398ms)
+			RebuildScriptCaches (51ms)
+			SetupLoadedEditorAssemblies (419ms)
 				LogAssemblyErrors (0ms)
 				InitializePlatformSupportModulesInManaged (4ms)
-				SetLoadedEditorAssemblies (6ms)
+				SetLoadedEditorAssemblies (7ms)
 				RefreshPlugins (1ms)
-				BeforeProcessingInitializeOnLoad (52ms)
-				ProcessInitializeOnLoadAttributes (213ms)
-				ProcessInitializeOnLoadMethodAttributes (120ms)
+				BeforeProcessingInitializeOnLoad (56ms)
+				ProcessInitializeOnLoadAttributes (237ms)
+				ProcessInitializeOnLoadMethodAttributes (111ms)
 				AfterProcessingInitializeOnLoad (2ms)
 				EditorAssembliesLoaded (0ms)
 			ExecutionOrderSort2 (0ms)
@@ -150,13 +150,13 @@ Domain Reload Profiling:
 Platform modules already initialized, skipping
 ========================================================================
 Worker process is ready to serve import requests
-Launched and connected shader compiler UnityShaderCompiler.exe after 0.04 seconds
-Refreshing native plugins compatible for Editor in 0.64 ms, found 2 plugins.
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.05 seconds
+Refreshing native plugins compatible for Editor in 0.65 ms, found 2 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Unloading 2596 Unused Serialized files (Serialized files now loaded: 0)
 Unloading 67 unused Assets / (130.9 KB). Loaded Objects now: 3039.
 Memory consumption went from 412.4 MB to 412.3 MB.
-Total: 6.280600 ms (FindLiveObjects: 0.180300 ms CreateObjectMapping: 0.099900 ms MarkObjects: 5.891400 ms  DeleteObjects: 0.108100 ms)
+Total: 6.968500 ms (FindLiveObjects: 0.204000 ms CreateObjectMapping: 0.074400 ms MarkObjects: 6.563400 ms  DeleteObjects: 0.125400 ms)
 
 AssetImportParameters requested are different than current active one (requested -> active):
   custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
@@ -169,25 +169,3 @@ AssetImportParameters requested are different than current active one (requested
   custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
   custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
   custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-========================================================================
-Received Import Request.
-  Time since last request: 119346.392441 seconds.
-  path: Assets/PostApocalypseGunsDemo/Shotguns/JackHammer_3p_01.wav
-  artifactKey: Guid(67535d6a9b045954e925424a157be5d5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/PostApocalypseGunsDemo/Shotguns/JackHammer_3p_01.wav using Guid(67535d6a9b045954e925424a157be5d5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '261f67c94c009cbf22648e6bc9660fe5') in 0.103018 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 51.106249 seconds.
-  path: Assets/PostApocalypseGunsDemo/SniperRifles/AntiMaterialRifle_3p_01.wav
-  artifactKey: Guid(4f02814b62ca4c9469420ae40236bc23) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/PostApocalypseGunsDemo/SniperRifles/AntiMaterialRifle_3p_01.wav using Guid(4f02814b62ca4c9469420ae40236bc23) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '97133646f2d160d2df664fc9c53350f6') in 0.055974 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000512 seconds.
-  path: Assets/PostApocalypseGunsDemo/SniperRifles/AntiMaterialRifle_far_03.wav
-  artifactKey: Guid(4cf5890d3d7b62049a4c759a2d2dbe16) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/PostApocalypseGunsDemo/SniperRifles/AntiMaterialRifle_far_03.wav using Guid(4cf5890d3d7b62049a4c759a2d2dbe16) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f617f7e32c42039d9912bf4bf2726e88') in 0.027260 seconds 
-Editor requested this worker to shutdown with reason: Scaling down because of idle timeout
-AssetImportWorker is now disconnected from the server
-Process exiting
-Exiting without the bug reporter. Application will terminate with return code 0

@@ -45,6 +45,8 @@ public class BossWeapon : MonoBehaviour
 
     public void Slash()
     {
+        FindObjectOfType<AudioManager>().Play("BossSlash");
+
         GetComponent<Boss>().UpdateAction("Slash");
 
         Vector3 pos = transform.position;
@@ -55,6 +57,7 @@ public class BossWeapon : MonoBehaviour
         if (colInfo && colInfo.GetComponent<PlayerHealth>())
         {
             colInfo.GetComponent<PlayerHealth>().TakeDamage(attackDamage, "Slash");
+            FindObjectOfType<AudioManager>().Play("BossSlashHit");
         }
     }
 
@@ -77,14 +80,18 @@ public class BossWeapon : MonoBehaviour
     {
         GetComponent<Boss>().UpdateAction("Stab");
 
+        FindObjectOfType<AudioManager>().Play("BossSlash");
+
         Vector3 pos = transform.position;
         pos += transform.right * stabOffset.x;
         pos += transform.up * stabOffset.y;
 
-        Collider2D colInfo = Physics2D.OverlapBox(pos, stabSize, attackMask);
+        Collider2D colInfo = Physics2D.OverlapBox(pos, stabSize, 0f, attackMask);
+
         if (colInfo && colInfo.GetComponent<PlayerHealth>())
         {
-            colInfo.GetComponent<PlayerHealth>().TakeDamage(enragedAttackDamage);
+            colInfo.GetComponent<PlayerHealth>().TakeDamage(enragedAttackDamage, "Stab");
+            FindObjectOfType<AudioManager>().Play("StabHit");
         }
     }
 

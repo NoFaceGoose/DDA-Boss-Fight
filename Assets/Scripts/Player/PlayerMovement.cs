@@ -14,7 +14,6 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         horizontalMove = Input.GetAxisRaw("Horizontal") * moveSpeed;
 
         animator.SetFloat("Speed", Mathf.Abs(horizontalMove));
@@ -23,6 +22,7 @@ public class PlayerMovement : MonoBehaviour
         {
             jump = true;
             animator.SetBool("IsJumping", true);
+            FindObjectOfType<AudioManager>().Play("Jump");
         }
     }
 

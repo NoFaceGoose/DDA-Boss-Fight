@@ -11,7 +11,6 @@ public class FireBall : MonoBehaviour
 
     public GameObject impactEffect;
 
-    // Use this for initialization
     void Start()
     {
         rb.velocity = transform.right * speed;

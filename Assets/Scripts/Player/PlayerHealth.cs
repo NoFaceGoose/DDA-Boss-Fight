@@ -55,7 +55,7 @@ public class PlayerHealth : MonoBehaviour
                 break;
 
             case "Stab": boss.UpdateAction("Stab", true); break;
-            case "Spell": boss.UpdateAction("Spell", true); break;
+            case "Summon": boss.UpdateAction("Summon", true); break;
 
             default: break;
         }
@@ -78,6 +78,7 @@ public class PlayerHealth : MonoBehaviour
 
         if (health <= 0)
         {
+            health = 0;
             Die();
         }
     }
@@ -96,9 +97,6 @@ public class PlayerHealth : MonoBehaviour
 
     void Die()
     {
-        Destroy(gameObject);
-        Destroy(playerHealthBar);
-
         InGameMenu.gameEnded = true;
         resultText.text = "YOU DIED";
         resultText.color = Color.red;
