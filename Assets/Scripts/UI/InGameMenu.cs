@@ -24,6 +24,10 @@ public class InGameMenu : MonoBehaviour
 
     private void Pause()
     {
+        FindObjectOfType<AudioManager>().Stop("PlayerRunning");
+        FindObjectOfType<AudioManager>().Stop("BossWalking");
+        FindObjectOfType<AudioManager>().Stop("BossRunning");
+
         FindObjectOfType<AudioManager>().Play("Button");
         pauseMenu.SetActive(true);
         Time.timeScale = 0f;
