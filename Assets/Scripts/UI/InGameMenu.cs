@@ -42,7 +42,6 @@ public class InGameMenu : MonoBehaviour
     public void Restart()
     {
         Resume();
-        FindObjectOfType<AudioManager>().StopAll();
         gameEnded = false;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }

@@ -27,11 +27,16 @@ public class PlayerHealth : MonoBehaviour
     private void Update()
     {
         healthText.GetComponent<Text>().text = health + "/" + maxHealth;
+
+        if (health == 0)
+        {
+            Die();
+        }
     }
 
     public void TakeDamage(int damage, string attack = "")
     {
-        if (isInvulnerable)
+        if (isInvulnerable || InGameMenu.gameEnded)
         {
             return;
         }
@@ -71,16 +76,7 @@ public class PlayerHealth : MonoBehaviour
             StartCoroutine(DamageAnimation());
         }
 
-        if (health > maxHealth)
-        {
-            health = maxHealth;
-        }
-
-        if (health <= 0)
-        {
-            health = 0;
-            Die();
-        }
+        health = health < 0 ? 0 : health;
     }
 
     void GetPoisoned()
@@ -103,7 +99,10 @@ public class PlayerHealth : MonoBehaviour
         resultText.text = "YOU DIED";
         resultText.color = Color.red;
 
-        FindObjectOfType<AudioManager>().StopAll();
+        FindObjectOfType<AudioManager>().Stop("Theme");
+        FindObjectOfType<AudioManager>().Stop("PlayerRunning");
+        FindObjectOfType<AudioManager>().Stop("BossWalking");
+        FindObjectOfType<AudioManager>().Stop("BossRunning");
 
         resultMenu.SetActive(true);
         Time.timeScale = 0f;

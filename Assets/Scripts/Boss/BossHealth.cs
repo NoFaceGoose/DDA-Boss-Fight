@@ -34,6 +34,11 @@ public class BossHealth : MonoBehaviour
         {
             shieldText.GetComponent<Text>().text = shield + "/" + maxShield;
         }
+
+        if (health == 0)
+        {
+            Die();
+        }
     }
 
     public void TakeDamage(int damage, bool isFireBall = false)
@@ -55,12 +60,7 @@ public class BossHealth : MonoBehaviour
         else
         {
             health -= damage;
-
-            if (health <= 0)
-            {
-                health = 0;
-                Die();
-            }
+            health = health < 0 ? 0 : health;
         }
     }
 
@@ -78,9 +78,10 @@ public class BossHealth : MonoBehaviour
         resultText.text = "BOSS FELLED";
         resultText.color = Color.yellow;
 
-        FindObjectOfType<AudioManager>().StopAll();
+        FindObjectOfType<AudioManager>().Stop("Theme");
+        FindObjectOfType<AudioManager>().Stop("BossWalking");
+        FindObjectOfType<AudioManager>().Stop("BossRunning");
 
         resultMenu.SetActive(true);
-        Time.timeScale = 0f;
     }
 }

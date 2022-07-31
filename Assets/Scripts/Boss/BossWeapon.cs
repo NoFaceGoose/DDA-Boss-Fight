@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class BossWeapon : MonoBehaviour
 {
-    public int damageLowerBound, damageUpperBound;
+    public int damageLowerBound1, damageUpperBound1, damageLowerBound2, damageUpperBound2;
 
     public static bool firstGame = true;
     public static List<int> damageValues;
@@ -29,8 +29,10 @@ public class BossWeapon : MonoBehaviour
     private void Awake()
     {
         int playerMaxHP = GetComponent<Boss>().player.GetComponent<PlayerHealth>().maxHealth;
-        damageLowerBound = playerMaxHP / 20;
-        damageUpperBound = playerMaxHP / 5;
+        damageLowerBound1 = playerMaxHP / 40;
+        damageUpperBound1 = playerMaxHP / 8;
+        damageLowerBound2 = playerMaxHP / 6;
+        damageUpperBound2 = playerMaxHP / 4;
 
         if (firstGame)
         {
@@ -39,7 +41,8 @@ public class BossWeapon : MonoBehaviour
 
             foreach (string attack in attacks)
             {
-                int value = Random.Range(damageLowerBound, damageUpperBound);
+                int value;
+                value = attack == "Summon" ? Random.Range(damageLowerBound2, damageUpperBound2) : Random.Range(damageLowerBound1, damageUpperBound1);
                 damageValues.Add(value);
 
                 switch (attack)

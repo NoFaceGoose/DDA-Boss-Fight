@@ -93,7 +93,7 @@ public class Boss : MonoBehaviour
              AI == 0 ? new Action(() => RandomAction(State.PhaseOneNear)) : new Action(() => DDAAction(State.PhaseOneNear)));
 
         // Look at the player at first, then wait for 1 second, let the last state continue for a while
-        return new Sequence(new Action(() => LookAtPlayer()), AI == 0 ? new Wait(0.75f) : new Wait(DDAWait), new Selector(bb2, sel));
+        return new Sequence(new Action(() => LookAtPlayer()), AI == 0 ? new Wait(1.25f) : new Wait(DDAWait), new Selector(bb2, sel));
     }
 
     // always run to the player
@@ -104,7 +104,7 @@ public class Boss : MonoBehaviour
             AI == 0 ? new Action(() => RandomAction(State.PhaseTwoNear)) : new Action(() => DDAAction(State.PhaseTwoNear)));
 
         // Look at the player first and wait for 1 second, then check attack range, choose far attacks if the player is not in near attack range
-        Node seq = new Sequence(new Action(() => LookAtPlayer()), AI == 0 ? new Wait(0.5f) : new Wait(DDAWait),
+        Node seq = new Sequence(new Action(() => LookAtPlayer()), AI == 0 ? new Wait(0.75f) : new Wait(DDAWait),
             new Selector(bb, AI == 0 ? new Action(() => RandomAction(State.PhaseTwoFar)) : new Action(() => DDAAction(State.PhaseTwoFar))));
 
         // Enter phase two when enraged
@@ -145,10 +145,12 @@ public class Boss : MonoBehaviour
                 if (item.Value.isValid)
                 {
                     item.Value.UpdateFitness(player.GetComponent<PlayerHealth>(), bossHealth);
+                    
                     if (maxFitness <= item.Value.fitness)
                     {
                         maxFitness = item.Value.fitness;
                         action = item.Key;
+                        
                     }
                 }
             }
@@ -200,7 +202,7 @@ public class Boss : MonoBehaviour
             }
         }
 
-        // random selection with by the fitness
+        // random selection weighted by fitness
         float value = UnityEngine.Random.Range(0f, sumFitness);
 
         float lowerBound = 0f, upperBound = 0f;

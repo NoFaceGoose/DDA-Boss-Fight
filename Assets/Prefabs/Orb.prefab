@@ -118,7 +118,7 @@ MonoBehaviour:
   rotateSpeed: 10
   growSpeed: 1.05
   maxScale: 12
-  gravityScale: 6
+  gravityScale: 7
   explosionYOffset: 2
   explosionScale: 10
   range: 3.6
