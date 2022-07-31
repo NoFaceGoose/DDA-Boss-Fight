@@ -11,6 +11,7 @@ public class Spike : MonoBehaviour
 
         if (player)
         {
+            FindObjectOfType<AudioManager>().Play("StabHit");
             player.TakeDamage(damage);
         }
     }

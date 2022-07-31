@@ -258,6 +258,156 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 245478990}
   m_CullTransparentMesh: 1
+--- !u!1 &251935035
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 251935037}
+  - component: {fileID: 251935036}
+  m_Layer: 0
+  m_Name: Audio Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &251935036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 251935035}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd7e0835261f4754e9a7464c638036b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: Theme
+    loop: 1
+    clip: {fileID: 8300000, guid: de1ecec0b84ba3c418d99cfb922e86af, type: 3}
+    volume: 0.236
+    source: {fileID: 0}
+  - name: PlayerRunning
+    loop: 0
+    clip: {fileID: 8300000, guid: f0fba75baf76a514da1e094bc11a31be, type: 3}
+    volume: 0.332
+    source: {fileID: 0}
+  - name: BossWalking
+    loop: 0
+    clip: {fileID: 8300000, guid: a028be27b3c28494592f11a6ae991669, type: 3}
+    volume: 0.641
+    source: {fileID: 0}
+  - name: BossRunning
+    loop: 0
+    clip: {fileID: 8300000, guid: 2297347d09698b848ad3da652b4e9944, type: 3}
+    volume: 0.733
+    source: {fileID: 0}
+  - name: BossFire
+    loop: 0
+    clip: {fileID: 8300000, guid: 076c674d9627d49d7bc9428ecb754613, type: 3}
+    volume: 0.517
+    source: {fileID: 0}
+  - name: BossSummon
+    loop: 0
+    clip: {fileID: 8300000, guid: 113a0f1929ad74dcba20169a2eaa5e57, type: 3}
+    volume: 0.512
+    source: {fileID: 0}
+  - name: BossThrowPotion
+    loop: 0
+    clip: {fileID: 8300000, guid: 8171342f1983747b3a1e3a85ad95097b, type: 3}
+    volume: 0.504
+    source: {fileID: 0}
+  - name: PlayerFireHit
+    loop: 0
+    clip: {fileID: 8300000, guid: 8a44b12d3e3f24b1a89dc7f0b66756f4, type: 3}
+    volume: 0.36
+    source: {fileID: 0}
+  - name: OrbExplosion
+    loop: 0
+    clip: {fileID: 8300000, guid: 1fd31868d68903d4f9e2c4a3b7ef98f3, type: 3}
+    volume: 1
+    source: {fileID: 0}
+  - name: PlayerFire
+    loop: 0
+    clip: {fileID: 8300000, guid: 674258a055e994b72bbb15a28eb79838, type: 3}
+    volume: 0.19
+    source: {fileID: 0}
+  - name: PotionHit
+    loop: 0
+    clip: {fileID: 8300000, guid: 90af38775c5bd43c084091ac77fe7257, type: 3}
+    volume: 0.503
+    source: {fileID: 0}
+  - name: ShockWaveHit
+    loop: 0
+    clip: {fileID: 8300000, guid: cdfae31f0b58546d3ac1015effc38f01, type: 3}
+    volume: 0.504
+    source: {fileID: 0}
+  - name: Button
+    loop: 0
+    clip: {fileID: 8300000, guid: 3e80b7f792dfd5940a009b8c92026119, type: 3}
+    volume: 0.205
+    source: {fileID: 0}
+  - name: PlayerSlash
+    loop: 0
+    clip: {fileID: 8300000, guid: 3becec1909f194046945d85ac1077772, type: 3}
+    volume: 0.196
+    source: {fileID: 0}
+  - name: BossSlash
+    loop: 0
+    clip: {fileID: 8300000, guid: 3becec1909f194046945d85ac1077772, type: 3}
+    volume: 0.552
+    source: {fileID: 0}
+  - name: BossSlashHit
+    loop: 0
+    clip: {fileID: 8300000, guid: ac6034ade498bb94b87620cdf6eac48b, type: 3}
+    volume: 0.475
+    source: {fileID: 0}
+  - name: PlayerSlashHit
+    loop: 0
+    clip: {fileID: 8300000, guid: 38700e9d1b3b3a64cae840d122783180, type: 3}
+    volume: 0.22
+    source: {fileID: 0}
+  - name: StabHit
+    loop: 0
+    clip: {fileID: 8300000, guid: a37f44cbf8c2a7443a3c361efa2f233a, type: 3}
+    volume: 0.449
+    source: {fileID: 0}
+  - name: BossIntro
+    loop: 0
+    clip: {fileID: 8300000, guid: af63539a5e39c99489395bdea2471f60, type: 3}
+    volume: 0.305
+    source: {fileID: 0}
+  - name: Enrage
+    loop: 0
+    clip: {fileID: 8300000, guid: 9558776529dbab5418c79032647f36ec, type: 3}
+    volume: 0.854
+    source: {fileID: 0}
+  - name: Jump
+    loop: 0
+    clip: {fileID: 8300000, guid: 0945b72b3fde78e41b2d01139ecee2a5, type: 3}
+    volume: 0.548
+    source: {fileID: 0}
+--- !u!4 &251935037
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 251935035}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &262391152
 GameObject:
   m_ObjectHideFlags: 0
@@ -1353,156 +1503,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1632802578}
   m_CullTransparentMesh: 1
---- !u!1 &1635285153
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1635285155}
-  - component: {fileID: 1635285154}
-  m_Layer: 0
-  m_Name: Audio Manager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1635285154
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1635285153}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd7e0835261f4754e9a7464c638036b1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sounds:
-  - name: Theme
-    loop: 1
-    clip: {fileID: 8300000, guid: de1ecec0b84ba3c418d99cfb922e86af, type: 3}
-    volume: 0.236
-    source: {fileID: 0}
-  - name: PlayerRunning
-    loop: 0
-    clip: {fileID: 8300000, guid: f0fba75baf76a514da1e094bc11a31be, type: 3}
-    volume: 0.332
-    source: {fileID: 0}
-  - name: BossWalking
-    loop: 0
-    clip: {fileID: 8300000, guid: a028be27b3c28494592f11a6ae991669, type: 3}
-    volume: 0.641
-    source: {fileID: 0}
-  - name: BossRunning
-    loop: 0
-    clip: {fileID: 8300000, guid: 2297347d09698b848ad3da652b4e9944, type: 3}
-    volume: 0.733
-    source: {fileID: 0}
-  - name: BossFire
-    loop: 0
-    clip: {fileID: 8300000, guid: 076c674d9627d49d7bc9428ecb754613, type: 3}
-    volume: 0.517
-    source: {fileID: 0}
-  - name: BossSummon
-    loop: 0
-    clip: {fileID: 8300000, guid: 113a0f1929ad74dcba20169a2eaa5e57, type: 3}
-    volume: 0.512
-    source: {fileID: 0}
-  - name: BossThrowPotion
-    loop: 0
-    clip: {fileID: 8300000, guid: 8171342f1983747b3a1e3a85ad95097b, type: 3}
-    volume: 0.504
-    source: {fileID: 0}
-  - name: PlayerFireHit
-    loop: 0
-    clip: {fileID: 8300000, guid: 8a44b12d3e3f24b1a89dc7f0b66756f4, type: 3}
-    volume: 0.36
-    source: {fileID: 0}
-  - name: OrbExplosion
-    loop: 0
-    clip: {fileID: 8300000, guid: 1fd31868d68903d4f9e2c4a3b7ef98f3, type: 3}
-    volume: 1
-    source: {fileID: 0}
-  - name: PlayerFire
-    loop: 0
-    clip: {fileID: 8300000, guid: 674258a055e994b72bbb15a28eb79838, type: 3}
-    volume: 0.19
-    source: {fileID: 0}
-  - name: PotionHit
-    loop: 0
-    clip: {fileID: 8300000, guid: 90af38775c5bd43c084091ac77fe7257, type: 3}
-    volume: 0.503
-    source: {fileID: 0}
-  - name: ShockWaveHit
-    loop: 0
-    clip: {fileID: 8300000, guid: cdfae31f0b58546d3ac1015effc38f01, type: 3}
-    volume: 0.504
-    source: {fileID: 0}
-  - name: Button
-    loop: 0
-    clip: {fileID: 8300000, guid: 3e80b7f792dfd5940a009b8c92026119, type: 3}
-    volume: 0.205
-    source: {fileID: 0}
-  - name: PlayerSlash
-    loop: 0
-    clip: {fileID: 8300000, guid: 3becec1909f194046945d85ac1077772, type: 3}
-    volume: 0.196
-    source: {fileID: 0}
-  - name: BossSlash
-    loop: 0
-    clip: {fileID: 8300000, guid: 3becec1909f194046945d85ac1077772, type: 3}
-    volume: 0.552
-    source: {fileID: 0}
-  - name: BossSlashHit
-    loop: 0
-    clip: {fileID: 8300000, guid: ac6034ade498bb94b87620cdf6eac48b, type: 3}
-    volume: 0.566
-    source: {fileID: 0}
-  - name: PlayerSlashHit
-    loop: 0
-    clip: {fileID: 8300000, guid: 38700e9d1b3b3a64cae840d122783180, type: 3}
-    volume: 0.205
-    source: {fileID: 0}
-  - name: StabHit
-    loop: 0
-    clip: {fileID: 8300000, guid: a37f44cbf8c2a7443a3c361efa2f233a, type: 3}
-    volume: 0.58
-    source: {fileID: 0}
-  - name: BossIntro
-    loop: 0
-    clip: {fileID: 8300000, guid: af63539a5e39c99489395bdea2471f60, type: 3}
-    volume: 0.305
-    source: {fileID: 0}
-  - name: Enrage
-    loop: 0
-    clip: {fileID: 8300000, guid: 9558776529dbab5418c79032647f36ec, type: 3}
-    volume: 0.854
-    source: {fileID: 0}
-  - name: Jump
-    loop: 0
-    clip: {fileID: 8300000, guid: 0945b72b3fde78e41b2d01139ecee2a5, type: 3}
-    volume: 0.548
-    source: {fileID: 0}
---- !u!4 &1635285155
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1635285153}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1644637714
 GameObject:
   m_ObjectHideFlags: 0

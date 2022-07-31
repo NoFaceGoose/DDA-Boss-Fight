@@ -39,26 +39,14 @@ public class Boss : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         bossHealth = GetComponent<BossHealth>();
 
+        // action dictionary initialization
         actionDict = new Dictionary<string, ActionData>();
         actionDict.Add("Move", new ActionData(0));
-
-        // randomize the value of each attack damage of the boss
-        if (AI != 0)
-        {
-            actionDict.Add("Slash", new ActionData(GetComponent<BossWeapon>().RandomizeAttackDamage("Slash")));
-            actionDict.Add("Fire", new ActionData(GetComponent<BossWeapon>().RandomizeAttackDamage("Fire")));
-            actionDict.Add("ThrowPotion", new ActionData(GetComponent<BossWeapon>().RandomizeAttackDamage("ThrowPotion")));
-            actionDict.Add("Stab", new ActionData(GetComponent<BossWeapon>().RandomizeAttackDamage("Stab")));
-            actionDict.Add("Summon", new ActionData(GetComponent<BossWeapon>().RandomizeAttackDamage("Summon")));
-        }
-        else
-        {
-            actionDict.Add("Slash", new ActionData(GetComponent<BossWeapon>().attackDamage));
-            actionDict.Add("Fire", new ActionData(GetComponent<BossWeapon>().shockWave.GetComponent<ShockWave>().damage));
-            actionDict.Add("ThrowPotion", new ActionData(GetComponent<BossWeapon>().potion.GetComponent<Potion>().damage));
-            actionDict.Add("Stab", new ActionData(GetComponent<BossWeapon>().enragedAttackDamage));
-            actionDict.Add("Summon", new ActionData(GetComponent<BossWeapon>().orb.GetComponent<Orb>().damage));
-        }
+        actionDict.Add("Slash", new ActionData(GetComponent<BossWeapon>().attackDamage));
+        actionDict.Add("Fire", new ActionData(GetComponent<BossWeapon>().shockWave.GetComponent<ShockWave>().damage));
+        actionDict.Add("ThrowPotion", new ActionData(GetComponent<BossWeapon>().potion.GetComponent<Potion>().damage));
+        actionDict.Add("Stab", new ActionData(GetComponent<BossWeapon>().enragedAttackDamage));
+        actionDict.Add("Summon", new ActionData(GetComponent<BossWeapon>().orb.GetComponent<Orb>().damage));
 
         // start behaviour tree
         tree = BehaviourTree();
@@ -363,13 +351,8 @@ public class Boss : MonoBehaviour
 
     private class ActionData
     {
-        public int count, hit;
-
-        public int damage;
-
-        public float expectedDamage;
-        public float fitness;
-
+        public int count, hit, damage;
+        public float expectedDamage, fitness;
         public bool isValid;
 
         public ActionData(int damage)

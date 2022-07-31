@@ -43,6 +43,7 @@ public class InGameMenu : MonoBehaviour
     {
         Resume();
         FindObjectOfType<AudioManager>().StopAll();
+        gameEnded = false;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
@@ -50,6 +51,7 @@ public class InGameMenu : MonoBehaviour
     {
         Resume();
         FindObjectOfType<AudioManager>().StopAll();
+        gameEnded = false;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
     }
 }

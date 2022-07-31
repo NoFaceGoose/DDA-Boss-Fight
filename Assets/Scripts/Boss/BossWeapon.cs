@@ -1,8 +1,14 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 
 public class BossWeapon : MonoBehaviour
 {
     public int damageLowerBound, damageUpperBound;
+
+    public static bool firstGame = true;
+    public static List<int> damageValues;
+
+    private readonly string[] attacks = { "Slash", "Fire", "ThrowPotion", "Stab", "Summon" };
 
     public int attackDamage, enragedAttackDamage;
 
@@ -19,28 +25,49 @@ public class BossWeapon : MonoBehaviour
     public GameObject shockWave, potion, orb;
     public Transform firePoint, throwPoint;
 
-    private void Start()
+    // randomise attack values
+    private void Awake()
     {
         int playerMaxHP = GetComponent<Boss>().player.GetComponent<PlayerHealth>().maxHealth;
         damageLowerBound = playerMaxHP / 20;
         damageUpperBound = playerMaxHP / 5;
-    }
 
-    public int RandomizeAttackDamage(string name)
-    {
-        int value = Random.Range(damageLowerBound, damageUpperBound);
-
-        switch (name)
+        if (firstGame)
         {
-            case "Slash": attackDamage = value; break;
-            case "Fire": shockWave.GetComponent<ShockWave>().damage = value; break;
-            case "ThrowPotion": potion.GetComponent<Potion>().damage = value; break;
-            case "Stab": enragedAttackDamage = value; break;
-            case "Summon": orb.GetComponent<Orb>().damage = value; break;
-            default: break;
-        }
+            damageValues = new List<int>();
+            firstGame = false;
 
-        return value;
+            foreach (string attack in attacks)
+            {
+                int value = Random.Range(damageLowerBound, damageUpperBound);
+                damageValues.Add(value);
+
+                switch (attack)
+                {
+                    case "Slash": attackDamage = value; break;
+                    case "Fire": shockWave.GetComponent<ShockWave>().damage = value; break;
+                    case "ThrowPotion": potion.GetComponent<Potion>().damage = value; break;
+                    case "Stab": enragedAttackDamage = value; break;
+                    case "Summon": orb.GetComponent<Orb>().damage = value; break;
+                    default: break;
+                }
+            }
+        }
+        else
+        {
+            foreach (string attack in attacks)
+            {
+                switch (attack)
+                {
+                    case "Slash": attackDamage = damageValues[0]; break;
+                    case "Fire": shockWave.GetComponent<ShockWave>().damage = damageValues[1]; break;
+                    case "ThrowPotion": potion.GetComponent<Potion>().damage = damageValues[2]; break;
+                    case "Stab": enragedAttackDamage = damageValues[3]; break;
+                    case "Summon": orb.GetComponent<Orb>().damage = damageValues[4]; break;
+                    default: break;
+                }
+            }
+        }
     }
 
     public void Slash()

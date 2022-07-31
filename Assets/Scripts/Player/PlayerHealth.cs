@@ -97,11 +97,13 @@ public class PlayerHealth : MonoBehaviour
 
     void Die()
     {
+        gameObject.SetActive(false);
+
         InGameMenu.gameEnded = true;
         resultText.text = "YOU DIED";
         resultText.color = Color.red;
 
-        FindObjectOfType<AudioManager>().Stop("Theme");
+        FindObjectOfType<AudioManager>().StopAll();
 
         resultMenu.SetActive(true);
         Time.timeScale = 0f;

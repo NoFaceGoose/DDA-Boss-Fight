@@ -49,7 +49,6 @@ public class BossHealth : MonoBehaviour
             {
                 shield = 0;
                 Destroy(shieldObj);
-                Destroy(shieldBar);
                 FindObjectOfType<AudioManager>().Play("PlayerFireHit");
             }
         }
@@ -73,12 +72,13 @@ public class BossHealth : MonoBehaviour
     void Die()
     {
         GetComponent<Boss>().tree.Stop();
+        gameObject.SetActive(false);
 
         InGameMenu.gameEnded = true;
         resultText.text = "BOSS FELLED";
         resultText.color = Color.yellow;
 
-        FindObjectOfType<AudioManager>().Stop("Theme");
+        FindObjectOfType<AudioManager>().StopAll();
 
         resultMenu.SetActive(true);
         Time.timeScale = 0f;

@@ -15,7 +15,7 @@ D:/github/DDA-Boss-Fight
 -logFile
 Logs/AssetImportWorker5.log
 -srvPort
-7769
+2535
 Successfully changed project path to: D:/github/DDA-Boss-Fight
 D:/github/DDA-Boss-Fight
 [UnityMemory] Configuration Parameters - Can be set up in boot.config
@@ -47,7 +47,7 @@ D:/github/DDA-Boss-Fight
     "memorysetup-temp-allocator-size-cloud-worker=32768"
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gfx=262144"
-Refreshing native plugins compatible for Editor in 48.02 ms, found 2 plugins.
+Refreshing native plugins compatible for Editor in 61.99 ms, found 2 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2022.1.11f1 (09bebd6e9324)
 [Subsystems] Discovering subsystems at path D:/Unity/2022.1.11f1/Editor/Data/Resources/UnitySubsystems
@@ -63,100 +63,100 @@ Initialize mono
 Mono path[0] = 'D:/Unity/2022.1.11f1/Editor/Data/Managed'
 Mono path[1] = 'D:/Unity/2022.1.11f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
 Mono config path = 'D:/Unity/2022.1.11f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56252
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56520
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: D:/Unity/2022.1.11f1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll
 Register platform support module: D:/Unity/2022.1.11f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Registered in 0.002255 seconds.
+Registered in 0.002487 seconds.
 Native extension for WindowsStandalone target not found
 Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 38.31 ms, found 2 plugins.
+Refreshing native plugins compatible for Editor in 38.19 ms, found 2 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  0.599 seconds
+- Completed reload, in  0.606 seconds
 Domain Reload Profiling:
-	ReloadAssembly (600ms)
-		BeginReloadAssembly (120ms)
+	ReloadAssembly (606ms)
+		BeginReloadAssembly (124ms)
 			ExecutionOrderSort (0ms)
 			DisableScriptedObjects (0ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
 			CreateAndSetChildDomain (1ms)
-		EndReloadAssembly (390ms)
-			LoadAssemblies (121ms)
+		EndReloadAssembly (386ms)
+			LoadAssemblies (124ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (100ms)
-				TypeCache.Initialize (100ms)
-					TypeCache.ScanAssembly (98ms)
+			SetupTypeCache (104ms)
+				TypeCache.Initialize (104ms)
+					TypeCache.ScanAssembly (102ms)
 				ResolveRequiredComponents (0ms)
 			ReleaseScriptCaches (0ms)
-			RebuildScriptCaches (24ms)
-			SetupLoadedEditorAssemblies (220ms)
+			RebuildScriptCaches (23ms)
+			SetupLoadedEditorAssemblies (213ms)
 				LogAssemblyErrors (0ms)
 				InitializePlatformSupportModulesInManaged (7ms)
 				SetLoadedEditorAssemblies (6ms)
 				RefreshPlugins (38ms)
-				BeforeProcessingInitializeOnLoad (1ms)
-				ProcessInitializeOnLoadAttributes (125ms)
-				ProcessInitializeOnLoadMethodAttributes (42ms)
+				BeforeProcessingInitializeOnLoad (2ms)
+				ProcessInitializeOnLoadAttributes (119ms)
+				ProcessInitializeOnLoadMethodAttributes (41ms)
 				AfterProcessingInitializeOnLoad (0ms)
 				EditorAssembliesLoaded (0ms)
 			ExecutionOrderSort2 (0ms)
 			AwakeInstancesAfterBackupRestoration (0ms)
 Platform modules already initialized, skipping
 Registering precompiled user dll's ...
-Registered in 0.007515 seconds.
+Registered in 0.005929 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for WindowsStandalone target not found
 Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 0.68 ms, found 2 plugins.
+Refreshing native plugins compatible for Editor in 0.67 ms, found 2 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Package Manager log level set to [2]
 [Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
 [Package Manager] UpmClient::Send -- Unable to send message (not connected to UPM process).
 [Package Manager] Cannot connect to Unity Package Manager local server
 Mono: successfully reloaded assembly
-- Completed reload, in  1.195 seconds
+- Completed reload, in  1.006 seconds
 Domain Reload Profiling:
-	ReloadAssembly (1196ms)
-		BeginReloadAssembly (186ms)
+	ReloadAssembly (1007ms)
+		BeginReloadAssembly (154ms)
 			ExecutionOrderSort (0ms)
-			DisableScriptedObjects (5ms)
+			DisableScriptedObjects (4ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (21ms)
-		EndReloadAssembly (881ms)
-			LoadAssemblies (168ms)
+			CreateAndSetChildDomain (19ms)
+		EndReloadAssembly (759ms)
+			LoadAssemblies (139ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (198ms)
-				TypeCache.Initialize (195ms)
-					TypeCache.ScanAssembly (191ms)
+			SetupTypeCache (171ms)
+				TypeCache.Initialize (168ms)
+					TypeCache.ScanAssembly (165ms)
 				ResolveRequiredComponents (3ms)
 			ReleaseScriptCaches (0ms)
-			RebuildScriptCaches (45ms)
-			SetupLoadedEditorAssemblies (485ms)
+			RebuildScriptCaches (48ms)
+			SetupLoadedEditorAssemblies (412ms)
 				LogAssemblyErrors (0ms)
 				InitializePlatformSupportModulesInManaged (5ms)
-				SetLoadedEditorAssemblies (7ms)
+				SetLoadedEditorAssemblies (6ms)
 				RefreshPlugins (1ms)
 				BeforeProcessingInitializeOnLoad (59ms)
-				ProcessInitializeOnLoadAttributes (252ms)
-				ProcessInitializeOnLoadMethodAttributes (159ms)
-				AfterProcessingInitializeOnLoad (3ms)
+				ProcessInitializeOnLoadAttributes (224ms)
+				ProcessInitializeOnLoadMethodAttributes (114ms)
+				AfterProcessingInitializeOnLoad (2ms)
 				EditorAssembliesLoaded (0ms)
 			ExecutionOrderSort2 (0ms)
-			AwakeInstancesAfterBackupRestoration (22ms)
+			AwakeInstancesAfterBackupRestoration (7ms)
 Platform modules already initialized, skipping
 ========================================================================
 Worker process is ready to serve import requests
-Launched and connected shader compiler UnityShaderCompiler.exe after 0.06 seconds
-Refreshing native plugins compatible for Editor in 0.63 ms, found 2 plugins.
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.05 seconds
+Refreshing native plugins compatible for Editor in 0.62 ms, found 2 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Unloading 2596 Unused Serialized files (Serialized files now loaded: 0)
 Unloading 67 unused Assets / (130.9 KB). Loaded Objects now: 3039.
 Memory consumption went from 412.4 MB to 412.3 MB.
-Total: 6.474100 ms (FindLiveObjects: 0.212900 ms CreateObjectMapping: 0.163000 ms MarkObjects: 5.999600 ms  DeleteObjects: 0.097200 ms)
+Total: 5.901000 ms (FindLiveObjects: 0.191100 ms CreateObjectMapping: 0.070600 ms MarkObjects: 5.539900 ms  DeleteObjects: 0.098400 ms)
 
 AssetImportParameters requested are different than current active one (requested -> active):
   custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
@@ -171,64 +171,10 @@ AssetImportParameters requested are different than current active one (requested
   custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
 ========================================================================
 Received Import Request.
-  Time since last request: 120574.719268 seconds.
-  path: Assets/audio/misc bangs/bn3.wav
-  artifactKey: Guid(24a8534b6c42d45dfb297dc64694378d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/audio/misc bangs/bn3.wav using Guid(24a8534b6c42d45dfb297dc64694378d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e88eae6d65456bd5a43a7026c6e8626e') in 0.118807 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 123.949772 seconds.
-  path: Assets/Nature Sounds Pack/Ambient/AmbientNatureNightRainy.wav
-  artifactKey: Guid(133bb20799ebc6745a6ecdbafc2652ab) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Nature Sounds Pack/Ambient/AmbientNatureNightRainy.wav using Guid(133bb20799ebc6745a6ecdbafc2652ab) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd41e721e936490f9d7266004e0292382') in 0.008771 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000878 seconds.
-  path: Assets/Nature Sounds Pack/Ambient/AmbientNatureOutside.wav
-  artifactKey: Guid(4111b72ba979d774494cc3a088faeafd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Nature Sounds Pack/Ambient/AmbientNatureOutside.wav using Guid(4111b72ba979d774494cc3a088faeafd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '32c2e2f568d1da0b14cf4dba5808ecfc') in 0.010063 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 20.746341 seconds.
-  path: Assets/Nature Sounds Pack/Foliage/Foliage03.wav
-  artifactKey: Guid(cd221e77f31fe1b439a00246300c7efb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Nature Sounds Pack/Foliage/Foliage03.wav using Guid(cd221e77f31fe1b439a00246300c7efb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ff0e00610b5c32ab3a99cc23a24936da') in 0.036534 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000019 seconds.
-  path: Assets/Nature Sounds Pack/Foliage/Foliage05.wav
-  artifactKey: Guid(6d3975bd99ed1b246a84e4660b3e5c63) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Nature Sounds Pack/Foliage/Foliage05.wav using Guid(6d3975bd99ed1b246a84e4660b3e5c63) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9f93fcd975941abeb28a0708be33667d') in 0.008702 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000021 seconds.
-  path: Assets/Nature Sounds Pack/Foliage/Foliage04.wav
-  artifactKey: Guid(e4fd072247a07394090d706fb670dd7a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Nature Sounds Pack/Foliage/Foliage04.wav using Guid(e4fd072247a07394090d706fb670dd7a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a0f13fd440f288d2b157f3d4f1110cca') in 0.014038 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 7.131250 seconds.
-  path: Assets/Nature Sounds Pack/Footstep/FootstepGrass03.wav
-  artifactKey: Guid(b11e259f36b5d1542a293028cc448d4a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Nature Sounds Pack/Footstep/FootstepGrass03.wav using Guid(b11e259f36b5d1542a293028cc448d4a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c857cdcec544f453812bcdb7fcd8cbc8') in 0.030059 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000030 seconds.
-  path: Assets/Nature Sounds Pack/Footstep/FootstepGrass06.wav
-  artifactKey: Guid(60c342e4dc4c3b944b1f97b0cb28fde9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Nature Sounds Pack/Footstep/FootstepGrass06.wav using Guid(60c342e4dc4c3b944b1f97b0cb28fde9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a9ba252dd30d6b0d5bf18b5829805097') in 0.118585 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000038 seconds.
-  path: Assets/Nature Sounds Pack/Footstep/FootstepGrass07.wav
-  artifactKey: Guid(2a822e6e461020244a1adf924db16deb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Nature Sounds Pack/Footstep/FootstepGrass07.wav using Guid(2a822e6e461020244a1adf924db16deb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7d96657c54db1da75d62d900c8e6d6b3') in 0.016829 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 9.973432 seconds.
-  path: Assets/Nature Sounds Pack/Stream/StreamAndBirds03.wav
-  artifactKey: Guid(fadc3fbf98fde6f44900c4798af1b98e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Nature Sounds Pack/Stream/StreamAndBirds03.wav using Guid(fadc3fbf98fde6f44900c4798af1b98e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6a8e5261a79eb3d0ed7f94c005a39342') in 0.043619 seconds 
+  Time since last request: 55302.346973 seconds.
+  path: Assets/Painted HQ 2D Forest Medieval Background/day/mountain01.png
+  artifactKey: Guid(63bd50a6c3fd26b439c10e599e94b853) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Painted HQ 2D Forest Medieval Background/day/mountain01.png using Guid(63bd50a6c3fd26b439c10e599e94b853) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7f42bf8fb00eea54cf23e60ad4fb0f26') in 0.199117 seconds 
 Editor requested this worker to shutdown with reason: Scaling down because of idle timeout
 AssetImportWorker is now disconnected from the server
 Process exiting
