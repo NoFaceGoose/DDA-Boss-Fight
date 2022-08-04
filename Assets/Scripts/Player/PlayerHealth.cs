@@ -12,6 +12,8 @@ public class PlayerHealth : MonoBehaviour
     public GameObject resultMenu;
     public GameObject playerHealthBar;
 
+    public HPDiffObserver observer;
+
     public Boss boss;
     public Text healthText;
     public TextMeshProUGUI resultText;
@@ -27,11 +29,6 @@ public class PlayerHealth : MonoBehaviour
     private void Update()
     {
         healthText.GetComponent<Text>().text = health + "/" + maxHealth;
-
-        if (health == 0)
-        {
-            Die();
-        }
     }
 
     public void TakeDamage(int damage, string attack = "")
@@ -48,15 +45,15 @@ public class PlayerHealth : MonoBehaviour
 
             case "ThrowPotion":
                 boss.UpdateAction("ThrowPotion", true);
-                if (IsInvoking("GetDetoxified"))
+                if (IsInvoking(nameof(GetDetoxified)))
                 {
-                    CancelInvoke("GetDetoxified");
+                    CancelInvoke(nameof(GetDetoxified));
                 }
                 else
                 {
                     GetPoisoned();
                 }
-                Invoke("GetDetoxified", recoverTime);
+                Invoke(nameof(GetDetoxified), recoverTime);
                 break;
 
             case "Stab": boss.UpdateAction("Stab", true); break;
@@ -69,7 +66,9 @@ public class PlayerHealth : MonoBehaviour
 
         int value = -damage;
 
-        GetComponent<Player>().updateReminder("HP " + (value < 0 ? value.ToString() : ("+" + value)));
+        observer.UpdateSumHPDiff();
+
+        GetComponent<Player>().UpdateReminder("HP " + (value < 0 ? value.ToString() : ("+" + value)));
 
         if (damage > 0)
         {
@@ -77,23 +76,28 @@ public class PlayerHealth : MonoBehaviour
         }
 
         health = health < 0 ? 0 : health;
+
+        if (health == 0)
+        {
+            Invoke(nameof(Die), 0.1f);
+        }
     }
 
     void GetPoisoned()
     {
-        GetComponent<Player>().changeJumpForce(jumpForceFactor);
+        GetComponent<Player>().ChangeJumpForce(jumpForceFactor);
         GetComponent<PlayerMovement>().moveSpeed *= moveSpeedFactor;
     }
 
     void GetDetoxified()
     {
-        GetComponent<Player>().changeJumpForce(1f / jumpForceFactor);
+        GetComponent<Player>().ChangeJumpForce(1f / jumpForceFactor);
         GetComponent<PlayerMovement>().moveSpeed /= moveSpeedFactor;
     }
 
     void Die()
     {
-        gameObject.SetActive(false);
+        Destroy(gameObject);
 
         InGameMenu.gameEnded = true;
         resultText.text = "YOU DIED";
@@ -103,6 +107,12 @@ public class PlayerHealth : MonoBehaviour
         FindObjectOfType<AudioManager>().Stop("PlayerRunning");
         FindObjectOfType<AudioManager>().Stop("BossWalking");
         FindObjectOfType<AudioManager>().Stop("BossRunning");
+
+        if (FindObjectOfType<Boss>())
+        {
+            MainMenu.bossFights[MainMenu.index].loss++;
+            observer.UpdateAvgHPDiff();
+        }
 
         resultMenu.SetActive(true);
         Time.timeScale = 0f;

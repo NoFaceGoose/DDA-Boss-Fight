@@ -8,7 +8,7 @@ public class Potion : MonoBehaviour
 
     void Start()
     {
-        rb.velocity = transform.right * speed * -1.0f;
+        rb.velocity = -1.0f * speed * transform.right;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

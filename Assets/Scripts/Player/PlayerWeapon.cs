@@ -4,7 +4,7 @@ public class PlayerWeapon : MonoBehaviour
 {
     public Transform firePoint;
 
-    public GameObject fireBall;
+    public GameObject fireball;
 
     public float coolDown;
     private float timer;
@@ -64,7 +64,7 @@ public class PlayerWeapon : MonoBehaviour
 
     void Fire()
     {
-        Instantiate(fireBall, firePoint.position, firePoint.rotation);
+        Instantiate(fireball, firePoint.position, firePoint.rotation);
         FindObjectOfType<AudioManager>().Play("PlayerFire");
     }
 }

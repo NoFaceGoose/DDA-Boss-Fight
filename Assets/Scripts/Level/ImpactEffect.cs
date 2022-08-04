@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class ImpactEffect : MonoBehaviour
 {
-    public void selfDestroy()
+    public void SelfDestroy()
     {
         Destroy(gameObject);
     }

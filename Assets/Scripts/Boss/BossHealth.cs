@@ -12,6 +12,8 @@ public class BossHealth : MonoBehaviour
     public GameObject shieldObj;
     public GameObject bossHealthBar, shieldBar, bossName;
 
+    public HPDiffObserver observer;
+
     public Text healthText, shieldText;
     public TextMeshProUGUI resultText;
 
@@ -34,21 +36,23 @@ public class BossHealth : MonoBehaviour
         {
             shieldText.GetComponent<Text>().text = shield + "/" + maxShield;
         }
-
-        if (health == 0)
-        {
-            Die();
-        }
     }
 
-    public void TakeDamage(int damage, bool isFireBall = false)
+    public void TakeDamage(int damage, bool isFireball = false)
     {
         if (isInvulnerable)
             return;
 
         if (shield > 0)
         {
-            shield -= (int)(damage * defenseFactor);
+            if (isFireball)
+            {
+                shield -= (int)(damage * defenseFactor);
+            }
+            else
+            {
+                shield -= damage;
+            }
 
             if (shield <= 0)
             {
@@ -61,6 +65,14 @@ public class BossHealth : MonoBehaviour
         {
             health -= damage;
             health = health < 0 ? 0 : health;
+
+        }
+
+        observer.UpdateSumHPDiff();
+
+        if (health == 0)
+        {
+            Invoke(nameof(Die), 0.1f);
         }
     }
 
@@ -72,7 +84,7 @@ public class BossHealth : MonoBehaviour
     void Die()
     {
         GetComponent<Boss>().tree.Stop();
-        gameObject.SetActive(false);
+        Destroy(gameObject);
 
         InGameMenu.gameEnded = true;
         resultText.text = "BOSS FELLED";
@@ -81,6 +93,12 @@ public class BossHealth : MonoBehaviour
         FindObjectOfType<AudioManager>().Stop("Theme");
         FindObjectOfType<AudioManager>().Stop("BossWalking");
         FindObjectOfType<AudioManager>().Stop("BossRunning");
+
+        if (GetComponent<Boss>().player)
+        {
+            MainMenu.bossFights[MainMenu.index].win++;
+            observer.UpdateAvgHPDiff();
+        }
 
         resultMenu.SetActive(true);
     }

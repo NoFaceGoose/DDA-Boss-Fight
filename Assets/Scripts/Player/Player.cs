@@ -103,21 +103,21 @@ public class Player : MonoBehaviour
         transform.Rotate(0f, 180f, 0f);
     }
 
-    public void changeJumpForce(float factor)
+    public void ChangeJumpForce(float factor)
     {
         m_JumpForce *= factor;
     }
 
     // update the reminder text
-    public void updateReminder(string text)
+    public void UpdateReminder(string text)
     {
         reminder.GetComponent<Text>().text = text;
         reminder.SetActive(true);
-        CancelInvoke("cancelReminder");
-        Invoke("cancelReminder", reminderLifetime);
+        CancelInvoke(nameof(CancelReminder));
+        Invoke(nameof(CancelReminder), reminderLifetime);
     }
 
-    private void cancelReminder()
+    private void CancelReminder()
     {
         reminder.SetActive(false);
     }

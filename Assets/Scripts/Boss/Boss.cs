@@ -2,6 +2,7 @@
 using NPBehave;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 
 public class Boss : MonoBehaviour
 {
@@ -15,7 +16,11 @@ public class Boss : MonoBehaviour
     public float maxWaitingTime, minWaitingTime;
 
     public int dangerHealth;
-    public int AI;
+
+    public string title;
+
+    public SpriteRenderer helmet, Shield;
+    public TextMeshProUGUI bossName;
 
     public Root tree; // the boss's behaviour tree
 
@@ -28,25 +33,53 @@ public class Boss : MonoBehaviour
     // valid actions for each state of the boss
     private readonly string[] phaseOneFarActions = { "Move", "Fire", "ThrowPotion" }, phaseOneNearActions = { "Slash", "Fire", "ThrowPotion" },
         phaseTwoFarActions = { "Fire", "ThrowPotion", "Summon" }, phaseTwoNearActions = { "Slash", "Fire", "ThrowPotion", "Stab", "Summon" };
+    private enum State
+    {
+        PhaseOneFar,
+        PhaseOneNear,
+        PhaseTwoFar,
+        PhaseTwoNear
+    }
 
     private void Awake()
     {
-        AI = MainMenu.bossAI;
+        title = MainMenu.bossTitle;
+
+        if (MainMenu.bossFights[MainMenu.index].challengingOrder == 0)
+        {
+            int order = 1;
+            foreach (var val in MainMenu.bossFights.Values)
+            {
+                if (val.challengingOrder > 0)
+                {
+                    order++;
+                }
+            }
+
+            MainMenu.bossFights[MainMenu.index].challengingOrder = order;
+        }
     }
 
     private void Start()
     {
+        helmet.color = MainMenu.bossColor;
+        Shield.color = MainMenu.bossColor;
+        bossName.color = MainMenu.bossColor;
+        bossName.text = title;
+
         rb = GetComponent<Rigidbody2D>();
         bossHealth = GetComponent<BossHealth>();
 
         // action dictionary initialization
-        actionDict = new Dictionary<string, ActionData>();
-        actionDict.Add("Move", new ActionData(0));
-        actionDict.Add("Slash", new ActionData(GetComponent<BossWeapon>().attackDamage));
-        actionDict.Add("Fire", new ActionData(GetComponent<BossWeapon>().shockWave.GetComponent<ShockWave>().damage));
-        actionDict.Add("ThrowPotion", new ActionData(GetComponent<BossWeapon>().potion.GetComponent<Potion>().damage));
-        actionDict.Add("Stab", new ActionData(GetComponent<BossWeapon>().enragedAttackDamage));
-        actionDict.Add("Summon", new ActionData(GetComponent<BossWeapon>().orb.GetComponent<Orb>().damage));
+        actionDict = new Dictionary<string, ActionData>
+        {
+            { "Move", new ActionData(0) },
+            { "Slash", new ActionData(GetComponent<BossWeapon>().attackDamage) },
+            { "Fire", new ActionData(GetComponent<BossWeapon>().shockWave.GetComponent<ShockWave>().damage) },
+            { "ThrowPotion", new ActionData(GetComponent<BossWeapon>().potion.GetComponent<Potion>().damage) },
+            { "Stab", new ActionData(GetComponent<BossWeapon>().enragedAttackDamage) },
+            { "Summon", new ActionData(GetComponent<BossWeapon>().orb.GetComponent<Orb>().damage) }
+        };
 
         // start behaviour tree
         tree = BehaviourTree();
@@ -83,17 +116,17 @@ public class Boss : MonoBehaviour
     {
         // Execute far actions if the player is in far attack range
         Node bb1 = new BlackboardCondition("playerDistance", Operator.IS_SMALLER_OR_EQUAL, farAttackRange, Stops.IMMEDIATE_RESTART,
-            AI == 0 ? new Action(() => RandomAction(State.PhaseOneFar)) : new Action(() => DDAAction(State.PhaseOneFar)));
+            title == "Gray Knight" ? new Action(() => RandomAction(State.PhaseOneFar)) : new Action(() => DDAAction(State.PhaseOneFar)));
 
         // Move to the player if the player is not in far attack range
         Node sel = new Selector(bb1, new Action(() => MoveToPlayer()));
 
         // Execute near attacks the player if the player is in near attack range
         Node bb2 = new BlackboardCondition("playerDistance", Operator.IS_SMALLER_OR_EQUAL, nearAttackRange, Stops.IMMEDIATE_RESTART,
-             AI == 0 ? new Action(() => RandomAction(State.PhaseOneNear)) : new Action(() => DDAAction(State.PhaseOneNear)));
+             title == "Gray Knight" ? new Action(() => RandomAction(State.PhaseOneNear)) : new Action(() => DDAAction(State.PhaseOneNear)));
 
         // Look at the player at first, then wait for 1 second, let the last state continue for a while
-        return new Sequence(new Action(() => LookAtPlayer()), AI == 0 ? new Wait(1.25f) : new Wait(DDAWait), new Selector(bb2, sel));
+        return new Sequence(new Action(() => LookAtPlayer()), title == "Gray Knight" ? new Wait(1.25f) : new Wait(DDAWait), new Selector(bb2, sel));
     }
 
     // always run to the player
@@ -101,11 +134,11 @@ public class Boss : MonoBehaviour
     {
         //  Select between near attacks if player is in near attack range
         Node bb = new BlackboardCondition("playerDistance", Operator.IS_SMALLER_OR_EQUAL, nearEnragedAttackRange, Stops.IMMEDIATE_RESTART,
-            AI == 0 ? new Action(() => RandomAction(State.PhaseTwoNear)) : new Action(() => DDAAction(State.PhaseTwoNear)));
+            title == "Gray Knight" ? new Action(() => RandomAction(State.PhaseTwoNear)) : new Action(() => DDAAction(State.PhaseTwoNear)));
 
         // Look at the player first and wait for 1 second, then check attack range, choose far attacks if the player is not in near attack range
-        Node seq = new Sequence(new Action(() => LookAtPlayer()), AI == 0 ? new Wait(0.75f) : new Wait(DDAWait),
-            new Selector(bb, AI == 0 ? new Action(() => RandomAction(State.PhaseTwoFar)) : new Action(() => DDAAction(State.PhaseTwoFar))));
+        Node seq = new Sequence(new Action(() => LookAtPlayer()), title == "Gray Knight" ? new Wait(0.75f) : new Wait(DDAWait),
+            new Selector(bb, title == "Gray Knight" ? new Action(() => RandomAction(State.PhaseTwoFar)) : new Action(() => DDAAction(State.PhaseTwoFar))));
 
         // Enter phase two when enraged
         return new BlackboardCondition("isEnraged", Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, seq);
@@ -114,14 +147,14 @@ public class Boss : MonoBehaviour
     private float DDAWait()
     {
         return (maxWaitingTime + minWaitingTime) / 2f - (maxWaitingTime - minWaitingTime) / 2f *
-            ((float)player.GetComponent<PlayerHealth>().health / (float)player.GetComponent<PlayerHealth>().maxHealth - (float)(bossHealth.health + bossHealth.shield) / (float)(bossHealth.maxHealth + bossHealth.maxShield));
+            (player.GetComponent<PlayerHealth>().health / (float)player.GetComponent<PlayerHealth>().maxHealth - (bossHealth.health + bossHealth.shield) / (float)(bossHealth.maxHealth + bossHealth.maxShield));
     }
 
     // provide action selected by DDA system
     private void DDAAction(State state)
     {
         // set each action's validity according to the boss's current state
-        setActionValidity(state);
+        SetActionValidity(state);
 
         // execute the first action which has not been done once
         foreach (var item in actionDict)
@@ -134,7 +167,7 @@ public class Boss : MonoBehaviour
         }
 
         // execute the fittest action 
-        if (AI == 1)
+        if (title == "Golden Knight")
         {
             float maxFitness = 0f;
             string action = null;
@@ -145,12 +178,12 @@ public class Boss : MonoBehaviour
                 if (item.Value.isValid)
                 {
                     item.Value.UpdateFitness(player.GetComponent<PlayerHealth>(), bossHealth);
-                    
+
                     if (maxFitness <= item.Value.fitness)
                     {
                         maxFitness = item.Value.fitness;
                         action = item.Key;
-                        
+
                     }
                 }
             }
@@ -163,7 +196,7 @@ public class Boss : MonoBehaviour
         float sumFitness = 0f;
 
         // Roulette selection DDA
-        if (AI == 2)
+        if (title == "Red Knight")
         {
             // calculate each action's fitness
             foreach (var val in actionDict.Values)
@@ -177,7 +210,7 @@ public class Boss : MonoBehaviour
         // Ranking selection DDA
         else
         {
-            Dictionary<string, float> actionFit = new Dictionary<string, float>();
+            Dictionary<string, float> actionFit = new();
 
             // calculate each action's fitness
             foreach (var val in actionDict.Values)
@@ -226,7 +259,7 @@ public class Boss : MonoBehaviour
         }
     }
 
-    private void setActionValidity(State state)
+    private void SetActionValidity(State state)
     {
         string[] validActions = GetValidActions(state);
 
@@ -255,14 +288,14 @@ public class Boss : MonoBehaviour
     // get valid actions according to boss's current state
     private string[] GetValidActions(State state)
     {
-        switch (state)
+        return state switch
         {
-            case State.PhaseOneFar: return phaseOneFarActions;
-            case State.PhaseOneNear: return phaseOneNearActions;
-            case State.PhaseTwoFar: return phaseTwoFarActions;
-            case State.PhaseTwoNear: return phaseTwoNearActions;
-            default: return new string[] { };
-        }
+            State.PhaseOneFar => phaseOneFarActions,
+            State.PhaseOneNear => phaseOneNearActions,
+            State.PhaseTwoFar => phaseTwoFarActions,
+            State.PhaseTwoNear => phaseTwoNearActions,
+            _ => new string[] { },
+        };
     }
 
     private void ExecuteAction(string key)
@@ -349,44 +382,5 @@ public class Boss : MonoBehaviour
     private void Summon()
     {
         GetComponent<Animator>().SetTrigger("Summon");
-    }
-
-    private class ActionData
-    {
-        public int count, hit, damage;
-        public float expectedDamage, fitness;
-        public bool isValid;
-
-        public ActionData(int damage)
-        {
-            count = 0;
-            hit = 0;
-            this.damage = damage;
-            expectedDamage = 0f;
-            fitness = 0;
-            isValid = true;
-        }
-
-        // update the action's expected damage
-        public void UpdateExpectedDamage()
-        {
-            expectedDamage = ((float)hit / count) * damage;
-        }
-
-        // calculate and return the action's fitness
-        public float UpdateFitness(PlayerHealth playerHealth, BossHealth bossHealth)
-        {
-            float playerExpectedHP = playerHealth.health - expectedDamage >= 0 ? (float)(playerHealth.health - expectedDamage) : 0f;
-            fitness = 1f - Mathf.Sqrt(Mathf.Abs(playerExpectedHP / (float)playerHealth.maxHealth - (float)(bossHealth.health + bossHealth.shield) / (float)(bossHealth.maxHealth + bossHealth.maxShield)));
-            return fitness;
-        }
-    }
-
-    private enum State
-    {
-        PhaseOneFar,
-        PhaseOneNear,
-        PhaseTwoFar,
-        PhaseTwoNear
     }
 }
