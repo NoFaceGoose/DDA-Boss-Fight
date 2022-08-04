@@ -157,6 +157,14 @@ public class Boss : MonoBehaviour
         // execute the fittest action 
         if (title == "Golden Knight")
         {
+            // low probability of random selection
+            int breaker = UnityEngine.Random.Range(0, 5);
+            if (breaker == 0)
+            {
+                RandomAction(state);
+                return;
+            }
+
             float maxFitness = 0f;
             string action = null;
 
