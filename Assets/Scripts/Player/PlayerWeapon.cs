@@ -13,6 +13,7 @@ public class PlayerWeapon : MonoBehaviour
     public Vector3 attackOffset;
     public float attackRange;
     public LayerMask attackMask;
+    public LayerMask obstacleMask;
 
     public Animator animator;
 
@@ -48,6 +49,16 @@ public class PlayerWeapon : MonoBehaviour
             if (colInfo.GetComponent<BossHealth>())
             {
                 colInfo.GetComponent<BossHealth>().TakeDamage(attackDamage);
+                FindObjectOfType<AudioManager>().Play("PlayerSlashHit");
+            }
+        }
+
+        colInfo = Physics2D.OverlapCircle(pos, attackRange, obstacleMask);
+        if (colInfo)
+        {
+            if (colInfo.gameObject.CompareTag("Obstacle"))
+            {
+                Destroy(colInfo.gameObject);
                 FindObjectOfType<AudioManager>().Play("PlayerSlashHit");
             }
         }
