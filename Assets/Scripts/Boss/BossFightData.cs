@@ -3,6 +3,7 @@ using UnityEngine;
 public class BossFightData
 {
     public string title;
+    public bool isRevealed;
     public int challengingOrder;
     public int win, loss;
     public float avgHPDiff;
@@ -12,6 +13,7 @@ public class BossFightData
     {
         title = bossTitle;
         color = bossColor;
+        isRevealed = false;
         challengingOrder = 0;
         win = 0;
         loss = 0;

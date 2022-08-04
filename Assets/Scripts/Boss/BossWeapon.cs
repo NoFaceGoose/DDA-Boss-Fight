@@ -84,6 +84,11 @@ public class BossWeapon : MonoBehaviour
         FindObjectOfType<AudioManager>().Play("BossSummon");
     }
 
+    public void TurnVulnerable()
+    {
+        GetComponent<BossHealth>().isInvulnerable = false;
+    }
+
     void OnDrawGizmosSelected()
     {
         Vector3 pos = transform.position;

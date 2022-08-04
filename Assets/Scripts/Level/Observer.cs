@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HPDiffObserver : MonoBehaviour
+public class Observer : MonoBehaviour
 {
     public PlayerHealth playerHealth;
     public BossHealth bossHealth;
@@ -26,5 +26,22 @@ public class HPDiffObserver : MonoBehaviour
     public void UpdateAvgHPDiff()
     {
         MainMenu.bossFights[MainMenu.index].UpdateAvgHPDiff(sumHPDiff / count);
+    }
+
+    public void UpdateChallengingOrder()
+    {
+        if (MainMenu.bossFights[MainMenu.index].challengingOrder == 0)
+        {
+            int order = 1;
+            foreach (var val in MainMenu.bossFights.Values)
+            {
+                if (val.challengingOrder > 0)
+                {
+                    order++;
+                }
+            }
+
+            MainMenu.bossFights[MainMenu.index].challengingOrder = order;
+        }
     }
 }

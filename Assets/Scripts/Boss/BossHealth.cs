@@ -12,7 +12,7 @@ public class BossHealth : MonoBehaviour
     public GameObject shieldObj;
     public GameObject bossHealthBar, shieldBar, bossName;
 
-    public HPDiffObserver observer;
+    public Observer observer;
 
     public Text healthText, shieldText;
     public TextMeshProUGUI resultText;
@@ -98,6 +98,7 @@ public class BossHealth : MonoBehaviour
         {
             MainMenu.bossFights[MainMenu.index].win++;
             observer.UpdateAvgHPDiff();
+            observer.UpdateChallengingOrder();
         }
 
         resultMenu.SetActive(true);

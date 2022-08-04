@@ -45,19 +45,7 @@ public class Boss : MonoBehaviour
     {
         title = MainMenu.bossTitle;
 
-        if (MainMenu.bossFights[MainMenu.index].challengingOrder == 0)
-        {
-            int order = 1;
-            foreach (var val in MainMenu.bossFights.Values)
-            {
-                if (val.challengingOrder > 0)
-                {
-                    order++;
-                }
-            }
-
-            MainMenu.bossFights[MainMenu.index].challengingOrder = order;
-        }
+        MainMenu.bossFights[MainMenu.index].isRevealed = true;
     }
 
     private void Start()
@@ -116,17 +104,17 @@ public class Boss : MonoBehaviour
     {
         // Execute far actions if the player is in far attack range
         Node bb1 = new BlackboardCondition("playerDistance", Operator.IS_SMALLER_OR_EQUAL, farAttackRange, Stops.IMMEDIATE_RESTART,
-            title == "Gray Knight" ? new Action(() => RandomAction(State.PhaseOneFar)) : new Action(() => DDAAction(State.PhaseOneFar)));
+            title == "Grey Knight" ? new Action(() => RandomAction(State.PhaseOneFar)) : new Action(() => DDAAction(State.PhaseOneFar)));
 
         // Move to the player if the player is not in far attack range
         Node sel = new Selector(bb1, new Action(() => MoveToPlayer()));
 
         // Execute near attacks the player if the player is in near attack range
         Node bb2 = new BlackboardCondition("playerDistance", Operator.IS_SMALLER_OR_EQUAL, nearAttackRange, Stops.IMMEDIATE_RESTART,
-             title == "Gray Knight" ? new Action(() => RandomAction(State.PhaseOneNear)) : new Action(() => DDAAction(State.PhaseOneNear)));
+             title == "Grey Knight" ? new Action(() => RandomAction(State.PhaseOneNear)) : new Action(() => DDAAction(State.PhaseOneNear)));
 
         // Look at the player at first, then wait for 1 second, let the last state continue for a while
-        return new Sequence(new Action(() => LookAtPlayer()), title == "Gray Knight" ? new Wait(1.25f) : new Wait(DDAWait), new Selector(bb2, sel));
+        return new Sequence(new Action(() => LookAtPlayer()), title == "Grey Knight" ? new Wait(1.25f) : new Wait(DDAWait), new Selector(bb2, sel));
     }
 
     // always run to the player
@@ -134,11 +122,11 @@ public class Boss : MonoBehaviour
     {
         //  Select between near attacks if player is in near attack range
         Node bb = new BlackboardCondition("playerDistance", Operator.IS_SMALLER_OR_EQUAL, nearEnragedAttackRange, Stops.IMMEDIATE_RESTART,
-            title == "Gray Knight" ? new Action(() => RandomAction(State.PhaseTwoNear)) : new Action(() => DDAAction(State.PhaseTwoNear)));
+            title == "Grey Knight" ? new Action(() => RandomAction(State.PhaseTwoNear)) : new Action(() => DDAAction(State.PhaseTwoNear)));
 
         // Look at the player first and wait for 1 second, then check attack range, choose far attacks if the player is not in near attack range
-        Node seq = new Sequence(new Action(() => LookAtPlayer()), title == "Gray Knight" ? new Wait(0.75f) : new Wait(DDAWait),
-            new Selector(bb, title == "Gray Knight" ? new Action(() => RandomAction(State.PhaseTwoFar)) : new Action(() => DDAAction(State.PhaseTwoFar))));
+        Node seq = new Sequence(new Action(() => LookAtPlayer()), title == "Grey Knight" ? new Wait(0.75f) : new Wait(DDAWait),
+            new Selector(bb, title == "Grey Knight" ? new Action(() => RandomAction(State.PhaseTwoFar)) : new Action(() => DDAAction(State.PhaseTwoFar))));
 
         // Enter phase two when enraged
         return new BlackboardCondition("isEnraged", Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, seq);
@@ -207,7 +195,7 @@ public class Boss : MonoBehaviour
                 }
             }
         }
-        // Ranking selection DDA
+        // Rank selection DDA
         else
         {
             Dictionary<string, float> actionFit = new();

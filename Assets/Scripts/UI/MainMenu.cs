@@ -21,7 +21,7 @@ public class MainMenu : MonoBehaviour
         {
             bossFights = new Dictionary<int, BossFightData>();
 
-            List<string> bosses = new() { "Gray Knight", "Golden Knight", "Red Knight", "Blue Knight" };
+            List<string> bosses = new() { "Grey Knight", "Golden Knight", "Red Knight", "Blue Knight" };
             List<Color> colors = new() { new Color(.7f, .7f, .7f), new Color(1f, .9f, .3f), new Color(.8f, .3f, .3f), new Color(.2f, .6f, 1f) };
 
             for (int i = 0; i < 4; i++)
@@ -42,15 +42,15 @@ public class MainMenu : MonoBehaviour
             challengingOrders[i].color = bossFights[i].color;
 
             winLossRatios[i].text = bossFights[i].win + "/" + bossFights[i].loss;
-            winLossRatios[i].color = bossFights[i].challengingOrder > 0 ? bossFights[i].color : Color.white;
+            winLossRatios[i].color = (bossFights[i].win > 0 || bossFights[i].loss > 0) ? bossFights[i].color : Color.white;
 
-            bosstitles[i].text = bossFights[i].challengingOrder > 0 ? bossFights[i].title : "Unknown Boss";
-            bosstitles[i].color = bossFights[i].challengingOrder > 0 ? bossFights[i].color : Color.white;
+            bosstitles[i].text = bossFights[i].isRevealed ? bossFights[i].title : "Unknown Boss";
+            bosstitles[i].color = bossFights[i].isRevealed ? bossFights[i].color : Color.white;
 
             AvgHPDiffs[i].text = bossFights[i].avgHPDiff > 0f ? bossFights[i].avgHPDiff.ToString("P", CultureInfo.InvariantCulture) : " ";
             AvgHPDiffs[i].color = bossFights[i].color;
 
-            if (bossFights[i].challengingOrder > 0)
+            if (bossFights[i].isRevealed)
             {
                 toggle.SetActive(true);
             }
