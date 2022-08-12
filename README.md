@@ -58,7 +58,7 @@ The main menu includes:
 
 4. Function **LookAtPlayer** in **Boss.cs**: Turning the boss to face the player.
 
-5. **Player.cs**and **PlayerMovement.cs**: Logic of player controls, including moving,  flipping and jumping.
+5. **Player.cs** and **PlayerMovement.cs**: Logic of player controls, including moving,  flipping and jumping.
 
    2-5 from [Brackeys/Boss-Battle: Project files for our tutorial on how to create a boss battle using state machines in Unity. (github.com)](https://github.com/Brackeys/Boss-Battle)
 
