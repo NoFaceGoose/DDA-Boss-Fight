@@ -14,21 +14,13 @@ Additionally, a small **DDA waiting** system is designed to dynamically adjust t
 
 The system's core code is in **Boss.cs** and **ActionData.cs**.
 
-The following is a screenshot of the boss stage with player controls included.
-
-![image-20220812150054579](C:\Users\98114\AppData\Roaming\Typora\typora-user-images\image-20220812150054579.png)
-
 
 
 ### Boss Options
 
-There are four bosses designed for comparison in the demo (explained in the following image).
+There are four bosses designed for comparison in the demo.
 
-![image-20220812150720135](C:\Users\98114\AppData\Roaming\Typora\typora-user-images\image-20220812150720135.png)
-
-The following is a screenshot of the main menu.
-
-![image-20220812150508606](C:\Users\98114\AppData\Roaming\Typora\typora-user-images\image-20220812150508606.png)
+The main menu includes:
 
 1. **Challenging Order**: update only when the player beats or is defeated by the boss.
 
