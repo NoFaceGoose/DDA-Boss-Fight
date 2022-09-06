@@ -2,7 +2,8 @@
 
 ### **Introduction**
 
-This is a MSc project of Computer Games in Queen Mary, University of London. The topic is **Improving Boss Fight Experience in 2D Action  Games by Applying Dynamic Difficulty Adjustment *(DDA) to Behaviour Tree (BT)**. This project is based on Unity Editor 2022.1.11f1
+This is a MSc project of Computer Games in Queen Mary, University of London. The topic is **Improving Boss Fight Experience in 2D Action  Games by Applying Dynamic Difficulty Adjustment *(DDA) to Behaviour Tree (BT)**. This project is based on Unity Editor 2022.1.11f1.
+WebGL Build: (https://nofacegoose.github.io/DDA-Boss-Fight/Build/index.html)
 
 
 
