@@ -44,7 +44,7 @@ public class Boss : MonoBehaviour
     private void Awake()
     {
         title = MainMenu.bossTitle;
-
+        
         MainMenu.bossFights[MainMenu.index].isRevealed = true;
     }
 
@@ -206,7 +206,7 @@ public class Boss : MonoBehaviour
         // Rank selection DDA
         else
         {
-            Dictionary<string, float> actionFit = new();
+            // Dictionary<string, float> actionFit = new();
 
             // calculate each action's fitness
             foreach (var val in actionDict.Values)
